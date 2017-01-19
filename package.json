@@ -6,6 +6,12 @@
   "scripts": {
     "test": "jest"
   },
+  "files": [
+    "README.md",
+    "LICENCE",
+    "src",
+    "demo.gif",
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bamlab/react-native-image-header-scroll-view.git"
@@ -14,7 +20,10 @@
     "React-native",
     "ScrollView",
     "animation",
-    "navbar"
+    "navbar",
+    "react-component",
+    "ios",
+    "android"
   ],
   "author": "Nhacsam <nicolas@djambazian.fr>",
   "license": "MIT",
