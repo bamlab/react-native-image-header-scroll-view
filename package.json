@@ -1,6 +1,6 @@
 {
   "name": "react-native-image-header-scroll-view",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ScrollView with an image in header which become a navbar",
   "main": "src/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "README.md",
     "LICENCE",
     "src",
-    "demo.gif",
+    "demo.gif"
   ],
   "repository": {
     "type": "git",
