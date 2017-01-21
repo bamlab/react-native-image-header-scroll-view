@@ -51,7 +51,10 @@ class ImageHeaderScrollView extends Component {
   }
 
   renderHeader() {
-    const headerHeight = this.interpolateOnImageHeight([this.props.maxHeight, this.props.minHeight]);
+    const headerHeight = this.interpolateOnImageHeight([
+      this.props.maxHeight,
+      this.props.minHeight,
+    ]);
     const overlayOpacity = this.interpolateOnImageHeight([0, this.props.maxOverlayOpacity]);
 
     const headerScale = this.state.scrollY.interpolate({
@@ -60,8 +63,9 @@ class ImageHeaderScrollView extends Component {
       extrapolate: 'clamp',
     });
 
+    const headerTransformStyle = { height: headerHeight, transform: [{ scale: headerScale }] };
     return (
-      <Animated.View style={[styles.header, { height: headerHeight, transform: [{ scale: headerScale }] }]}>
+      <Animated.View style={[styles.header, headerTransformStyle]}>
         <Animated.View style={[styles.blackOverlay, { opacity: overlayOpacity }]} />
         { this.props.renderHeader() }
       </Animated.View>
@@ -77,7 +81,7 @@ class ImageHeaderScrollView extends Component {
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
           )}
-          >
+        >
           <Animated.View style={[{ paddingTop: this.props.maxHeight }, this.props.childrenStyle]}>
             {this.props.children}
           </Animated.View>

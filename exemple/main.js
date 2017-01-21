@@ -18,7 +18,7 @@ const TvShow = () => (
     <StatusBar barStyle="light-content" />
     <HeaderImageScrollView
       maxHeight={200}
-      minHeight={50}
+      minHeight={66}
       renderHeader={() => (
         <Image source={tvShowContent.image} style={styles.image} />
       )}
