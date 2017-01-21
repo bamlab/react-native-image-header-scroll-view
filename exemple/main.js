@@ -1,3 +1,4 @@
+import Exponent from 'exponent';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   Image,
   Dimensions,
   StatusBar
-} from 'react-native';
+  } from 'react-native';
 
 import HeaderImageScrollView from 'react-native-image-header-scroll-view';
 import tvShowContent from './assets/tvShowContent';
@@ -21,7 +22,7 @@ const TvShow = () => (
       renderHeader={() => (
         <Image source={tvShowContent.image} style={styles.image} />
       )}
-    >
+      >
       <View style={styles.section}>
         <Text style={styles.title}>
           <Text style={styles.name}>{tvShowContent.title}</Text>, ({tvShowContent.year})
@@ -89,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TvShow;
+Exponent.registerRootComponent(TvShow);
