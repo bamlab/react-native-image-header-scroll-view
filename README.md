@@ -38,6 +38,11 @@ render() {
 }
 ```
 
+## Usage (API)
+
+All of the properties of `ScrollView` are supported. Please refer to the
+[`ScrollView` documentation](https://facebook.github.io/react-native/docs/scrollview.html) for more detail.
+
 ## Other open-source modules by the folks at [BAM](http://github.com/bamlab)
 
  * [generator-rn-toolbox](https://github.com/bamlab/generator-rn-toolbox)

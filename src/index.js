@@ -5,6 +5,9 @@ import {
   StyleSheet,
   View,
   } from 'react-native';
+import _ from 'lodash';
+
+const SCROLLVIEW_REF = 'ScrollView';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,6 +43,27 @@ class ImageHeaderScrollView extends Component {
       scrollY: new Animated.Value(0),
     };
   }
+
+  /*
+   * Expose `ScrollView` API so this component is composable
+   * with any component that expects a `ScrollView`.
+   */
+  getScrollResponder() {
+    return this[SCROLLVIEW_REF].getScrollResponder();
+  }
+  getScrollableNode() {
+    return this.getScrollResponder().getScrollableNode();
+  }
+  getInnerViewNode() {
+    return this.getScrollResponder().getInnerViewNode();
+  }
+  setNativeProps(props) {
+    this[SCROLLVIEW_REF].setNativeProps(props);
+  }
+  scrollTo(...args) {
+    this.getScrollResponder().scrollTo(...args);
+  }
+
 
   interpolateOnImageHeight(outputRange) {
     const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
@@ -96,14 +120,17 @@ class ImageHeaderScrollView extends Component {
   }
 
   render() {
+    const scrollViewProps = _.pick(this.props, _.keys(ScrollView.propTypes));
     return (
       <View style={styles.container}>
         <ScrollView
+          ref={(sv) => { this[SCROLLVIEW_REF] = sv; }}
           style={styles.container}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
           )}
+          {...scrollViewProps}
         >
           <Animated.View style={[{ paddingTop: this.props.maxHeight }, this.props.childrenStyle]}>
             {this.props.children}
@@ -127,6 +154,7 @@ ImageHeaderScrollView.propTypes = {
   childrenStyle: View.propTypes.style,
   foregroundParallaxRatio: React.PropTypes.number,
   fadeOutForeground: React.PropTypes.bool,
+  ...ScrollView.propTypes,
 };
 
 ImageHeaderScrollView.defaultProps = {

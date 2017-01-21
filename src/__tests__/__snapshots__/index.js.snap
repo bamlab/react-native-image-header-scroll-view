@@ -1,4 +1,4 @@
-exports[`test renders correctly by default 1`] = `
+exports[`ImageHeaderScrollView renders correctly by default 1`] = `
 <View
   style={
     Object {
