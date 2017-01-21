@@ -144,28 +144,28 @@ class ImageHeaderScrollView extends Component {
 }
 
 ImageHeaderScrollView.propTypes = {
-  renderHeader: React.PropTypes.func,
-  renderForeground: React.PropTypes.func,
-  maxHeight: React.PropTypes.number,
-  minHeight: React.PropTypes.number,
   children: React.PropTypes.node || React.PropTypes.nodes,
-  maxOverlayOpacity: React.PropTypes.number,
-  minOverlayOpacity: React.PropTypes.number,
   childrenStyle: View.propTypes.style,
-  foregroundParallaxRatio: React.PropTypes.number,
   fadeOutForeground: React.PropTypes.bool,
+  foregroundParallaxRatio: React.PropTypes.number,
+  maxHeight: React.PropTypes.number,
+  maxOverlayOpacity: React.PropTypes.number,
+  minHeight: React.PropTypes.number,
+  minOverlayOpacity: React.PropTypes.number,
+  renderForeground: React.PropTypes.func,
+  renderHeader: React.PropTypes.func,
   ...ScrollView.propTypes,
 };
 
 ImageHeaderScrollView.defaultProps = {
-  maxHeight: 125,
-  minHeight: 80,
-  maxOverlayOpacity: 0.3,
-  minOverlayOpacity: 0,
-  renderHeader: () => <View />,
-  renderForeground: () => <View />,
-  foregroundParallaxRatio: 1,
   fadeOutForeground: false,
+  foregroundParallaxRatio: 1,
+  maxHeight: 125,
+  maxOverlayOpacity: 0.3,
+  minHeight: 80,
+  minOverlayOpacity: 0,
+  renderForeground: () => <View />,
+  renderHeader: () => <View />,
 };
 
 export default ImageHeaderScrollView;
