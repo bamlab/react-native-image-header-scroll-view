@@ -1,6 +1,6 @@
 {
   "name": "image-header-scroll-view",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Exemple project of react-native-image-header-scroll-view",
   "author": null,
   "private": true,
@@ -11,6 +11,6 @@
     "lodash": "^4.17.4",
     "react": "~15.3.2",
     "react-native": "git+https://github.com/exponentjs/react-native#sdk-12.0.0",
-    "react-native-image-header-scroll-view": "^0.0.2"
+    "react-native-image-header-scroll-view": "^0.1.0"
   }
 }

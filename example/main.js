@@ -1,13 +1,13 @@
 import Exponent from 'exponent';
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
   Dimensions,
-  StatusBar
-  } from 'react-native';
+  StatusBar,
+} from 'react-native';
 
 import HeaderImageScrollView from 'react-native-image-header-scroll-view';
 import tvShowContent from './assets/tvShowContent';
