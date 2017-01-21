@@ -55,7 +55,10 @@ class ImageHeaderScrollView extends Component {
       this.props.maxHeight,
       this.props.minHeight,
     ]);
-    const overlayOpacity = this.interpolateOnImageHeight([0, this.props.maxOverlayOpacity]);
+    const overlayOpacity = this.interpolateOnImageHeight([
+      this.props.minOverlayOpacity,
+      this.props.maxOverlayOpacity,
+    ]);
 
     const headerScale = this.state.scrollY.interpolate({
       inputRange: [-this.props.maxHeight, 0],
@@ -68,6 +71,26 @@ class ImageHeaderScrollView extends Component {
       <Animated.View style={[styles.header, headerTransformStyle]}>
         <Animated.View style={[styles.blackOverlay, { opacity: overlayOpacity }]} />
         { this.props.renderHeader() }
+      </Animated.View>
+    );
+  }
+
+  renderForeground() {
+    const headerTranslate = this.state.scrollY.interpolate({
+      inputRange: [0, this.props.maxHeight * 2],
+      outputRange: [0, -this.props.maxHeight * 2 * this.props.foregroundParallaxRatio],
+      extrapolate: 'clamp',
+    });
+    const opacity = this.interpolateOnImageHeight([1, -0.3]);
+
+    const headerTransformStyle = {
+      height: this.props.maxHeight,
+      transform: [{ translateY: headerTranslate }],
+      opacity: this.props.fadeOutForeground ? opacity : 1,
+    };
+    return (
+      <Animated.View style={[styles.header, headerTransformStyle]}>
+        { this.props.renderForeground() }
       </Animated.View>
     );
   }
@@ -87,6 +110,7 @@ class ImageHeaderScrollView extends Component {
           </Animated.View>
         </ScrollView>
         { this.renderHeader() }
+        { this.renderForeground() }
       </View>
     );
   }
@@ -94,18 +118,26 @@ class ImageHeaderScrollView extends Component {
 
 ImageHeaderScrollView.propTypes = {
   renderHeader: React.PropTypes.func,
+  renderForeground: React.PropTypes.func,
   maxHeight: React.PropTypes.number,
   minHeight: React.PropTypes.number,
   children: React.PropTypes.node || React.PropTypes.nodes,
   maxOverlayOpacity: React.PropTypes.number,
+  minOverlayOpacity: React.PropTypes.number,
   childrenStyle: View.propTypes.style,
+  foregroundParallaxRatio: React.PropTypes.number,
+  fadeOutForeground: React.PropTypes.bool,
 };
 
 ImageHeaderScrollView.defaultProps = {
   maxHeight: 125,
   minHeight: 80,
   maxOverlayOpacity: 0.3,
+  minOverlayOpacity: 0,
   renderHeader: () => <View />,
+  renderForeground: () => <View />,
+  foregroundParallaxRatio: 1,
+  fadeOutForeground: false,
 };
 
 export default ImageHeaderScrollView;

@@ -17,12 +17,20 @@ const TvShow = () => (
   <View style={{ flex:1 }}>
     <StatusBar barStyle="light-content" />
     <HeaderImageScrollView
-      maxHeight={200}
+      maxHeight={250}
       minHeight={66}
+      maxOverlayOpacity={0.6}
+      minOverlayOpacity={0.3}
+      fadeOutForeground
       renderHeader={() => (
         <Image source={tvShowContent.image} style={styles.image} />
       )}
-      >
+      renderForeground={() => (
+        <View style={styles.titleContainer}>
+          <Text style={styles.imageTitle}>{tvShowContent.title}</Text>
+        </View>
+      )}
+    >
       <View style={styles.section}>
         <Text style={styles.title}>
           <Text style={styles.name}>{tvShowContent.title}</Text>, ({tvShowContent.year})
@@ -48,7 +56,7 @@ const TvShow = () => (
 
 const styles = StyleSheet.create({
   image: {
-    height: 200,
+    height: 250,
     width: Dimensions.get('window').width,
     alignSelf: 'stretch',
     resizeMode: 'cover',
@@ -88,6 +96,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
   },
+  titleContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageTitle: {
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontSize: 24,
+  }
 });
 
 Exponent.registerRootComponent(TvShow);

@@ -1,11 +1,13 @@
 import React from 'react';
 import 'react-native';
-import ImageHeaderScrollView from '../index.js';
 import renderer from 'react-test-renderer';
+import ImageHeaderScrollView from '../index.js';
 
-it('renders correctly by default', () => {
-  const tree = renderer.create(
-    <ImageHeaderScrollView />
-  ).toJSON();
-  expect(tree).toMatchSnapshot();
+describe('ImageHeaderScrollView', () => {
+  it('renders correctly by default', () => {
+    const tree = renderer.create(
+      <ImageHeaderScrollView />,
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });
