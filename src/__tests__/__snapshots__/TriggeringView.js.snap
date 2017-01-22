@@ -1,5 +1,6 @@
 exports[`TriggeringView renders correctly by default 1`] = `
 <View
+  onLayout={[Function]}
   style={
     Object {
       "flex": 1,
@@ -24,8 +25,7 @@ exports[`TriggeringView renders correctly by default 1`] = `
           "paddingTop": 45,
         }
       }>
-      <View
-        onLayout={[Function]} />
+      <View />
     </View>
   </ScrollView>
   <View
@@ -95,8 +95,7 @@ exports[`TriggeringView renders correctly by default 1`] = `
 `;
 
 exports[`TriggeringView should display children 1`] = `
-<View
-  onLayout={[Function]}>
+<View>
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -106,7 +105,4 @@ exports[`TriggeringView should display children 1`] = `
 </View>
 `;
 
-exports[`TriggeringView should dont't crash without ImageHeaderScrollView 1`] = `
-<View
-  onLayout={[Function]} />
-`;
+exports[`TriggeringView should dont't crash without ImageHeaderScrollView 1`] = `<View />`;

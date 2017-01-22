@@ -49,11 +49,15 @@ class ImageHeaderScrollView extends Component {
     super(props);
     this.state = {
       scrollY: new Animated.Value(0),
+      pageY: 0,
     };
   }
 
   getChildContext() {
-    return { scrollY: this.state.scrollY };
+    return {
+      scrollY: this.state.scrollY,
+      scrollPageY: this.state.pageY + this.props.minHeight,
+    };
   }
 
   /*
@@ -75,7 +79,6 @@ class ImageHeaderScrollView extends Component {
   scrollTo(...args) {
     this.getScrollResponder().scrollTo(...args);
   }
-
 
   interpolateOnImageHeight(outputRange) {
     const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
@@ -138,9 +141,13 @@ class ImageHeaderScrollView extends Component {
     const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
     const scrollViewProps = _.pick(this.props, _.keys(ScrollView.propTypes));
     return (
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        ref={(ref) => { this.container = ref; }}
+        onLayout={() => this.container.measureInWindow((x, y) => this.setState({ pageY: y }))}
+      >
         <ScrollView
-          ref={(sv) => { this[SCROLLVIEW_REF] = sv; }}
+          ref={(ref) => { this[SCROLLVIEW_REF] = ref; }}
           style={[styles.container, { marginTop: this.props.minHeight }]}
           scrollEventThrottle={16}
           onScroll={Animated.event(
@@ -188,6 +195,7 @@ ImageHeaderScrollView.defaultProps = {
 
 ImageHeaderScrollView.childContextTypes = {
   scrollY: React.PropTypes.instanceOf(Animated.Value),
+  scrollPageY: React.PropTypes.number,
 };
 
 export default ImageHeaderScrollView;
