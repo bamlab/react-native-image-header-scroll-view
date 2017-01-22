@@ -1,4 +1,4 @@
 node_modules/**/*
 .exponent/*
 npm-debug.*
-ImageHeaderScrollView.js
+ImageHeaderScrollView

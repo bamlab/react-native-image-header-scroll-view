@@ -1,5 +1,5 @@
 import Exponent from 'exponent';
-import React from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,55 +8,79 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
-import HeaderImageScrollView from 'react-native-image-header-scroll-view';
+import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import tvShowContent from './assets/tvShowContent';
 
+const MIN_HEIGHT = 66;
+const MAX_HEIGHT = 250;
 
-const TvShow = () => (
-  <View style={{ flex:1 }}>
-    <StatusBar barStyle="light-content" />
-    <HeaderImageScrollView
-      maxHeight={250}
-      minHeight={66}
-      maxOverlayOpacity={0.6}
-      minOverlayOpacity={0.3}
-      fadeOutForeground
-      renderHeader={() => (
-        <Image source={tvShowContent.image} style={styles.image} />
-      )}
-      renderForeground={() => (
-        <View style={styles.titleContainer}>
-          <Text style={styles.imageTitle}>{tvShowContent.title}</Text>
-        </View>
-      )}
-    >
-      <View style={styles.section}>
-        <Text style={styles.title}>
-          <Text style={styles.name}>{tvShowContent.title}</Text>, ({tvShowContent.year})
-        </Text>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Overview</Text>
-        <Text style={styles.sectionContent}>{tvShowContent.overview}</Text>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Keywords</Text>
-        <View style={styles.keywords}>
-          {tvShowContent.keywords.map((keyword) => (
-            <View style={styles.keywordContainer} key={keyword}>
-              <Text style={styles.keyword}>{keyword}</Text>
+class TvShow extends Component {
+  constructor() {
+    super();
+    this.state = { showNavTitle: false };
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <StatusBar barStyle="light-content"/>
+        <HeaderImageScrollView
+          maxHeight={MAX_HEIGHT}
+          minHeight={MIN_HEIGHT}
+          maxOverlayOpacity={0.6}
+          minOverlayOpacity={0.3}
+          fadeOutForeground
+          renderHeader={() => (
+            <Image source={tvShowContent.image} style={styles.image} />
+          )}
+          renderFixedForeground={() => (
+            <Animatable.View
+              style={styles.navTitleView}
+              ref={(navTitleView) => { this.navTitleView = navTitleView }}
+            >
+              <Text style={styles.navTitle}>{tvShowContent.title}, ({tvShowContent.year})</Text>
+            </Animatable.View>
+          )}
+          renderForeground={() => (
+            <View style={styles.titleContainer}>
+              <Text style={styles.imageTitle}>{tvShowContent.title}</Text>
             </View>
-          ))}
-        </View>
+          )}
+        >
+          <TriggeringView
+            style={styles.section}
+            onHide={() => this.navTitleView.fadeInUp(200)}
+            onDisplay={() => this.navTitleView.fadeOut(100)}
+          >
+            <Text style={styles.title}>
+              <Text style={styles.name}>{tvShowContent.title}</Text>, ({tvShowContent.year})
+            </Text>
+          </TriggeringView>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Overview</Text>
+            <Text style={styles.sectionContent}>{tvShowContent.overview}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Keywords</Text>
+            <View style={styles.keywords}>
+              {tvShowContent.keywords.map((keyword) => (
+                <View style={styles.keywordContainer} key={keyword}>
+                  <Text style={styles.keyword}>{keyword}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        </HeaderImageScrollView>
       </View>
-    </HeaderImageScrollView>
-  </View>
-);
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   image: {
-    height: 250,
+    height: MAX_HEIGHT,
     width: Dimensions.get('window').width,
     alignSelf: 'stretch',
     resizeMode: 'cover',
@@ -106,7 +130,19 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'transparent',
     fontSize: 24,
-  }
+  },
+  navTitleView: {
+    height: MIN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 8,
+    opacity: 0,
+  },
+  navTitle: {
+    color: 'white',
+    fontSize: 18,
+    backgroundColor: 'transparent',
+  },
 });
 
 Exponent.registerRootComponent(TvShow);
