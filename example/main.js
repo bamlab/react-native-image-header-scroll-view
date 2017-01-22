@@ -13,11 +13,12 @@ import {
   StackNavigation,
 } from '@exponent/ex-navigation';
 
-import { Menu, TvShow } from './Pages';
+import { Menu, TvShow, BasicUsage } from './Pages';
 
 export const Router = createRouter(() => ({
   menu: () => Menu,
   tvShow: () => TvShow,
+  basicUsage: () => BasicUsage,
 }));
 
 class App extends React.Component {

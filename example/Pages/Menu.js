@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
   button: {
     height: 100,
     width: Dimensions.get('window').width - 60,
-    backgroundColor: '#cccccc',
     borderRadius: 10,
+    marginVertical: 15,
   },
   buttonText: {
     color: 'white',
@@ -31,8 +31,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }
 });
-
-console.log(Router);
 
 @withNavigation
 class Button extends React.Component {
@@ -55,6 +53,7 @@ class Button extends React.Component {
 const Menu = () => (
   <View style={styles.page}>
     <StatusBar />
+    <Button image={require('../assets/NZ.jpg')} text="BasicUsage" target="basicUsage" />
     <Button image={tvShowContent.image} text="TV Show" target="tvShow" />
   </View>
 );

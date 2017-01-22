@@ -12,8 +12,7 @@ import * as Animatable from 'react-native-animatable';
 import { NavigationBar } from '@exponent/ex-navigation';
 
 
-// import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
-import HeaderImageScrollView, { TriggeringView } from '../ImageHeaderScrollView';
+import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 import tvShowContent from '../assets/tvShowContent';
 
 const MIN_HEIGHT = NavigationBar.DEFAULT_HEIGHT;
