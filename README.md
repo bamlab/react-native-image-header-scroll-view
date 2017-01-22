@@ -25,15 +25,15 @@ render() {
   return (
     <HeaderImageScrollView
       maxHeight={200}
-      minHeight={50}
+      minHeight={MIN_HEIGHT}
       renderHeader={() => (
-        <Image source={require('image.jpg')} style={styles.image} />
+        <Image source={require('../assets/NZ.jpg')} style={styles.image} />
       )}
     >
       <View style={{ height: 1000 }}>
-          <TriggeringView onHide={() => console.log('text hidden')}}>
-            <Text>Scroll Me!</Text>
-          </TriggeringView>
+        <TriggeringView onHide={() => console.log('text hidden')} >
+          <Text>Scroll Me!</Text>
+        </TriggeringView>
       </View>
     </HeaderImageScrollView>
   );
