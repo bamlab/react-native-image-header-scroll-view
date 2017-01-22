@@ -1,4 +1,4 @@
-exports[`ImageHeaderScrollView renders correctly by default 1`] = `
+exports[`TriggeringView renders correctly by default 1`] = `
 <View
   style={
     Object {
@@ -23,7 +23,10 @@ exports[`ImageHeaderScrollView renders correctly by default 1`] = `
         Object {
           "paddingTop": 45,
         }
-      } />
+      }>
+      <View
+        onLayout={[Function]} />
+    </View>
   </ScrollView>
   <View
     style={
@@ -89,4 +92,21 @@ exports[`ImageHeaderScrollView renders correctly by default 1`] = `
     <View />
   </View>
 </View>
+`;
+
+exports[`TriggeringView should display children 1`] = `
+<View
+  onLayout={[Function]}>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail">
+     Hello world 
+  </Text>
+</View>
+`;
+
+exports[`TriggeringView should dont't crash without ImageHeaderScrollView 1`] = `
+<View
+  onLayout={[Function]} />
 `;

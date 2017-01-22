@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import { View, Animated, StyleSheet } from 'react-native';
-
-const styles = StyleSheet.create({
-  fixed: {
-    position: 'absolute',
-    top: 0,
-  },
-});
+import { View, Animated } from 'react-native';
+import _ from 'lodash';
 
 class TriggeringView extends Component {
 
@@ -20,6 +14,21 @@ class TriggeringView extends Component {
     this.onScroll = this.onScroll.bind(this);
   }
 
+  componentWillMount() {
+    if (!this.context.scrollY) {
+      return;
+    }
+    this.listenerId = this.context.scrollY.addListener(this.onScroll);
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    if (!this.context.scrollY) {
+      return;
+    }
+    this.context.scrollY.removeListener(this.listenerId);
+    nextContext.scrollY.addListener(this.onScroll);
+  }
+
   onLayout(e) {
     this.layout = this.setState({
       layout: e.nativeEvent.layout,
@@ -27,22 +36,12 @@ class TriggeringView extends Component {
     });
   }
 
-  componentWillMount() {
-    this.listenerId = this.context.scrollY.addListener(this.onScroll);
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-    this.context.scrollY.removeListener(this.listenerId);
-    nextContext.scrollY.addListener(this.onScroll);
-  }
-
   onScroll(e) {
     const value = e.value;
     if (!this.state.touched && value >= this.state.layout.y) {
-      this.setState({ touched: true});
+      this.setState({ touched: true });
       this.props.onBeginHidden();
       this.props.onTouchTop(true);
-
     } else if (this.state.touched && value < this.state.layout.y) {
       this.setState({ touched: false });
       this.props.onDisplay();
@@ -61,13 +60,13 @@ class TriggeringView extends Component {
   }
 
   render() {
-    const {children, ...viewProps} = this.props;
+    const viewProps = _.pick(this.props, _.keys(View.propTypes));
     return (
       <Animated.View
-        onLayout={(e) => this.onLayout(e)}
+        onLayout={e => this.onLayout(e)}
         {...viewProps}
       >
-        { children }
+        { this.props.children }
       </Animated.View>
     );
   }

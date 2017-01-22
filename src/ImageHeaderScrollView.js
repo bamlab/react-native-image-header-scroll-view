@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     zIndex: 101,
-  }
+  },
 });
 
 
@@ -50,6 +50,10 @@ class ImageHeaderScrollView extends Component {
     this.state = {
       scrollY: new Animated.Value(0),
     };
+  }
+
+  getChildContext() {
+    return { scrollY: this.state.scrollY };
   }
 
   /*
@@ -72,9 +76,6 @@ class ImageHeaderScrollView extends Component {
     this.getScrollResponder().scrollTo(...args);
   }
 
-  getChildContext() {
-    return { scrollY: this.state.scrollY };
-  }
 
   interpolateOnImageHeight(outputRange) {
     const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
