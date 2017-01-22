@@ -1,17 +1,19 @@
 {
   "name": "image-header-scroll-view",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Exemple project of react-native-image-header-scroll-view",
   "author": null,
   "private": true,
   "main": "main.js",
   "dependencies": {
+    "@exponent/ex-navigation": "^2.7.1",
     "@exponent/vector-icons": "~2.0.3",
+    "babel-preset-react-native-stage-0": "^1.0.1",
     "exponent": "~12.0.3",
     "lodash": "^4.17.4",
     "react": "~15.3.2",
     "react-native": "git+https://github.com/exponentjs/react-native#sdk-12.0.0",
     "react-native-animatable": "^1.1.0",
-    "react-native-image-header-scroll-view": "^0.2.0"
+    "react-native-image-header-scroll-view": "^0.2.1"
   }
 }

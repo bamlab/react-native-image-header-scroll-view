@@ -7,7 +7,6 @@ class TriggeringView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      layout: {},
       touched: false,
       hidden: false,
     };
@@ -29,30 +28,28 @@ class TriggeringView extends Component {
     nextContext.scrollY.addListener(this.onScroll);
   }
 
-  onLayout(e) {
-    this.layout = this.setState({
-      layout: e.nativeEvent.layout,
-      bottom: e.nativeEvent.layout.y + e.nativeEvent.layout.height,
+  onScroll() {
+    this.containerView.measure((x, y, width, height, pageX, pageY) => {
+      this.triggerEvents(this.context.scrollPageY, pageY, pageY + height);
     });
   }
 
-  onScroll(e) {
-    const value = e.value;
-    if (!this.state.touched && value >= this.state.layout.y) {
+  triggerEvents(value, top, bottom) {
+    if (!this.state.touched && value >= top) {
       this.setState({ touched: true });
       this.props.onBeginHidden();
       this.props.onTouchTop(true);
-    } else if (this.state.touched && value < this.state.layout.y) {
+    } else if (this.state.touched && value < top) {
       this.setState({ touched: false });
       this.props.onDisplay();
       this.props.onTouchTop(false);
     }
 
-    if (!this.state.hidden && value >= this.state.bottom) {
+    if (!this.state.hidden && value >= bottom) {
       this.setState({ hidden: true });
       this.props.onHide();
       this.props.onTouchBottom(true);
-    } else if (this.state.hidden && value < this.state.bottom) {
+    } else if (this.state.hidden && value < bottom) {
       this.setState({ hidden: false });
       this.props.onBeginDisplayed();
       this.props.onTouchBottom(false);
@@ -62,12 +59,12 @@ class TriggeringView extends Component {
   render() {
     const viewProps = _.pick(this.props, _.keys(View.propTypes));
     return (
-      <Animated.View
-        onLayout={e => this.onLayout(e)}
+      <View
+        ref={(view) => { this.containerView = view; }}
         {...viewProps}
       >
         { this.props.children }
-      </Animated.View>
+      </View>
     );
   }
 }
@@ -92,6 +89,7 @@ TriggeringView.defaultProps = {
 
 TriggeringView.contextTypes = {
   scrollY: React.PropTypes.instanceOf(Animated.Value),
+  scrollPageY: React.PropTypes.number,
 };
 
 export default TriggeringView;

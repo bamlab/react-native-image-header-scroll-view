@@ -1,5 +1,6 @@
 exports[`ImageHeaderScrollView renders correctly by default 1`] = `
 <View
+  onLayout={[Function]}
   style={
     Object {
       "flex": 1,
