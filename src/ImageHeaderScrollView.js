@@ -4,7 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  } from 'react-native';
+} from 'react-native';
 import _ from 'lodash';
 
 const SCROLLVIEW_REF = 'ScrollView';
@@ -98,6 +98,10 @@ class ImageHeaderScrollView extends Component {
       this.props.minOverlayOpacity,
       this.props.maxOverlayOpacity,
     ]);
+    const imageHeaderOpacity = this.interpolateOnImageHeight([
+      this.props.minImageHeaderOpacity,
+      this.props.maxImageHeaderOpacity,
+    ]);
 
     const headerScale = this.state.scrollY.interpolate({
       inputRange: [-this.props.maxHeight, 0],
@@ -112,7 +116,7 @@ class ImageHeaderScrollView extends Component {
         <View style={styles.fixedForeground}>
           { this.props.renderFixedForeground() }
         </View>
-        { this.props.renderHeader() }
+        { this.props.renderHeader(imageHeaderOpacity) }
       </Animated.View>
     );
   }
@@ -173,7 +177,9 @@ ImageHeaderScrollView.propTypes = {
   foregroundParallaxRatio: React.PropTypes.number,
   maxHeight: React.PropTypes.number,
   maxOverlayOpacity: React.PropTypes.number,
+  maxImageHeaderOpacity: React.PropTypes.number,
   minHeight: React.PropTypes.number,
+  minImageHeaderOpacity: React.PropTypes.number,
   minOverlayOpacity: React.PropTypes.number,
   renderFixedForeground: React.PropTypes.func,
   renderForeground: React.PropTypes.func,
@@ -186,8 +192,10 @@ ImageHeaderScrollView.defaultProps = {
   foregroundParallaxRatio: 1,
   maxHeight: 125,
   maxOverlayOpacity: 0.3,
+  maxImageHeaderOpacity: 0,
   minHeight: 80,
   minOverlayOpacity: 0,
+  minImageHeaderOpacity: 1,
   renderFixedForeground: () => <View />,
   renderForeground: () => <View />,
   renderHeader: () => <View />,
