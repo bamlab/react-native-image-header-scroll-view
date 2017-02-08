@@ -110,9 +110,9 @@ class ImageHeaderScrollView extends Component {
       <Animated.View style={[styles.header, headerTransformStyle]}>
         <Animated.View style={[styles.blackOverlay, { opacity: overlayOpacity }]} />
         <View style={styles.fixedForeground}>
-          { this.props.renderFixedForeground() }
+          { this.props.renderFixedForeground(this.state.scrollY) }
         </View>
-        { this.props.renderHeader() }
+        { this.props.renderHeader(this.state.scrollY) }
       </Animated.View>
     );
   }
