@@ -14,6 +14,6 @@
     "react": "~15.3.2",
     "react-native": "git+https://github.com/exponentjs/react-native#sdk-12.0.0",
     "react-native-animatable": "^1.1.0",
-    "react-native-image-header-scroll-view": "^0.2.1"
+    "react-native-image-header-scroll-view": "^0.3.0"
   }
 }
