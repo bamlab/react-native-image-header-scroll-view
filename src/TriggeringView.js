@@ -61,6 +61,7 @@ class TriggeringView extends Component {
     return (
       <View
         ref={(view) => { this.containerView = view; }}
+        collapsable={false}
         {...viewProps}
       >
         { this.props.children }
