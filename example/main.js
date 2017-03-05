@@ -5,8 +5,6 @@ import {
   View,
 } from 'react-native';
 
-import Exponent from 'exponent';
-
 import {
   createRouter,
   NavigationProvider,
@@ -31,4 +29,4 @@ class App extends React.Component {
   }
 }
 
-Exponent.registerRootComponent(App);
+export default App;

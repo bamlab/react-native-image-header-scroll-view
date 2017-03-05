@@ -1,4 +1,3 @@
-import Exponent from 'exponent';
 import React, { Component } from 'react';
 import {
   StyleSheet,
