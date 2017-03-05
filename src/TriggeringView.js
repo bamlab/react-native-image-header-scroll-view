@@ -10,7 +10,10 @@ class TriggeringView extends Component {
       touched: false,
       hidden: false,
     };
+    this.initialPageY = 0;
     this.onScroll = this.onScroll.bind(this);
+    this.onRef = this.onRef.bind(this);
+    this.onLayout = this.onLayout.bind(this);
   }
 
   componentWillMount() {
@@ -28,10 +31,21 @@ class TriggeringView extends Component {
     nextContext.scrollY.addListener(this.onScroll);
   }
 
-  onScroll() {
-    this.containerView.measure((x, y, width, height, pageX, pageY) => {
-      this.triggerEvents(this.context.scrollPageY, pageY, pageY + height);
+  onRef(ref) {
+    this.ref = ref;
+  }
+
+  onLayout(e) {
+    const layout = e.nativeEvent.layout;
+    this.height = layout.height;
+    this.ref.measure((x, y, width, height, pageX, pageY) => {
+      this.initialPageY = pageY;
     });
+  }
+
+  onScroll(event) {
+    const pageY = this.initialPageY - event.value;
+    this.triggerEvents(this.context.scrollPageY, pageY, pageY + this.height);
   }
 
   triggerEvents(value, top, bottom) {
@@ -60,7 +74,8 @@ class TriggeringView extends Component {
     const viewProps = _.pick(this.props, _.keys(View.propTypes));
     return (
       <View
-        ref={(view) => { this.containerView = view; }}
+        ref={this.onRef}
+        onLayout={this.onLayout}
         collapsable={false}
         {...viewProps}
       >

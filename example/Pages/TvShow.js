@@ -83,6 +83,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: 'transparent',
   },
+  sectionLarge: {
+    height: 600,
+  },
 });
 
 class TvShow extends Component {
@@ -131,7 +134,7 @@ class TvShow extends Component {
             <Text style={styles.sectionTitle}>Overview</Text>
             <Text style={styles.sectionContent}>{tvShowContent.overview}</Text>
           </View>
-          <View style={styles.section}>
+          <View style={[styles.section, styles.sectionLarge]}>
             <Text style={styles.sectionTitle}>Keywords</Text>
             <View style={styles.keywords}>
               {tvShowContent.keywords.map(keyword => (
