@@ -6,30 +6,6 @@ exports[`TriggeringView renders correctly by default 1`] = `
       "flex": 1,
     }
   }>
-  <ScrollView
-    onScroll={[Function]}
-    scrollEventThrottle={16}
-    style={
-      Array [
-        Object {
-          "flex": 1,
-        },
-        Object {
-          "marginTop": 80,
-        },
-      ]
-    }>
-    <View
-      style={
-        Object {
-          "paddingTop": 45,
-        }
-      }>
-      <View
-        collapsable={false}
-        onLayout={[Function]} />
-    </View>
-  </ScrollView>
   <View
     style={
       Object {
@@ -92,6 +68,42 @@ exports[`TriggeringView renders correctly by default 1`] = `
       }
     }>
     <View />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "transform": Array [
+          Object {
+            "translateY": 0,
+          },
+        ],
+      }
+    }>
+    <ScrollView
+      onScroll={[Function]}
+      scrollEventThrottle={16}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }>
+      <View
+        style={
+          Object {
+            "backgroundColor": "white",
+            "transform": Array [
+              Object {
+                "translateY": 125,
+              },
+            ],
+          }
+        }>
+        <View
+          collapsable={false}
+          onLayout={[Function]} />
+      </View>
+    </ScrollView>
   </View>
 </View>
 `;

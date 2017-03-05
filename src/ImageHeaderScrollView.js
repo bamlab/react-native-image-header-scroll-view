@@ -90,10 +90,6 @@ class ImageHeaderScrollView extends Component {
   }
 
   renderHeader() {
-    const headerHeight = this.interpolateOnImageHeight([
-      this.props.maxHeight,
-      this.props.minHeight,
-    ]);
     const overlayOpacity = this.interpolateOnImageHeight([
       this.props.minOverlayOpacity,
       this.props.maxOverlayOpacity,
@@ -105,7 +101,11 @@ class ImageHeaderScrollView extends Component {
       extrapolate: 'clamp',
     });
 
-    const headerTransformStyle = { height: headerHeight, transform: [{ scale: headerScale }] };
+    const headerTransformStyle = {
+      height: this.props.maxHeight,
+      transform: [{ scale: headerScale }],
+    };
+
     return (
       <Animated.View style={[styles.header, headerTransformStyle]}>
         <Animated.View style={[styles.blackOverlay, { opacity: overlayOpacity }]} />
@@ -138,29 +138,43 @@ class ImageHeaderScrollView extends Component {
   }
 
   render() {
-    const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
     const scrollViewProps = _.pick(this.props, _.keys(ScrollView.propTypes));
+
+    const headerScrollDistance = this.interpolateOnImageHeight([
+      this.props.maxHeight,
+      this.props.maxHeight - this.props.minHeight,
+    ]);
+    const topMargin = this.interpolateOnImageHeight([0, this.props.minHeight]);
+
+    const childrenContainerStyle = StyleSheet.flatten([
+      { transform: [{ translateY: headerScrollDistance }] },
+      { backgroundColor: 'white' },
+      this.props.childrenStyle,
+    ]);
+
     return (
       <View
         style={styles.container}
         ref={(ref) => { this.container = ref; }}
         onLayout={() => this.container.measureInWindow((x, y) => this.setState({ pageY: y }))}
       >
-        <ScrollView
-          ref={(ref) => { this[SCROLLVIEW_REF] = ref; }}
-          style={[styles.container, { marginTop: this.props.minHeight }]}
-          scrollEventThrottle={16}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-          )}
-          {...scrollViewProps}
-        >
-          <Animated.View style={[{ paddingTop: headerScrollDistance }, this.props.childrenStyle]}>
-            {this.props.children}
-          </Animated.View>
-        </ScrollView>
         { this.renderHeader() }
         { this.renderForeground() }
+        <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
+          <ScrollView
+            ref={(ref) => { this[SCROLLVIEW_REF] = ref; }}
+            style={styles.container}
+            scrollEventThrottle={16}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+            )}
+            {...scrollViewProps}
+          >
+            <Animated.View style={childrenContainerStyle}>
+              {this.props.children}
+            </Animated.View>
+          </ScrollView>
+        </Animated.View>
       </View>
     );
   }
