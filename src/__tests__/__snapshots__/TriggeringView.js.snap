@@ -92,6 +92,7 @@ exports[`TriggeringView renders correctly by default 1`] = `
         style={
           Object {
             "backgroundColor": "white",
+            "paddingBottom": 125,
             "transform": Array [
               Object {
                 "translateY": 125,
