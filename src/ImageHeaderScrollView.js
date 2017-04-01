@@ -148,7 +148,7 @@ class ImageHeaderScrollView extends Component {
 
     const childrenContainerStyle = StyleSheet.flatten([
       { transform: [{ translateY: headerScrollDistance }] },
-      { backgroundColor: 'white' },
+      { backgroundColor: 'white', paddingBottom: this.props.maxHeight },
       this.props.childrenStyle,
     ]);
 
