@@ -55,6 +55,7 @@ const Menu = () => (
     <StatusBar />
     <Button image={require('../assets/NZ.jpg')} text="BasicUsage" target="basicUsage" />
     <Button image={tvShowContent.image} text="TV Show" target="tvShow" />
+    <Button image={require('../assets/cutecat.jpg')} text="Cute cat" target="colors" />
   </View>
 );
 
