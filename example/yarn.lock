@@ -2571,9 +2571,9 @@ react-native-drawer-layout@^1.0.0:
     autobind-decorator "^1.3.2"
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-image-header-scroll-view@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-image-header-scroll-view/-/react-native-image-header-scroll-view-0.5.0.tgz#2b5871ff0f01637f36c9c083cea8eca65e4275dc"
+react-native-image-header-scroll-view@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-header-scroll-view/-/react-native-image-header-scroll-view-0.5.1.tgz#d2ab403c3aa220e502760c39a452bac47e38e155"
   dependencies:
     lodash "^4.17.4"
 
