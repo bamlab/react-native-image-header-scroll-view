@@ -159,7 +159,6 @@ class ImageHeaderScrollView extends Component {
         onLayout={() => this.container.measureInWindow((x, y) => this.setState({ pageY: y }))}
       >
         { this.renderHeader() }
-        { this.renderForeground() }
         <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
           <ScrollView
             ref={(ref) => { this[SCROLLVIEW_REF] = ref; }}
@@ -174,6 +173,7 @@ class ImageHeaderScrollView extends Component {
               {this.props.children}
             </Animated.View>
           </ScrollView>
+          { this.renderForeground() }
         </Animated.View>
       </View>
     );

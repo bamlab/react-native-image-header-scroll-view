@@ -53,25 +53,6 @@ exports[`TriggeringView renders correctly by default 1`] = `
   <View
     style={
       Object {
-        "height": 125,
-        "left": 0,
-        "opacity": 1,
-        "overflow": "hidden",
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-        "transform": Array [
-          Object {
-            "translateY": 0,
-          },
-        ],
-      }
-    }>
-    <View />
-  </View>
-  <View
-    style={
-      Object {
         "flex": 1,
         "transform": Array [
           Object {
@@ -105,6 +86,25 @@ exports[`TriggeringView renders correctly by default 1`] = `
           onLayout={[Function]} />
       </View>
     </ScrollView>
+    <View
+      style={
+        Object {
+          "height": 125,
+          "left": 0,
+          "opacity": 1,
+          "overflow": "hidden",
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "transform": Array [
+            Object {
+              "translateY": 0,
+            },
+          ],
+        }
+      }>
+      <View />
+    </View>
   </View>
 </View>
 `;

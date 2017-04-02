@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, Image, TouchableOpacity, StatusBar, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, Image, TouchableOpacity, View, Dimensions } from 'react-native';
 import { NavigationBar } from '@exponent/ex-navigation';
 
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
@@ -27,6 +27,13 @@ class BasicUsage extends React.Component {
           minHeight={MIN_HEIGHT}
           renderHeader={() => (
             <Image source={require('../assets/NZ.jpg')} style={styles.image} />
+          )}
+          renderForeground={() => (
+            <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
+              <TouchableOpacity onPress={() => console.log('tap!!')} >
+                <Text style={{ backgroundColor: 'transparent' }}>Tap Me!</Text>
+              </TouchableOpacity>
+            </View>
           )}
         >
           <View style={{ height: 1000 }}>
