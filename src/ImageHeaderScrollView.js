@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   blackOverlay: {
-    backgroundColor: 'black',
     position: 'absolute',
     top: 0,
     right: 0,
@@ -108,7 +107,7 @@ class ImageHeaderScrollView extends Component {
 
     return (
       <Animated.View style={[styles.header, headerTransformStyle]}>
-        <Animated.View style={[styles.blackOverlay, { opacity: overlayOpacity }]} />
+        <Animated.View style={[styles.blackOverlay, { opacity: overlayOpacity, backgroundColor: !this.props.blackOverlayColor ? 'black' : this.props.blackOverlayColor }]} />
         <View style={styles.fixedForeground}>
           { this.props.renderFixedForeground(this.state.scrollY) }
         </View>
@@ -185,6 +184,7 @@ ImageHeaderScrollView.propTypes = {
   childrenStyle: View.propTypes.style,
   fadeOutForeground: React.PropTypes.bool,
   foregroundParallaxRatio: React.PropTypes.number,
+  blackOverlayColor: React.PropTypes.string,
   maxHeight: React.PropTypes.number,
   maxOverlayOpacity: React.PropTypes.number,
   minHeight: React.PropTypes.number,
@@ -200,6 +200,7 @@ ImageHeaderScrollView.defaultProps = {
   foregroundParallaxRatio: 1,
   maxHeight: 125,
   maxOverlayOpacity: 0.3,
+  blackOverlayColor: 'white',
   minHeight: 80,
   minOverlayOpacity: 0,
   renderFixedForeground: () => <View />,
