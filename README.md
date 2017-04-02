@@ -55,6 +55,7 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 | `minHeight` | `number` | `125` | Min height for the header (in navbar mode) |
 | `minOverlayOpacity` | `number` | `0` | Opacity of a black overlay on the header before any scroll |
 | `maxOverlayOpacity` | `number` | `0.3` | Opacity of a black overlay on the header when in navbar mode |
+| `overlayColor` | `string` | `black` | Color of the overlay on the header |
 
 
 ### Foreground
