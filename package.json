@@ -2,16 +2,13 @@
   "name": "react-native-image-header-scroll-view",
   "version": "0.5.1",
   "description": "ScrollView with an image in header which become a navbar",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "scripts": {
     "jest": "jest",
     "jest:watch": "npm run jest -- --watch",
     "lint": "eslint src/*.js",
     "test": "npm run lint && npm run flow && npm run jest",
-    "flow": "flow",
-    "clean": "rimraf lib",
-    "build": "babel src --out-dir lib",
-    "prepublish": "npm test && npm run clean && npm run build"
+    "flow": "flow"
   },
   "files": [
     "README.md",
@@ -41,13 +38,13 @@
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-core": "^6.22.1",
-    "babel-eslint": "^7.1.1",
+    "babel-eslint": "^7.2.1",
     "babel-jest": "^18.0.0",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "^1.9.1",
-    "eslint": "^3.12.2",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-flowtype": "^2.30.4",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.0.0",
     "eslint-plugin-react": "^6.8.0",
@@ -55,8 +52,7 @@
     "jest": "^18.1.0",
     "react": "^15.4.2",
     "react-native": "^0.42.0",
-    "react-test-renderer": "^15.4.2",
-    "rimraf": "^2.6.1"
+    "react-test-renderer": "^15.4.2"
   },
   "jest": {
     "preset": "react-native",

@@ -1,10 +1,19 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
   "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/no-extraneous-dependencies": [0],
     "import/no-unresolved": [2, { ignore: ['^react(-native)?$'] }],
-    "import/extensions": [2, { "js": "never", "json": "always" }]
+    "import/extensions": [2, { "js": "never", "json": "always" }],
+    "react/sort-comp": 0,
+    "no-use-before-define": 0,
+    "no-duplicate-imports": 0
   }
 }

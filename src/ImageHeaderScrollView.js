@@ -1,50 +1,55 @@
-import React, { Component } from 'react';
+// @flow
+
+import React, { Component, PropTypes } from 'react';
 import {
   Animated,
   ScrollView,
   StyleSheet,
   View,
-  } from 'react-native';
+} from 'react-native';
+
+import type { Styles } from 'react-native';
+
 import _ from 'lodash';
 
-const SCROLLVIEW_REF = 'ScrollView';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    overflow: 'hidden',
-  },
-  headerChildren: {
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
-    zIndex: 100,
-  },
-  fixedForeground: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
-    zIndex: 101,
-  },
-});
-
-
 class ImageHeaderScrollView extends Component {
-  constructor(props) {
+
+  props: PropsType;
+
+  static defaultProps: $Shape<PropsType> = {
+    overlayColor: 'black',
+    fadeOutForeground: false,
+    foregroundParallaxRatio: 1,
+    maxHeight: 125,
+    maxOverlayOpacity: 0.3,
+    minHeight: 80,
+    minOverlayOpacity: 0,
+    renderFixedForeground: () => <View />,
+    renderForeground: () => <View />,
+    renderHeader: () => <View />,
+  };
+
+  static propTypes = {
+    children: PropTypes.node || PropTypes.nodes,
+    childrenStyle: View.propTypes.style,
+    overlayColor: PropTypes.string,
+    fadeOutForeground: PropTypes.bool,
+    foregroundParallaxRatio: PropTypes.number,
+    maxHeight: PropTypes.number,
+    maxOverlayOpacity: PropTypes.number,
+    minHeight: PropTypes.number,
+    minOverlayOpacity: PropTypes.number,
+    renderFixedForeground: PropTypes.func,
+    renderForeground: PropTypes.func,
+    renderHeader: PropTypes.func,
+    ...ScrollView.propTypes,
+  };
+
+  state: StateType;
+  scrollViewRef: ScrollView;
+  container: View;
+
+  constructor(props: PropsType) {
     super(props);
     this.state = {
       scrollY: new Animated.Value(0),
@@ -64,7 +69,7 @@ class ImageHeaderScrollView extends Component {
    * with any component that expects a `ScrollView`.
    */
   getScrollResponder() {
-    return this[SCROLLVIEW_REF].getScrollResponder();
+    return this.scrollViewRef.getScrollResponder();
   }
   getScrollableNode() {
     return this.getScrollResponder().getScrollableNode();
@@ -72,14 +77,14 @@ class ImageHeaderScrollView extends Component {
   getInnerViewNode() {
     return this.getScrollResponder().getInnerViewNode();
   }
-  setNativeProps(props) {
-    this[SCROLLVIEW_REF].setNativeProps(props);
+  setNativeProps(props: Object) {
+    this.scrollViewRef.setNativeProps(props);
   }
-  scrollTo(...args) {
+  scrollTo(...args: Array<*>) {
     this.getScrollResponder().scrollTo(...args);
   }
 
-  interpolateOnImageHeight(outputRange) {
+  interpolateOnImageHeight(outputRange: Array<number | string>) {
     const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
     return this.state.scrollY.interpolate({
       inputRange: [0, headerScrollDistance],
@@ -165,7 +170,7 @@ class ImageHeaderScrollView extends Component {
         { this.renderHeader() }
         <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
           <ScrollView
-            ref={(ref) => { this[SCROLLVIEW_REF] = ref; }}
+            ref={(ref) => { this.scrollViewRef = ref; }}
             style={styles.container}
             scrollEventThrottle={16}
             onScroll={Animated.event(
@@ -184,38 +189,62 @@ class ImageHeaderScrollView extends Component {
   }
 }
 
-ImageHeaderScrollView.propTypes = {
-  children: React.PropTypes.node || React.PropTypes.nodes,
-  childrenStyle: View.propTypes.style,
-  overlayColor: React.PropTypes.string,
-  fadeOutForeground: React.PropTypes.bool,
-  foregroundParallaxRatio: React.PropTypes.number,
-  maxHeight: React.PropTypes.number,
-  maxOverlayOpacity: React.PropTypes.number,
-  minHeight: React.PropTypes.number,
-  minOverlayOpacity: React.PropTypes.number,
-  renderFixedForeground: React.PropTypes.func,
-  renderForeground: React.PropTypes.func,
-  renderHeader: React.PropTypes.func,
-  ...ScrollView.propTypes,
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    overflow: 'hidden',
+  },
+  headerChildren: {
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    zIndex: 100,
+  },
+  fixedForeground: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 0,
+    zIndex: 101,
+  },
+});
+
+export type PropsType = {
+  children: React$Element<*> | Array<React$Element<*>>,
+  childrenStyle: Styles,
+  overlayColor: string,
+  fadeOutForeground: boolean,
+  foregroundParallaxRatio: number,
+  maxHeight: number,
+  maxOverlayOpacity: number,
+  minHeight: number,
+  minOverlayOpacity: number,
+  renderFixedForeground: (scrollY: Animated.Value) => void,
+  renderForeground: (scrollY: Animated.Value) => void,
+  renderHeader: (scrollY: Animated.Value) => void,
 };
 
-ImageHeaderScrollView.defaultProps = {
-  overlayColor: 'black',
-  fadeOutForeground: false,
-  foregroundParallaxRatio: 1,
-  maxHeight: 125,
-  maxOverlayOpacity: 0.3,
-  minHeight: 80,
-  minOverlayOpacity: 0,
-  renderFixedForeground: () => <View />,
-  renderForeground: () => <View />,
-  renderHeader: () => <View />,
-};
+type StateType = {|
+  scrollY: Animated.Value,
+  pageY: number,
+|};
 
 ImageHeaderScrollView.childContextTypes = {
-  scrollY: React.PropTypes.instanceOf(Animated.Value),
-  scrollPageY: React.PropTypes.number,
+  scrollY: PropTypes.instanceOf(Animated.Value),
+  scrollPageY: PropTypes.number,
 };
 
 export default ImageHeaderScrollView;
