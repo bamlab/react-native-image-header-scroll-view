@@ -11,7 +11,7 @@ import * as Animatable from 'react-native-animatable';
 import { NavigationBar } from '@exponent/ex-navigation';
 
 
-import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
+import HeaderImageScrollView, { TriggeringView } from '../ImageHeaderScrollView';
 import tvShowContent from '../assets/tvShowContent';
 
 const MIN_HEIGHT = NavigationBar.DEFAULT_HEIGHT;
@@ -101,8 +101,9 @@ class TvShow extends Component {
         <HeaderImageScrollView
           maxHeight={MAX_HEIGHT}
           minHeight={MIN_HEIGHT}
-          maxOverlayOpacity={0.6}
-          minOverlayOpacity={0.3}
+          maxOverlayOpacity={0.8}
+          minOverlayOpacity={0.2}
+          overlayColor="white"
           fadeOutForeground
           renderHeader={() => (
             <Image source={tvShowContent.image} style={styles.image} />

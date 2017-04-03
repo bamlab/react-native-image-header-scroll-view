@@ -61,7 +61,7 @@ exports[`ImageHeaderScrollView renders correctly by default 1`] = `
         ],
       }
     }>
-    <ScrollView
+    <RCTScrollView
       onScroll={[Function]}
       scrollEventThrottle={16}
       style={
@@ -69,19 +69,21 @@ exports[`ImageHeaderScrollView renders correctly by default 1`] = `
           "flex": 1,
         }
       }>
-      <View
-        style={
-          Object {
-            "backgroundColor": "white",
-            "paddingBottom": 125,
-            "transform": Array [
-              Object {
-                "translateY": 125,
-              },
-            ],
-          }
-        } />
-    </ScrollView>
+      <View>
+        <View
+          style={
+            Object {
+              "backgroundColor": "white",
+              "paddingBottom": 125,
+              "transform": Array [
+                Object {
+                  "translateY": 125,
+                },
+              ],
+            }
+          } />
+      </View>
+    </RCTScrollView>
     <View
       style={
         Object {

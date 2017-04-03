@@ -61,7 +61,7 @@ exports[`TriggeringView renders correctly by default 1`] = `
         ],
       }
     }>
-    <ScrollView
+    <RCTScrollView
       onScroll={[Function]}
       scrollEventThrottle={16}
       style={
@@ -69,23 +69,25 @@ exports[`TriggeringView renders correctly by default 1`] = `
           "flex": 1,
         }
       }>
-      <View
-        style={
-          Object {
-            "backgroundColor": "white",
-            "paddingBottom": 125,
-            "transform": Array [
-              Object {
-                "translateY": 125,
-              },
-            ],
-          }
-        }>
+      <View>
         <View
-          collapsable={false}
-          onLayout={[Function]} />
+          style={
+            Object {
+              "backgroundColor": "white",
+              "paddingBottom": 125,
+              "transform": Array [
+                Object {
+                  "translateY": 125,
+                },
+              ],
+            }
+          }>
+          <View
+            collapsable={false}
+            onLayout={[Function]} />
+        </View>
       </View>
-    </ScrollView>
+    </RCTScrollView>
     <View
       style={
         Object {
