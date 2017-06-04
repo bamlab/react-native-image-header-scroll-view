@@ -22,6 +22,7 @@ exports[`ImageHeaderScrollView renders correctly by default 1`] = `
         ],
       }
     }>
+    <View />
     <View
       style={
         Object {
@@ -48,7 +49,6 @@ exports[`ImageHeaderScrollView renders correctly by default 1`] = `
       }>
       <View />
     </View>
-    <View />
   </View>
   <View
     style={
@@ -61,46 +61,51 @@ exports[`ImageHeaderScrollView renders correctly by default 1`] = `
         ],
       }
     }>
-    <ScrollView
+    <RCTScrollView
+      onMoveShouldSetResponder={[Function]}
       onScroll={[Function]}
+      onStartShouldSetResponder={[Function]}
       scrollEventThrottle={16}
       style={
         Object {
           "flex": 1,
         }
       }>
-      <View
-        style={
-          Object {
-            "backgroundColor": "white",
-            "paddingBottom": 125,
-            "transform": Array [
-              Object {
-                "translateY": 125,
-              },
-            ],
-          }
-        } />
-    </ScrollView>
-    <View
-      style={
-        Object {
-          "height": 125,
-          "left": 0,
-          "opacity": 1,
-          "overflow": "hidden",
-          "position": "absolute",
-          "right": 0,
-          "top": 0,
-          "transform": Array [
+      <View>
+        <View
+          style={
             Object {
-              "translateY": 0,
-            },
-          ],
-        }
-      }>
-      <View />
-    </View>
+              "backgroundColor": "white",
+              "paddingBottom": 125,
+              "transform": Array [
+                Object {
+                  "translateY": 125,
+                },
+              ],
+            }
+          } />
+      </View>
+    </RCTScrollView>
+  </View>
+  <View />
+  <View
+    style={
+      Object {
+        "height": 125,
+        "left": 0,
+        "opacity": 1,
+        "overflow": "hidden",
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": 0,
+          },
+        ],
+      }
+    }>
+    <View />
   </View>
 </View>
 `;
