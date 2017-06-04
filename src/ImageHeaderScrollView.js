@@ -189,8 +189,6 @@ class ImageHeaderScrollView extends Component {
           <ScrollView
             ref={ref => (this[SCROLLVIEW_REF] = ref)}
             style={styles.container}
-            onStartShouldSetResponder={() => false}
-            onMoveShouldSetResponder={() => false}
             scrollEventThrottle={16}
             onScroll={Animated.event([
               { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
