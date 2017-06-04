@@ -1,5 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, Image, TouchableOpacity, StatusBar, View, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+  View,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import { withNavigation } from '@exponent/ex-navigation';
 import { Router } from '../main';
 
@@ -8,6 +17,8 @@ import tvShowContent from '../assets/tvShowContent';
 const styles = StyleSheet.create({
   page: {
     flex: 1,
+  },
+  pageContent: {
     alignItems: 'stretch',
     padding: 30,
   },
@@ -29,20 +40,22 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });
 
-@withNavigation
-class Button extends React.Component {
+@withNavigation class Button extends React.Component {
   render() {
     const props = this.props;
     return (
-      <TouchableOpacity activeOpacity={0.7} onPress={() => {
-        this.props.navigator.push(Router.getRoute(props.target));
-      }}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => {
+          this.props.navigator.push(Router.getRoute(props.target));
+        }}
+      >
         <Image style={styles.button} source={props.image}>
           <View style={styles.overlay}>
-            <Text style={styles.buttonText}>{ props.text }</Text>
+            <Text style={styles.buttonText}>{props.text}</Text>
           </View>
         </Image>
       </TouchableOpacity>
@@ -51,12 +64,13 @@ class Button extends React.Component {
 }
 
 const Menu = () => (
-  <View style={styles.page}>
+  <ScrollView style={styles.page} contentContainerStyle={styles.pageContent}>
     <StatusBar />
     <Button image={require('../assets/NZ.jpg')} text="BasicUsage" target="basicUsage" />
     <Button image={tvShowContent.image} text="TV Show" target="tvShow" />
     <Button image={require('../assets/cutecat.jpg')} text="Cute cat" target="colors" />
-  </View>
+    <Button image={require('../assets/avignon.jpg')} text="Forms and buttons" target="avignon" />
+  </ScrollView>
 );
 
 Menu.route = {
