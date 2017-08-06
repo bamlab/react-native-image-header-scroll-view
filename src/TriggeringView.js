@@ -1,8 +1,18 @@
+// @flow weak
 import React, { Component } from 'react';
 import { View, Animated } from 'react-native';
 import _ from 'lodash';
 
-class TriggeringView extends Component {
+class TriggeringView extends Component<*, *, *> {
+  initialPageY: number;
+  listenerId: number;
+  ref: *;
+  height: number;
+
+  onScroll: Function;
+  onRef: Function;
+  onLayout: Function;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -10,9 +20,9 @@ class TriggeringView extends Component {
       hidden: false,
     };
     this.initialPageY = 0;
-    this.onScroll = this.onScroll.bind(this);
-    this.onRef = this.onRef.bind(this);
-    this.onLayout = this.onLayout.bind(this);
+    this.onScroll = this._onScroll.bind(this);
+    this.onRef = this._onRef.bind(this);
+    this.onLayout = this._onLayout.bind(this);
   }
 
   componentWillMount() {
@@ -30,11 +40,11 @@ class TriggeringView extends Component {
     nextContext.scrollY.addListener(this.onScroll);
   }
 
-  onRef(ref) {
+  _onRef(ref) {
     this.ref = ref;
   }
 
-  onLayout(e) {
+  _onLayout(e) {
     const layout = e.nativeEvent.layout;
     this.height = layout.height;
     this.ref.measure((x, y, width, height, pageX, pageY) => {
@@ -42,7 +52,7 @@ class TriggeringView extends Component {
     });
   }
 
-  onScroll(event) {
+  _onScroll(event) {
     const pageY = this.initialPageY - event.value;
     this.triggerEvents(this.context.scrollPageY, pageY, pageY + this.height);
   }
@@ -70,7 +80,7 @@ class TriggeringView extends Component {
   }
 
   render() {
-    const viewProps = _.pick(this.props, _.keys(View.propTypes));
+    const viewProps = _.omit(this.props, _.keys(TriggeringView.propTypes));
     return (
       <View ref={this.onRef} onLayout={this.onLayout} collapsable={false} {...viewProps}>
         {this.props.children}
@@ -85,7 +95,6 @@ TriggeringView.propTypes = {
   onDisplay: React.PropTypes.func,
   onTouchTop: React.PropTypes.func,
   onTouchBottom: React.PropTypes.func,
-  ...View.propTypes,
 };
 
 TriggeringView.defaultProps = {

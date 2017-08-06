@@ -1,8 +1,7 @@
+// @flow weak
 import React, { Component } from 'react';
 import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import _ from 'lodash';
-
-const SCROLLVIEW_REF = 'ScrollView';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +39,10 @@ const styles = StyleSheet.create({
   },
 });
 
-class ImageHeaderScrollView extends Component {
+class ImageHeaderScrollView extends Component<*, *, *> {
+  container: *;
+  scrollViewRef: ScrollView;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -61,7 +63,7 @@ class ImageHeaderScrollView extends Component {
    * with any component that expects a `ScrollView`.
    */
   getScrollResponder() {
-    return this[SCROLLVIEW_REF].getScrollResponder();
+    return this.scrollViewRef.getScrollResponder();
   }
   getScrollableNode() {
     return this.getScrollResponder().getScrollableNode();
@@ -70,7 +72,7 @@ class ImageHeaderScrollView extends Component {
     return this.getScrollResponder().getInnerViewNode();
   }
   setNativeProps(props) {
-    this[SCROLLVIEW_REF].setNativeProps(props);
+    this.scrollViewRef.setNativeProps(props);
   }
   scrollTo(...args) {
     this.getScrollResponder().scrollTo(...args);
@@ -187,7 +189,7 @@ class ImageHeaderScrollView extends Component {
         {this.renderHeader()}
         <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
           <ScrollView
-            ref={ref => (this[SCROLLVIEW_REF] = ref)}
+            ref={ref => (this.scrollViewRef = ref)}
             style={styles.container}
             scrollEventThrottle={16}
             onScroll={Animated.event([
@@ -208,8 +210,8 @@ class ImageHeaderScrollView extends Component {
 }
 
 ImageHeaderScrollView.propTypes = {
-  children: React.PropTypes.node || React.PropTypes.nodes,
-  childrenStyle: View.propTypes.style,
+  children: React.PropTypes.node || React.PropTypes.arrayOf(React.PropTypes.node),
+  childrenStyle: React.PropTypes.any,
   overlayColor: React.PropTypes.string,
   fadeOutForeground: React.PropTypes.bool,
   foregroundParallaxRatio: React.PropTypes.number,

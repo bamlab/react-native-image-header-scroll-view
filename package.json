@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src/*.js",
-    "test": "npm run lint",
+    "test": "npm run lint && flow",
     "prettify": "prettier --single-quote --trailing-comma es5 --print-width 100 --write src/**.js"
   },
   "files": ["README.md", "LICENCE", "src", "readmeAssets"],
@@ -39,6 +39,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-prettier": "2.1.2",
     "eslint-plugin-react": "^6.10.0",
+    "flow-bin": "^0.47.0",
     "prettier": "^1.5.3",
     "react": "16.0.0-alpha.12"
   },
