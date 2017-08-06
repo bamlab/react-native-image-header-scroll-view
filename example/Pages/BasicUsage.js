@@ -24,12 +24,9 @@ class BasicUsage extends React.Component {
           maxHeight={200}
           minHeight={MIN_HEIGHT}
           renderHeader={() => <Image source={require('../assets/NZ.jpg')} style={styles.image} />}
-          renderForeground={() =>
-            <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => console.log('tap!!')}>
-                <Text style={{ backgroundColor: 'transparent' }}>Tap Me!</Text>
-              </TouchableOpacity>
-            </View>}
+          renderForeground={() => <View />}
+          renderFixedForeground={() => <View />}
+          renderTouchableFixedForeground={() => <View />}
         >
           <View style={{ height: 1000 }}>
             <TriggeringView onHide={() => console.log('text hidden')}>
