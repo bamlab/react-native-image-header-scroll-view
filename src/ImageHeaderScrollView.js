@@ -16,7 +16,6 @@ export type Props = {
   renderFixedForeground: () => React.Element<any>,
   renderForeground: () => React.Element<any>,
   renderHeader: () => React.Element<any>,
-  renderTouchableFixedForeground: () => React.Element<any>,
 };
 
 export type DefaultProps = {
@@ -27,8 +26,6 @@ export type DefaultProps = {
   maxOverlayOpacity: number,
   minHeight: number,
   minOverlayOpacity: number,
-  renderFixedForeground: () => React.Element<any>,
-  renderForeground: () => React.Element<any>,
   renderHeader: () => React.Element<any>,
 };
 
@@ -50,8 +47,6 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
     maxOverlayOpacity: 0.3,
     minHeight: 80,
     minOverlayOpacity: 0,
-    renderFixedForeground: () => <View />,
-    renderForeground: () => <View />,
     renderHeader: () => <View />,
   };
 
@@ -106,13 +101,14 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
     ]);
 
     const headerScale = this.state.scrollY.interpolate({
-      inputRange: [-this.props.maxHeight, 0],
-      outputRange: [3, 1],
+      inputRange: [-2 * this.props.maxHeight, 0],
+      outputRange: [5, 1],
       extrapolate: 'clamp',
     });
+    const height = this.interpolateOnImageHeight([this.props.maxHeight, this.props.minHeight]);
 
     const headerTransformStyle = {
-      height: this.props.maxHeight,
+      height,
       transform: [{ scale: headerScale }],
     };
 
@@ -121,18 +117,33 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
       { opacity: overlayOpacity, backgroundColor: this.props.overlayColor },
     ];
 
+    const absoluteContainerStyle = {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      height: this.props.maxHeight,
+    };
+
     return (
       <Animated.View style={[styles.header, headerTransformStyle]}>
-        {this.props.renderHeader()}
-        <Animated.View style={overlayStyle} />
-        <View style={styles.fixedForeground}>
-          {this.props.renderFixedForeground()}
+        <View style={absoluteContainerStyle}>
+          {this.props.renderHeader()}
+          <Animated.View style={overlayStyle} />
+          {this.props.renderFixedForeground &&
+            <View style={styles.fixedForeground}>
+              {this.props.renderFixedForeground()}
+            </View>}
         </View>
       </Animated.View>
     );
   }
 
   renderForeground() {
+    if (!this.props.renderForeground) {
+      return null;
+    }
+
     const headerTranslate = this.state.scrollY.interpolate({
       inputRange: [0, this.props.maxHeight * 2],
       outputRange: [0, -this.props.maxHeight * 2 * this.props.foregroundParallaxRatio],
@@ -152,31 +163,6 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
     );
   }
 
-  renderTouchableFixedForeground() {
-    if (!this.props.renderTouchableFixedForeground) {
-      return <View />;
-    }
-
-    const height = this.interpolateOnImageHeight([this.props.maxHeight, this.props.minHeight]);
-
-    const headerScale = this.state.scrollY.interpolate({
-      inputRange: [-this.props.maxHeight, 0],
-      outputRange: [3, 1],
-      extrapolate: 'clamp',
-    });
-
-    const headerTransformStyle = {
-      height,
-      transform: [{ scale: headerScale }],
-    };
-
-    return (
-      <Animated.View style={[styles.header, styles.touchableFixedForeground, headerTransformStyle]}>
-        {this.props.renderTouchableFixedForeground()}
-      </Animated.View>
-    );
-  }
-
   render() {
     const {
       children,
@@ -191,18 +177,10 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
       renderFixedForeground,
       renderForeground,
       renderHeader,
-      renderTouchableFixedForeground,
       ...scrollViewProps
     } = this.props;
 
-    const headerScrollDistance = this.interpolateOnImageHeight([maxHeight, maxHeight - minHeight]);
-    const topMargin = this.interpolateOnImageHeight([0, minHeight]);
-
-    const childrenContainerStyle = StyleSheet.flatten([
-      { transform: [{ translateY: headerScrollDistance }] },
-      { backgroundColor: 'white', paddingBottom: maxHeight },
-      childrenStyle,
-    ]);
+    const childrenContainerStyle = StyleSheet.flatten([childrenStyle, { paddingTop: maxHeight }]);
 
     return (
       <View
@@ -210,23 +188,18 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
         ref={ref => (this.container = ref)}
         onLayout={() => this.container.measureInWindow((x, y) => this.setState({ pageY: y }))}
       >
+        <ScrollView
+          ref={ref => (this.scrollViewRef = ref)}
+          style={styles.container}
+          scrollEventThrottle={16}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
+          {...scrollViewProps}
+        >
+          <Animated.View style={childrenContainerStyle}>
+            {children}
+          </Animated.View>
+        </ScrollView>
         {this.renderHeader()}
-        <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
-          <ScrollView
-            ref={ref => (this.scrollViewRef = ref)}
-            style={styles.container}
-            scrollEventThrottle={16}
-            onScroll={Animated.event([
-              { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
-            ])}
-            {...scrollViewProps}
-          >
-            <Animated.View style={childrenContainerStyle}>
-              {children}
-            </Animated.View>
-          </ScrollView>
-        </Animated.View>
-        {this.renderTouchableFixedForeground()}
         {this.renderForeground()}
       </View>
     );
@@ -254,19 +227,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   overlay: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     zIndex: 100,
   },
   fixedForeground: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
     zIndex: 101,
   },
   touchableFixedForeground: {
