@@ -126,12 +126,12 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
     };
 
     return (
-      <Animated.View style={[styles.header, headerTransformStyle]}>
+      <Animated.View style={[styles.header, headerTransformStyle, { backgroundColor: 'red' }]}>
         <View style={absoluteContainerStyle}>
           {this.props.renderHeader()}
           <Animated.View style={overlayStyle} />
           {this.props.renderFixedForeground &&
-            <View style={styles.fixedForeground}>
+            <View style={[styles.fixedForeground, { backgroundColor: 'blue' }]}>
               {this.props.renderFixedForeground()}
             </View>}
         </View>
@@ -157,7 +157,7 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
       opacity: this.props.fadeOutForeground ? opacity : 1,
     };
     return (
-      <Animated.View style={[styles.header, headerTransformStyle]}>
+      <Animated.View style={[styles.header, headerTransformStyle, { backgroundColor: 'yellow' }]}>
         {this.props.renderForeground()}
       </Animated.View>
     );
@@ -180,7 +180,10 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
       ...scrollViewProps
     } = this.props;
 
-    const childrenContainerStyle = StyleSheet.flatten([childrenStyle, { paddingTop: maxHeight }]);
+    const childrenContainerStyle = StyleSheet.flatten([
+      childrenStyle,
+      { paddingTop: maxHeight, backgroundColor: 'pink' },
+    ]);
 
     return (
       <View
@@ -190,7 +193,7 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
       >
         <ScrollView
           ref={ref => (this.scrollViewRef = ref)}
-          style={styles.container}
+          style={[styles.container, { backgroundColor: 'green' }]}
           scrollEventThrottle={16}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
           {...scrollViewProps}
