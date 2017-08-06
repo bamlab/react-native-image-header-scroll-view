@@ -74,6 +74,7 @@ const Menu = props =>
       text="Forms and buttons"
       target="avignon"
     />
+    <Button {...props} image={require('../assets/pullrefresh.jpg')} text="Pull To Refresh" target="pullrefresh" />
   </ScrollView>;
 
 Menu.route = {
