@@ -16,27 +16,23 @@ const styles = StyleSheet.create({
   },
 });
 
-
 class BasicUsage extends React.Component {
   render() {
     return (
-      <View style={styles.container} >
+      <View style={styles.container}>
         <HeaderImageScrollView
           maxHeight={200}
           minHeight={MIN_HEIGHT}
-          renderHeader={() => (
-            <Image source={require('../assets/NZ.jpg')} style={styles.image} />
-          )}
-          renderForeground={() => (
+          renderHeader={() => <Image source={require('../assets/NZ.jpg')} style={styles.image} />}
+          renderForeground={() =>
             <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => console.log('tap!!')} >
+              <TouchableOpacity onPress={() => console.log('tap!!')}>
                 <Text style={{ backgroundColor: 'transparent' }}>Tap Me!</Text>
               </TouchableOpacity>
-            </View>
-          )}
+            </View>}
         >
           <View style={{ height: 1000 }}>
-            <TriggeringView onHide={() => console.log('text hidden')} >
+            <TriggeringView onHide={() => console.log('text hidden')}>
               <Text>Scroll Me!</Text>
             </TriggeringView>
           </View>

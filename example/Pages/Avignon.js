@@ -15,16 +15,14 @@ class BasicUsage extends React.Component {
           maxHeight={MAX_HEIGHT}
           minHeight={MIN_HEIGHT}
           minOverlayOpacity={0.4}
-          renderHeader={() => (
-            <Image source={require('../assets/avignon.jpg')} style={styles.image} />
-          )}
-          renderTouchableFixedForeground={() => (
+          renderHeader={() =>
+            <Image source={require('../assets/avignon.jpg')} style={styles.image} />}
+          renderTouchableFixedForeground={() =>
             <View style={{ height: MAX_HEIGHT, justifyContent: 'center', alignItems: 'center' }}>
               <TouchableOpacity onPress={() => console.log('tap!!')} style={styles.button}>
                 <Text style={styles.buttonText}>Discover Avignon now!</Text>
               </TouchableOpacity>
-            </View>
-          )}
+            </View>}
         >
           <View style={{ height: 1000 }}>
             <TriggeringView onHide={() => console.log('text hidden')}>

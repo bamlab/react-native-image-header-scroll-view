@@ -1,10 +1,7 @@
 import React from 'react';
 import { StyleSheet, Image, View, Dimensions } from 'react-native';
 
-import { Header } from 'react-navigation';
 import HeaderImageScrollView from 'react-native-image-header-scroll-view';
-
-const MIN_HEIGHT = Header.HEIGHT;
 
 const styles = StyleSheet.create({
   image: {
@@ -21,9 +18,8 @@ class ColorsPage extends React.Component {
           maxHeight={150}
           minHeight={80}
           fadeOutForeground
-          renderHeader={() => (
-            <Image source={require('../assets/cutecat.jpg')} style={styles.image} />
-          )}
+          renderHeader={() =>
+            <Image source={require('../assets/cutecat.jpg')} style={styles.image} />}
         >
           <View style={{ height: 100, backgroundColor: 'blue' }} />
           <View style={{ height: 100, backgroundColor: 'red' }} />

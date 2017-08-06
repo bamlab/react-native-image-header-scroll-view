@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  StatusBar,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, StatusBar } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Header } from 'react-navigation';
 
@@ -103,22 +96,24 @@ class TvShow extends Component {
           maxOverlayOpacity={0.6}
           minOverlayOpacity={0.3}
           fadeOutForeground
-          renderHeader={() => (
-            <Image source={tvShowContent.image} style={styles.image} />
-          )}
-          renderFixedForeground={() => (
+          renderHeader={() => <Image source={tvShowContent.image} style={styles.image} />}
+          renderFixedForeground={() =>
             <Animatable.View
               style={styles.navTitleView}
-              ref={(navTitleView) => { this.navTitleView = navTitleView; }}
+              ref={navTitleView => {
+                this.navTitleView = navTitleView;
+              }}
             >
-              <Text style={styles.navTitle}>{tvShowContent.title}, ({tvShowContent.year})</Text>
-            </Animatable.View>
-          )}
-          renderForeground={() => (
+              <Text style={styles.navTitle}>
+                {tvShowContent.title}, ({tvShowContent.year})
+              </Text>
+            </Animatable.View>}
+          renderForeground={() =>
             <View style={styles.titleContainer}>
-              <Text style={styles.imageTitle}>{tvShowContent.title}</Text>
-            </View>
-          )}
+              <Text style={styles.imageTitle}>
+                {tvShowContent.title}
+              </Text>
+            </View>}
         >
           <TriggeringView
             style={styles.section}
@@ -131,16 +126,20 @@ class TvShow extends Component {
           </TriggeringView>
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Overview</Text>
-            <Text style={styles.sectionContent}>{tvShowContent.overview}</Text>
+            <Text style={styles.sectionContent}>
+              {tvShowContent.overview}
+            </Text>
           </View>
           <View style={[styles.section, styles.sectionLarge]}>
             <Text style={styles.sectionTitle}>Keywords</Text>
             <View style={styles.keywords}>
-              {tvShowContent.keywords.map(keyword => (
+              {tvShowContent.keywords.map(keyword =>
                 <View style={styles.keywordContainer} key={keyword}>
-                  <Text style={styles.keyword}>{keyword}</Text>
+                  <Text style={styles.keyword}>
+                    {keyword}
+                  </Text>
                 </View>
-              ))}
+              )}
             </View>
           </View>
         </HeaderImageScrollView>
