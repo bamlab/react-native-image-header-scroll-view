@@ -1,5 +1,7 @@
 # react-native-image-header-scroll-view
 
+![badge](https://circleci.com/gh/bamlab/react-native-image-header-scroll-view.svg?style=shield&circle-token=:circle-token)
+
 A ScrollView-like component that:
  - Has a fixed image header
  - Keep the image as a nav bar
