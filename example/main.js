@@ -1,6 +1,6 @@
 import { StackNavigator } from 'react-navigation';
 
-import { Menu, TvShow, BasicUsage, ColorsPage, Avignon } from './Pages';
+import { Menu, TvShow, BasicUsage, ColorsPage, Avignon, PullToRefresh } from './Pages';
 
 export const App = StackNavigator(
   {
@@ -18,6 +18,9 @@ export const App = StackNavigator(
     },
     avignon: {
       screen: Avignon,
+    },
+    pullrefresh: {
+      screen: PullToRefresh,
     },
   },
   {
