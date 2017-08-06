@@ -3,7 +3,6 @@ import { View, Animated } from 'react-native';
 import _ from 'lodash';
 
 class TriggeringView extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -73,13 +72,8 @@ class TriggeringView extends Component {
   render() {
     const viewProps = _.pick(this.props, _.keys(View.propTypes));
     return (
-      <View
-        ref={this.onRef}
-        onLayout={this.onLayout}
-        collapsable={false}
-        {...viewProps}
-      >
-        { this.props.children }
+      <View ref={this.onRef} onLayout={this.onLayout} collapsable={false} {...viewProps}>
+        {this.props.children}
       </View>
     );
   }

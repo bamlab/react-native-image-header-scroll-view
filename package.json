@@ -4,10 +4,9 @@
   "description": "ScrollView with an image in header which become a navbar",
   "main": "src/index.js",
   "scripts": {
-    "jest": "jest",
-    "jest:watch": "npm run jest -- --watch",
     "lint": "eslint src/*.js",
-    "test": "npm run lint && npm run jest"
+    "test": "npm run lint",
+    "prettify": "prettier --single-quote --trailing-comma es5 --print-width 100 --write src/**.js"
   },
   "files": ["README.md", "LICENCE", "src", "readmeAssets"],
   "repository": {
@@ -30,7 +29,7 @@
   },
   "homepage": "https://github.com/bamlab/react-native-image-header-scroll-view#readme",
   "devDependencies": {
-    "babel-jest": "19.0.0",
+    "babel-eslint": "^7.2.3",
     "babel-preset-react-native": "1.9.1",
     "eslint": "^3.19.0",
     "eslint-config-prettier": "1.7.0",
@@ -46,10 +45,6 @@
   "peerDependencies": {
     "react": ">=15.3.1",
     "react-native": ">=0.20.0"
-  },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": ["<rootDir>/exemple/"]
   },
   "dependencies": {
     "lodash": "^4.17.4"
