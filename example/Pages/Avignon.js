@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, Image, TouchableOpacity, View, Dimensions } from 'react-native';
-import { NavigationBar } from '@exponent/ex-navigation';
 
+import { Header } from 'react-navigation';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 
-const MIN_HEIGHT = NavigationBar.DEFAULT_HEIGHT;
+const MIN_HEIGHT = Header.HEIGHT;
 const MAX_HEIGHT = 200;
 
 class BasicUsage extends React.Component {
@@ -15,16 +15,14 @@ class BasicUsage extends React.Component {
           maxHeight={MAX_HEIGHT}
           minHeight={MIN_HEIGHT}
           minOverlayOpacity={0.4}
-          renderHeader={() => (
-            <Image source={require('../assets/avignon.jpg')} style={styles.image} />
-          )}
-          renderTouchableFixedForeground={() => (
+          renderHeader={() =>
+            <Image source={require('../assets/avignon.jpg')} style={styles.image} />}
+          renderTouchableFixedForeground={() =>
             <View style={{ height: MAX_HEIGHT, justifyContent: 'center', alignItems: 'center' }}>
               <TouchableOpacity onPress={() => console.log('tap!!')} style={styles.button}>
                 <Text style={styles.buttonText}>Discover Avignon now!</Text>
               </TouchableOpacity>
-            </View>
-          )}
+            </View>}
         >
           <View style={{ height: 1000 }}>
             <TriggeringView onHide={() => console.log('text hidden')}>
@@ -41,7 +39,6 @@ class BasicUsage extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: -MIN_HEIGHT,
     flex: 1,
   },
   image: {

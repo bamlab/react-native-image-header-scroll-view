@@ -1,14 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, Image, TouchableOpacity, View, Dimensions } from 'react-native';
-import { NavigationBar } from '@exponent/ex-navigation';
 
+import { Header } from 'react-navigation';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 
-const MIN_HEIGHT = NavigationBar.DEFAULT_HEIGHT;
+const MIN_HEIGHT = Header.HEIGHT;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: -MIN_HEIGHT,
     flex: 1,
   },
   image: {
@@ -17,27 +16,23 @@ const styles = StyleSheet.create({
   },
 });
 
-
 class BasicUsage extends React.Component {
   render() {
     return (
-      <View style={styles.container} >
+      <View style={styles.container}>
         <HeaderImageScrollView
           maxHeight={200}
           minHeight={MIN_HEIGHT}
-          renderHeader={() => (
-            <Image source={require('../assets/NZ.jpg')} style={styles.image} />
-          )}
-          renderForeground={() => (
+          renderHeader={() => <Image source={require('../assets/NZ.jpg')} style={styles.image} />}
+          renderForeground={() =>
             <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
-              <TouchableOpacity onPress={() => console.log('tap!!')} >
+              <TouchableOpacity onPress={() => console.log('tap!!')}>
                 <Text style={{ backgroundColor: 'transparent' }}>Tap Me!</Text>
               </TouchableOpacity>
-            </View>
-          )}
+            </View>}
         >
           <View style={{ height: 1000 }}>
-            <TriggeringView onHide={() => console.log('text hidden')} >
+            <TriggeringView onHide={() => console.log('text hidden')}>
               <Text>Scroll Me!</Text>
             </TriggeringView>
           </View>
@@ -46,15 +41,5 @@ class BasicUsage extends React.Component {
     );
   }
 }
-
-BasicUsage.route = {
-  navigationBar: {
-    tintColor: 'white',
-    backgroundColor: 'transparent',
-    borderBottomWidth: 0,
-    statusBarHeight: 0,
-    elevation: 0,
-  },
-};
 
 export default BasicUsage;

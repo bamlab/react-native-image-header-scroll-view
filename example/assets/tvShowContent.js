@@ -10,11 +10,7 @@ export default {
     He's saved us from alien menaces and evil from before time began – but just who is he?`,
   image: require('./doctorwho.jpg'),
   year: 2005,
-  genres: [
-    'Action & Adventure',
-    'Drama',
-    'Sci-Fi & Fantasy',
-  ],
+  genres: ['Action & Adventure', 'Drama', 'Sci-Fi & Fantasy'],
   keywords: [
     'time travel',
     'time machine',
@@ -25,4 +21,3 @@ export default {
     'space and aliens',
   ],
 };
-

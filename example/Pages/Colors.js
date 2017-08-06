@@ -1,10 +1,7 @@
 import React from 'react';
 import { StyleSheet, Image, View, Dimensions } from 'react-native';
-import { NavigationBar } from '@exponent/ex-navigation';
 
 import HeaderImageScrollView from 'react-native-image-header-scroll-view';
-
-const MIN_HEIGHT = NavigationBar.DEFAULT_HEIGHT;
 
 const styles = StyleSheet.create({
   image: {
@@ -16,14 +13,13 @@ const styles = StyleSheet.create({
 class ColorsPage extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, marginTop: -MIN_HEIGHT }}>
+      <View style={{ flex: 1 }}>
         <HeaderImageScrollView
           maxHeight={150}
           minHeight={80}
           fadeOutForeground
-          renderHeader={() => (
-            <Image source={require('../assets/cutecat.jpg')} style={styles.image} />
-          )}
+          renderHeader={() =>
+            <Image source={require('../assets/cutecat.jpg')} style={styles.image} />}
         >
           <View style={{ height: 100, backgroundColor: 'blue' }} />
           <View style={{ height: 100, backgroundColor: 'red' }} />
@@ -38,15 +34,5 @@ class ColorsPage extends React.Component {
     );
   }
 }
-
-ColorsPage.route = {
-  navigationBar: {
-    tintColor: 'white',
-    backgroundColor: 'transparent',
-    borderBottomWidth: 0,
-    statusBarHeight: 0,
-    elevation: 0,
-  },
-};
 
 export default ColorsPage;
