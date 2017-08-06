@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, Image, TouchableOpacity, View, Dimensions } from 'react-native';
-import { NavigationBar } from '@exponent/ex-navigation';
 
+import { Header } from 'react-navigation';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 
-const MIN_HEIGHT = NavigationBar.DEFAULT_HEIGHT;
+const MIN_HEIGHT = Header.HEIGHT;
 const MAX_HEIGHT = 200;
 
 class BasicUsage extends React.Component {
@@ -41,7 +41,6 @@ class BasicUsage extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: -MIN_HEIGHT,
     flex: 1,
   },
   image: {

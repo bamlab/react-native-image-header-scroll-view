@@ -1,26 +1,37 @@
-import React from 'react';
-import { AppRegistry, Text, View } from 'react-native';
-
-import { createRouter, NavigationProvider, StackNavigation } from '@exponent/ex-navigation';
+import { StackNavigator } from 'react-navigation';
 
 import { Menu, TvShow, BasicUsage, ColorsPage, Avignon } from './Pages';
 
-export const Router = createRouter(() => ({
-  menu: () => Menu,
-  tvShow: () => TvShow,
-  basicUsage: () => BasicUsage,
-  colors: () => ColorsPage,
-  avignon: () => Avignon,
-}));
-
-class App extends React.Component {
-  render() {
-    return (
-      <NavigationProvider router={Router}>
-        <StackNavigation initialRoute={Router.getRoute('menu')} />
-      </NavigationProvider>
-    );
-  }
-}
+export const App = StackNavigator({
+  menu: {
+    screen: Menu,
+  },
+  tvShow: {
+    screen: TvShow,
+  },
+  basicUsage: {
+    screen: BasicUsage,
+  },
+  colors: {
+    screen: ColorsPage,
+  },
+  avignon: {
+    screen: Avignon,
+  },
+}, {
+  navigationOptions: {
+    headerTintColor: 'white',
+    headerStyle: {
+      position: 'absolute',
+      top: 0,
+      elevation: 0,
+      shadowColor: 'transparent',
+      shadowRadius: 0,
+      shadowOffset: {
+        height: 0,
+      },
+    },
+  },
+});
 
 export default App;

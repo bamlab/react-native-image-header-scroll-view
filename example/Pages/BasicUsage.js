@@ -1,14 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, Image, TouchableOpacity, View, Dimensions } from 'react-native';
-import { NavigationBar } from '@exponent/ex-navigation';
 
+import { Header } from 'react-navigation';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
 
-const MIN_HEIGHT = NavigationBar.DEFAULT_HEIGHT;
+const MIN_HEIGHT = Header.HEIGHT;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: -MIN_HEIGHT,
     flex: 1,
   },
   image: {
@@ -46,15 +45,5 @@ class BasicUsage extends React.Component {
     );
   }
 }
-
-BasicUsage.route = {
-  navigationBar: {
-    tintColor: 'white',
-    backgroundColor: 'transparent',
-    borderBottomWidth: 0,
-    statusBarHeight: 0,
-    elevation: 0,
-  },
-};
 
 export default BasicUsage;

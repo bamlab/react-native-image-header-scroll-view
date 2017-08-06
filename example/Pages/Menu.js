@@ -9,9 +9,6 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import { withNavigation } from '@exponent/ex-navigation';
-import { Router } from '../main';
-
 import tvShowContent from '../assets/tvShowContent';
 
 const styles = StyleSheet.create({
@@ -43,14 +40,14 @@ const styles = StyleSheet.create({
   },
 });
 
-@withNavigation class Button extends React.Component {
+class Button extends React.Component {
   render() {
     const props = this.props;
     return (
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => {
-          this.props.navigator.push(Router.getRoute(props.target));
+          this.props.navigation.navigate(props.target);
         }}
       >
         <Image style={styles.button} source={props.image}>
@@ -63,13 +60,13 @@ const styles = StyleSheet.create({
   }
 }
 
-const Menu = () => (
+const Menu = (props) => (
   <ScrollView style={styles.page} contentContainerStyle={styles.pageContent}>
     <StatusBar />
-    <Button image={require('../assets/NZ.jpg')} text="BasicUsage" target="basicUsage" />
-    <Button image={tvShowContent.image} text="TV Show" target="tvShow" />
-    <Button image={require('../assets/cutecat.jpg')} text="Cute cat" target="colors" />
-    <Button image={require('../assets/avignon.jpg')} text="Forms and buttons" target="avignon" />
+    <Button {...props} image={require('../assets/NZ.jpg')} text="BasicUsage" target="basicUsage" />
+    <Button {...props} image={tvShowContent.image} text="TV Show" target="tvShow" />
+    <Button {...props} image={require('../assets/cutecat.jpg')} text="Cute cat" target="colors" />
+    <Button {...props} image={require('../assets/avignon.jpg')} text="Forms and buttons" target="avignon" />
   </ScrollView>
 );
 
