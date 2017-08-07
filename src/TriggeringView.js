@@ -1,5 +1,6 @@
 // @flow weak
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Animated } from 'react-native';
 import _ from 'lodash';
 
@@ -89,12 +90,12 @@ class TriggeringView extends Component<*, *, *> {
   }
 }
 TriggeringView.propTypes = {
-  onBeginHidden: React.PropTypes.func,
-  onHide: React.PropTypes.func,
-  onBeginDisplayed: React.PropTypes.func,
-  onDisplay: React.PropTypes.func,
-  onTouchTop: React.PropTypes.func,
-  onTouchBottom: React.PropTypes.func,
+  onBeginHidden: PropTypes.func,
+  onHide: PropTypes.func,
+  onBeginDisplayed: PropTypes.func,
+  onDisplay: PropTypes.func,
+  onTouchTop: PropTypes.func,
+  onTouchBottom: PropTypes.func,
 };
 
 TriggeringView.defaultProps = {
@@ -107,8 +108,8 @@ TriggeringView.defaultProps = {
 };
 
 TriggeringView.contextTypes = {
-  scrollY: React.PropTypes.instanceOf(Animated.Value),
-  scrollPageY: React.PropTypes.number,
+  scrollY: PropTypes.instanceOf(Animated.Value),
+  scrollPageY: PropTypes.number,
 };
 
 export default TriggeringView;

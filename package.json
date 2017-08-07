@@ -8,7 +8,12 @@
     "test": "npm run lint && flow",
     "prettify": "prettier --single-quote --trailing-comma es5 --print-width 100 --write src/**.js"
   },
-  "files": ["README.md", "LICENCE", "src", "readmeAssets"],
+  "files": [
+    "README.md",
+    "LICENCE",
+    "src",
+    "readmeAssets"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bamlab/react-native-image-header-scroll-view.git"
@@ -48,6 +53,7 @@
     "react-native": ">=0.20.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "prop-types": "^15.5.10"
   }
 }
