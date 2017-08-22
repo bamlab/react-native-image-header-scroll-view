@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import _ from 'lodash';
 
@@ -234,8 +235,8 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
 }
 
 ImageHeaderScrollView.childContextTypes = {
-  scrollY: React.PropTypes.instanceOf(Animated.Value),
-  scrollPageY: React.PropTypes.number,
+  scrollY: PropTypes.instanceOf(Animated.Value),
+  scrollPageY: PropTypes.number,
 };
 
 const styles = StyleSheet.create({
