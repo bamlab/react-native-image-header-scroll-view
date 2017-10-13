@@ -17,7 +17,7 @@ class BasicUsage extends React.Component {
           minOverlayOpacity={0.4}
           renderHeader={() =>
             <Image source={require('../assets/avignon.jpg')} style={styles.image} />}
-          renderTouchableFixedForeground={() =>
+          renderFixedForeground={() =>
             <View style={{ height: MAX_HEIGHT, justifyContent: 'center', alignItems: 'center' }}>
               <TouchableOpacity onPress={() => console.log('tap!!')} style={styles.button}>
                 <Text style={styles.buttonText}>Discover Avignon now!</Text>
