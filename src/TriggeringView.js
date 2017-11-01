@@ -1,29 +1,64 @@
 // @flow weak
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { View, Animated } from 'react-native';
 import _ from 'lodash';
 
-class TriggeringView extends Component<*, *, *> {
+type Props = {
+  onBeginHidden: Function,
+  onHide: Function,
+  onBeginDisplayed: Function,
+  onDisplay: Function,
+  onTouchTop: Function,
+  onTouchBottom: Function,
+  children?: React$Node,
+};
+
+type DefaultProps = {
+  onBeginHidden: Function,
+  onHide: Function,
+  onBeginDisplayed: Function,
+  onDisplay: Function,
+  onTouchTop: Function,
+  onTouchBottom: Function,
+};
+
+type State = {
+  touched: boolean,
+  hidden: boolean,
+};
+
+type Context = {
+  scrollPageY?: number,
+  scrollY: Animated.Value,
+};
+
+class TriggeringView extends Component<Props, State> {
   initialPageY: number;
-  listenerId: number;
-  ref: *;
+  listenerId: string;
+  ref: ?any; // @see https://github.com/facebook/react-native/issues/15955
   height: number;
+  context: Context;
 
   onScroll: Function;
   onRef: Function;
   onLayout: Function;
+  state: State = {
+    touched: false,
+    hidden: false,
+  };
+
+  static defaultProps: DefaultProps = {
+    onBeginHidden: () => {},
+    onHide: () => {},
+    onBeginDisplayed: () => {},
+    onDisplay: () => {},
+    onTouchTop: () => {},
+    onTouchBottom: () => {},
+  };
 
   constructor(props) {
     super(props);
-    this.state = {
-      touched: false,
-      hidden: false,
-    };
     this.initialPageY = 0;
-    this.onScroll = this._onScroll.bind(this);
-    this.onRef = this._onRef.bind(this);
-    this.onLayout = this._onLayout.bind(this);
   }
 
   componentWillMount() {
@@ -41,40 +76,46 @@ class TriggeringView extends Component<*, *, *> {
     nextContext.scrollY.addListener(this.onScroll);
   }
 
-  _onRef(ref) {
+  onRef = ref => {
     this.ref = ref;
-  }
+  };
 
-  _onLayout(e) {
+  onLayout = e => {
+    if (!this.ref) {
+      return;
+    }
     const layout = e.nativeEvent.layout;
     this.height = layout.height;
     this.ref.measure((x, y, width, height, pageX, pageY) => {
       this.initialPageY = pageY;
     });
-  }
+  };
 
-  _onScroll(event) {
+  onScroll = event => {
+    if (!this.context.scrollPageY) {
+      return;
+    }
     const pageY = this.initialPageY - event.value;
     this.triggerEvents(this.context.scrollPageY, pageY, pageY + this.height);
-  }
+  };
 
   triggerEvents(value, top, bottom) {
     if (!this.state.touched && value >= top) {
-      this.setState({ touched: true });
+      this.setState(() => ({ touched: true }));
       this.props.onBeginHidden();
       this.props.onTouchTop(true);
     } else if (this.state.touched && value < top) {
-      this.setState({ touched: false });
+      this.setState(() => ({ touched: false }));
       this.props.onDisplay();
       this.props.onTouchTop(false);
     }
 
     if (!this.state.hidden && value >= bottom) {
-      this.setState({ hidden: true });
+      this.setState(() => ({ hidden: true }));
       this.props.onHide();
       this.props.onTouchBottom(true);
     } else if (this.state.hidden && value < bottom) {
-      this.setState({ hidden: false });
+      this.setState(() => ({ hidden: false }));
       this.props.onBeginDisplayed();
       this.props.onTouchBottom(false);
     }
@@ -89,27 +130,5 @@ class TriggeringView extends Component<*, *, *> {
     );
   }
 }
-TriggeringView.propTypes = {
-  onBeginHidden: PropTypes.func,
-  onHide: PropTypes.func,
-  onBeginDisplayed: PropTypes.func,
-  onDisplay: PropTypes.func,
-  onTouchTop: PropTypes.func,
-  onTouchBottom: PropTypes.func,
-};
-
-TriggeringView.defaultProps = {
-  onBeginHidden: () => {},
-  onHide: () => {},
-  onBeginDisplayed: () => {},
-  onDisplay: () => {},
-  onTouchTop: () => {},
-  onTouchBottom: () => {},
-};
-
-TriggeringView.contextTypes = {
-  scrollY: PropTypes.instanceOf(Animated.Value),
-  scrollPageY: PropTypes.number,
-};
 
 export default TriggeringView;

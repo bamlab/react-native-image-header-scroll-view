@@ -5,7 +5,7 @@ import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import _ from 'lodash';
 
 export type Props = {
-  children: React.Element<any>,
+  children: React$Element<any>,
   childrenStyle: any,
   overlayColor: string,
   fadeOutForeground: boolean,
@@ -14,10 +14,10 @@ export type Props = {
   maxOverlayOpacity: number,
   minHeight: number,
   minOverlayOpacity: number,
-  renderFixedForeground: () => React.Element<any>,
-  renderForeground: () => React.Element<any>,
-  renderHeader: () => React.Element<any>,
-  renderTouchableFixedForeground: () => React.Element<any>,
+  renderFixedForeground: () => React$Element<any>,
+  renderForeground: () => React$Element<any>,
+  renderHeader: () => React$Element<any>,
+  renderTouchableFixedForeground: () => React$Element<any>,
 };
 
 export type DefaultProps = {
@@ -28,9 +28,9 @@ export type DefaultProps = {
   maxOverlayOpacity: number,
   minHeight: number,
   minOverlayOpacity: number,
-  renderFixedForeground: () => React.Element<any>,
-  renderForeground: () => React.Element<any>,
-  renderHeader: () => React.Element<any>,
+  renderFixedForeground: () => React$Element<any>,
+  renderForeground: () => React$Element<any>,
+  renderHeader: () => React$Element<any>,
 };
 
 export type State = {
@@ -38,9 +38,9 @@ export type State = {
   pageY: number,
 };
 
-class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
-  container: *;
-  scrollViewRef: ScrollView;
+class ImageHeaderScrollView extends Component<Props, State> {
+  container: ?any; // @see https://github.com/facebook/react-native/issues/15955
+  scrollViewRef: ?any; // @see https://github.com/facebook/react-native/issues/15955
   state: State;
 
   static defaultProps: DefaultProps = {
@@ -76,19 +76,37 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
    * with any component that expects a `ScrollView`.
    */
   getScrollResponder() {
+    if (!this.scrollViewRef) {
+      return;
+    }
     return this.scrollViewRef.getScrollResponder();
   }
   getScrollableNode() {
-    return this.getScrollResponder().getScrollableNode();
+    const responder = this.getScrollResponder();
+    if (!responder) {
+      return;
+    }
+    return responder.getScrollableNode();
   }
   getInnerViewNode() {
-    return this.getScrollResponder().getInnerViewNode();
+    const responder = this.getScrollResponder();
+    if (!responder) {
+      return;
+    }
+    return responder.getInnerViewNode();
   }
   setNativeProps(props: Props) {
+    if (!this.scrollViewRef) {
+      return;
+    }
     this.scrollViewRef.setNativeProps(props);
   }
   scrollTo(...args: *) {
-    this.getScrollResponder().scrollTo(...args);
+    const responder = this.getScrollResponder();
+    if (!responder) {
+      return;
+    }
+    responder.scrollTo(...args);
   }
 
   interpolateOnImageHeight(outputRange: Array<number>) {
@@ -178,6 +196,13 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
     );
   }
 
+  onContainerLayout = () => {
+    if (!this.container) {
+      return;
+    }
+    this.container.measureInWindow((x, y) => this.setState(() => ({ pageY: y })));
+  };
+
   render() {
     const {
       children,
@@ -209,7 +234,7 @@ class ImageHeaderScrollView extends Component<DefaultProps, Props, State> {
       <View
         style={styles.container}
         ref={ref => (this.container = ref)}
-        onLayout={() => this.container.measureInWindow((x, y) => this.setState({ pageY: y }))}
+        onLayout={this.onContainerLayout}
       >
         {this.renderHeader()}
         <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
