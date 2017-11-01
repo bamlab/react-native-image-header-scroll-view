@@ -5,8 +5,8 @@ import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import _ from 'lodash';
 
 export type Props = {
-  children: React$Element<any>,
-  childrenStyle: any,
+  children?: ?React$Element<any>,
+  childrenStyle?: ?any,
   overlayColor: string,
   fadeOutForeground: boolean,
   foregroundParallaxRatio: number,
@@ -17,7 +17,7 @@ export type Props = {
   renderFixedForeground: () => React$Element<any>,
   renderForeground: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
-  renderTouchableFixedForeground: () => React$Element<any>,
+  renderTouchableFixedForeground?: ?() => React$Element<any>,
 };
 
 export type DefaultProps = {
@@ -172,10 +172,6 @@ class ImageHeaderScrollView extends Component<Props, State> {
   }
 
   renderTouchableFixedForeground() {
-    if (!this.props.renderTouchableFixedForeground) {
-      return <View />;
-    }
-
     const height = this.interpolateOnImageHeight([this.props.maxHeight, this.props.minHeight]);
 
     const headerScale = this.state.scrollY.interpolate({
@@ -188,6 +184,10 @@ class ImageHeaderScrollView extends Component<Props, State> {
       height,
       transform: [{ scale: headerScale }],
     };
+
+    if (!this.props.renderTouchableFixedForeground) {
+      return <View />;
+    }
 
     return (
       <Animated.View style={[styles.header, styles.touchableFixedForeground, headerTransformStyle]}>
