@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Animated,
-  ScrollView,
-  StyleSheet,
-  View,
-  } from 'react-native';
+import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import _ from 'lodash';
 
 const SCROLLVIEW_REF = 'ScrollView';
@@ -41,7 +36,6 @@ const styles = StyleSheet.create({
     zIndex: 101,
   },
 });
-
 
 class ImageHeaderScrollView extends Component {
   constructor(props) {
@@ -114,9 +108,9 @@ class ImageHeaderScrollView extends Component {
       <Animated.View style={[styles.header, headerTransformStyle]}>
         <Animated.View style={overlayStyle} />
         <View style={styles.fixedForeground}>
-          { this.props.renderFixedForeground(this.state.scrollY) }
+          {this.props.renderFixedForeground(this.state.scrollY)}
         </View>
-        { this.props.renderHeader(this.state.scrollY) }
+        {this.props.renderHeader(this.state.scrollY)}
       </Animated.View>
     );
   }
@@ -136,7 +130,7 @@ class ImageHeaderScrollView extends Component {
     };
     return (
       <Animated.View style={[styles.header, headerTransformStyle]}>
-        { this.props.renderForeground() }
+        {this.props.renderForeground()}
       </Animated.View>
     );
   }
@@ -159,25 +153,32 @@ class ImageHeaderScrollView extends Component {
     return (
       <View
         style={styles.container}
-        ref={(ref) => { this.container = ref; }}
+        ref={ref => {
+          this.container = ref;
+        }}
         onLayout={() => this.container.measureInWindow((x, y) => this.setState({ pageY: y }))}
       >
-        { this.renderHeader() }
+        {this.renderHeader()}
         <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
           <ScrollView
-            ref={(ref) => { this[SCROLLVIEW_REF] = ref; }}
+            ref={ref => {
+              this[SCROLLVIEW_REF] = ref;
+            }}
             style={styles.container}
             scrollEventThrottle={16}
+            {...scrollViewProps}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+              {
+                listener: this.props.onScroll,
+              }
             )}
-            {...scrollViewProps}
           >
             <Animated.View style={childrenContainerStyle}>
               {this.props.children}
             </Animated.View>
           </ScrollView>
-          { this.renderForeground() }
+          {this.renderForeground()}
         </Animated.View>
       </View>
     );
