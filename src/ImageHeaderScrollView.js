@@ -38,8 +38,8 @@ export type State = {
 };
 
 class ImageHeaderScrollView extends Component<Props, State> {
-  container: ?any; // @see https://github.com/facebook/react-native/issues/15955
-  scrollViewRef: ?any; // @see https://github.com/facebook/react-native/issues/15955
+  container: ?View; // @see https://github.com/facebook/react-native/issues/15955
+  scrollViewRef: ?ScrollView; // @see https://github.com/facebook/react-native/issues/15955
   state: State;
 
   static defaultProps: DefaultProps = {
@@ -201,6 +201,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
   };
 
   render() {
+    /* eslint-disable no-unused-vars */
     const {
       children,
       childrenStyle,
@@ -217,6 +218,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
       renderTouchableFixedForeground,
       ...scrollViewProps
     } = this.props;
+    /* eslint-enable no-unused-vars */
 
     const headerScrollDistance = this.interpolateOnImageHeight([maxHeight, maxHeight - minHeight]);
     const topMargin = this.interpolateOnImageHeight([0, minHeight]);

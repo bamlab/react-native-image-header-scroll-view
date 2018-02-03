@@ -126,6 +126,7 @@ class TriggeringView extends Component<Props, State> {
   }
 
   render() {
+    /* eslint-disable no-unused-vars */
     const {
       onBeginHidden,
       onHide,
@@ -135,6 +136,8 @@ class TriggeringView extends Component<Props, State> {
       onTouchBottom,
       ...viewProps
     } = this.props;
+    /* eslint-enable no-unused-vars */
+
     return (
       <View ref={this.onRef} collapsable={false} {...viewProps} onLayout={this.onLayout}>
         {this.props.children}
