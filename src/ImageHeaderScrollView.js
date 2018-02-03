@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Animated, ScrollView, StyleSheet, View } from 'react-native';
-import _ from 'lodash';
 
 export type Props = {
   children?: ?React$Element<any>,
@@ -144,9 +143,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
       <Animated.View style={[styles.header, headerTransformStyle]}>
         {this.props.renderHeader()}
         <Animated.View style={overlayStyle} />
-        <View style={styles.fixedForeground}>
-          {this.props.renderFixedForeground()}
-        </View>
+        <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
       </Animated.View>
     );
   }
@@ -247,9 +244,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
             ])}
             {...scrollViewProps}
           >
-            <Animated.View style={childrenContainerStyle}>
-              {children}
-            </Animated.View>
+            <Animated.View style={childrenContainerStyle}>{children}</Animated.View>
           </ScrollView>
         </Animated.View>
         {this.renderTouchableFixedForeground()}
