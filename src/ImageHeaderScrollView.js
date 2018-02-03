@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Animated, ScrollView, StyleSheet, View } from 'react-native';
+import type { ViewProps } from 'ViewPropTypes';
 
 export type Props = {
   children?: ?React$Element<any>,
@@ -17,6 +18,8 @@ export type Props = {
   renderForeground: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
   renderTouchableFixedForeground?: ?() => React$Element<any>,
+  style?: $PropertyType<ViewProps, 'style'>,
+  onScroll?: ?Function,
 };
 
 export type DefaultProps = {
@@ -216,6 +219,8 @@ class ImageHeaderScrollView extends Component<Props, State> {
       renderForeground,
       renderHeader,
       renderTouchableFixedForeground,
+      style,
+      onScroll,
       ...scrollViewProps
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -239,12 +244,15 @@ class ImageHeaderScrollView extends Component<Props, State> {
         <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
           <ScrollView
             ref={ref => (this.scrollViewRef = ref)}
-            style={styles.container}
             scrollEventThrottle={16}
-            onScroll={Animated.event([
-              { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
-            ])}
             {...scrollViewProps}
+            style={[styles.container, style]}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+              {
+                listener: onScroll,
+              }
+            )}
           >
             <Animated.View style={childrenContainerStyle}>{children}</Animated.View>
           </ScrollView>
