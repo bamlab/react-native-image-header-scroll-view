@@ -50,6 +50,7 @@ All of the properties of `ScrollView` are supported. Please refer to the
 The `HeaderImageScrollView` handle also the following props. None is required :
 
 ### Header
+
 | Property | Type | Default | Description |
 | -------- | ---- | ------- | ----------- |
 | `renderHeader` | `function` | Empty view | Function which return the component to use as header. It can return background image for example. |
@@ -69,6 +70,12 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 | `foregroundParallaxRatio` | `number` | `1` | Ration for parallax effect of foreground when scrolling. If 2, the header goes up two times faster than the scroll |
 | `fadeOutForeground` | `bool` | `false` | If set, add a fade out effect on the foreground when scroll up |
 | `renderTouchableFixedForeground` | `function` | Empty view | Same as `renderFixedForeground` but allow to use touchable in it. [*Can cause performances issues on Android*](https://github.com/bamlab/react-native-image-header-scroll-view/issues/6)|
+
+### Mixed
+
+| Property | Type | Default | Description |
+| -------- | ---- | ------- | ----------- |
+| `ScrollViewComponent` | `Component` | `ScrollView` | The component to be used for scrolling. Can be any component with an `onScroll` props (ie. `ListView`, `FlatList`, `SectionList` or `ScrollView`) |
 
 
 ### TriggeringView
