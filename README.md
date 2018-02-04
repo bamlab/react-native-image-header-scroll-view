@@ -76,6 +76,7 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 | Property | Type | Default | Description |
 | -------- | ---- | ------- | ----------- |
 | `ScrollViewComponent` | `Component` | `ScrollView` | The component to be used for scrolling. Can be any component with an `onScroll` props (ie. `ListView`, `FlatList`, `SectionList` or `ScrollView`) |
+| `scrollViewBackgroundColor` | `string` | `white` | Background color of the scrollView content |
 
 
 ### TriggeringView

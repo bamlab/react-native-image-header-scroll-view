@@ -27,6 +27,7 @@ export type Props = ScrollViewProps & {
   renderHeader: () => React$Element<any>,
   renderTouchableFixedForeground?: ?() => React$Element<any>,
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
+  scrollViewBackgroundColor: string,
 };
 
 export type DefaultProps = {
@@ -40,6 +41,7 @@ export type DefaultProps = {
   renderFixedForeground: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
+  scrollViewBackgroundColor: string,
 };
 
 export type State = {
@@ -65,6 +67,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     renderFixedForeground: () => <View />,
     renderHeader: () => <View />,
     ScrollViewComponent: ScrollView,
+    scrollViewBackgroundColor: 'white',
   };
 
   constructor(props: Props) {
@@ -206,6 +209,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
       contentContainerStyle,
       onScroll,
       ScrollViewComponent,
+      scrollViewBackgroundColor,
       ...scrollViewProps
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -214,7 +218,13 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
     return (
       <View
-        style={[styles.container, { paddingTop: minHeight }]}
+        style={[
+          styles.container,
+          {
+            paddingTop: minHeight,
+            backgroundColor: scrollViewBackgroundColor,
+          },
+        ]}
         ref={ref => (this.container = ref)}
         onLayout={this.onContainerLayout}
       >
@@ -226,7 +236,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
           {...scrollViewProps}
           contentContainerStyle={[
             {
-              backgroundColor: 'white',
+              backgroundColor: scrollViewBackgroundColor,
               marginTop: inset,
               paddingBottom: inset,
             },
