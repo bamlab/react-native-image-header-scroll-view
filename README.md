@@ -40,6 +40,8 @@ render() {
 }
 ```
 
+You can find examples in a [dedicated repository](https://github.com/bamlab/react-native-image-header-scroll-view-example).
+
 ## Usage (API)
 
 All of the properties of `ScrollView` are supported. Please refer to the
