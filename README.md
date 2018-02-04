@@ -28,9 +28,7 @@ render() {
     <HeaderImageScrollView
       maxHeight={200}
       minHeight={MIN_HEIGHT}
-      renderHeader={() => (
-        <Image source={require('../assets/NZ.jpg')} style={styles.image} />
-      )}
+      headerImage={require('../../assets/NZ.jpg')}
     >
       <View style={{ height: 1000 }}>
         <TriggeringView onHide={() => console.log('text hidden')} >
@@ -54,6 +52,7 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 | Property | Type | Default | Description |
 | -------- | ---- | ------- | ----------- |
 | `renderHeader` | `function` | Empty view | Function which return the component to use as header. It can return background image for example. |
+| `headerImage` | Image source Props (object or number) | `undefined` | Shortcut for `renderHeader={() => <Image source={this.props.headerImage} style={{ height: this.props.maxHeight, width: Dimensions.get('window').width }} />}` |
 | `maxHeight` | `number` | `80` | Max height for the header |
 | `minHeight` | `number` | `125` | Min height for the header (in navbar mode) |
 | `minOverlayOpacity` | `number` | `0` | Opacity of a black overlay on the header before any scroll |

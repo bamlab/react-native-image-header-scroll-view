@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Animated, ScrollView, StyleSheet, View, Platform } from 'react-native';
+import { Animated, ScrollView, StyleSheet, View, Image, Dimensions } from 'react-native';
 import type { ViewProps } from 'ViewPropTypes';
 import type { FlatList, SectionList, ListView } from 'react-native';
 
@@ -11,6 +11,19 @@ type ScrollViewProps = {
   contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
   scrollEventThrottle: number,
 };
+
+type SourceObjectProps = {
+  uri?: ?string,
+  bundle?: ?string,
+  method?: ?string,
+  headers?: ?{ [string]: string },
+  body?: ?string,
+  cache?: ?('default' | 'reload' | 'force-cache' | 'only-if-cached'),
+  width?: ?number,
+  height?: ?number,
+  scale?: ?number,
+};
+type SourceProps = number | SourceObjectProps | SourceObjectProps[];
 
 export type Props = ScrollViewProps & {
   children?: ?React$Element<any>,
@@ -28,6 +41,7 @@ export type Props = ScrollViewProps & {
   renderTouchableFixedForeground?: ?() => React$Element<any>,
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
   scrollViewBackgroundColor: string,
+  headerImage?: ?SourceProps,
 };
 
 export type DefaultProps = {
@@ -94,6 +108,21 @@ class ImageHeaderScrollView extends Component<Props, State> {
     });
   }
 
+  renderHeaderProps() {
+    if (this.props.headerImage) {
+      return (
+        <Image
+          source={this.props.headerImage}
+          style={{
+            height: this.props.maxHeight,
+            width: Dimensions.get('window').width,
+          }}
+        />
+      );
+    }
+    return this.props.renderHeader();
+  }
+
   renderHeader() {
     const overlayOpacity = this.interpolateOnImageHeight([
       this.props.minOverlayOpacity,
@@ -118,7 +147,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
     return (
       <Animated.View style={[styles.header, headerTransformStyle]}>
-        {this.props.renderHeader()}
+        {this.renderHeaderProps()}
         <Animated.View style={overlayStyle} />
         <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
       </Animated.View>
