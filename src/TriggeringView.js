@@ -1,7 +1,7 @@
-// @flow weak
+// @flow
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Animated } from 'react-native';
-import _ from 'lodash';
 
 type Props = {
   onBeginHidden: Function,
@@ -11,6 +11,7 @@ type Props = {
   onTouchTop: Function,
   onTouchBottom: Function,
   children?: React$Node,
+  onLayout?: Function,
 };
 
 type DefaultProps = {
@@ -56,7 +57,7 @@ class TriggeringView extends Component<Props, State> {
     onTouchBottom: () => {},
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.initialPageY = 0;
   }
@@ -68,7 +69,7 @@ class TriggeringView extends Component<Props, State> {
     this.listenerId = this.context.scrollY.addListener(this.onScroll);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentWillReceiveProps(nextProps: Props, nextContext: Context) {
     if (!this.context.scrollY) {
       return;
     }
@@ -76,11 +77,14 @@ class TriggeringView extends Component<Props, State> {
     nextContext.scrollY.addListener(this.onScroll);
   }
 
-  onRef = ref => {
+  onRef = (ref: any) => {
     this.ref = ref;
   };
 
-  onLayout = e => {
+  onLayout = (e: *) => {
+    if (this.props.onLayout) {
+      this.props.onLayout(e);
+    }
     if (!this.ref) {
       return;
     }
@@ -91,7 +95,7 @@ class TriggeringView extends Component<Props, State> {
     });
   };
 
-  onScroll = event => {
+  onScroll = (event: *) => {
     if (!this.context.scrollPageY) {
       return;
     }
@@ -99,36 +103,52 @@ class TriggeringView extends Component<Props, State> {
     this.triggerEvents(this.context.scrollPageY, pageY, pageY + this.height);
   };
 
-  triggerEvents(value, top, bottom) {
+  triggerEvents(value: number, top: number, bottom: number) {
     if (!this.state.touched && value >= top) {
-      this.setState(() => ({ touched: true }));
+      this.setState({ touched: true });
       this.props.onBeginHidden();
       this.props.onTouchTop(true);
     } else if (this.state.touched && value < top) {
-      this.setState(() => ({ touched: false }));
+      this.setState({ touched: false });
       this.props.onDisplay();
       this.props.onTouchTop(false);
     }
 
     if (!this.state.hidden && value >= bottom) {
-      this.setState(() => ({ hidden: true }));
+      this.setState({ hidden: true });
       this.props.onHide();
       this.props.onTouchBottom(true);
     } else if (this.state.hidden && value < bottom) {
-      this.setState(() => ({ hidden: false }));
+      this.setState({ hidden: false });
       this.props.onBeginDisplayed();
       this.props.onTouchBottom(false);
     }
   }
 
   render() {
-    const viewProps = _.omit(this.props, _.keys(TriggeringView.propTypes));
+    /* eslint-disable no-unused-vars */
+    const {
+      onBeginHidden,
+      onHide,
+      onBeginDisplayed,
+      onDisplay,
+      onTouchTop,
+      onTouchBottom,
+      ...viewProps
+    } = this.props;
+    /* eslint-enable no-unused-vars */
+
     return (
-      <View ref={this.onRef} onLayout={this.onLayout} collapsable={false} {...viewProps}>
+      <View ref={this.onRef} collapsable={false} {...viewProps} onLayout={this.onLayout}>
         {this.props.children}
       </View>
     );
   }
 }
+
+TriggeringView.contextTypes = {
+  scrollY: PropTypes.instanceOf(Animated.Value),
+  scrollPageY: PropTypes.number,
+};
 
 export default TriggeringView;

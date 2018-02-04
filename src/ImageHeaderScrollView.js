@@ -1,10 +1,31 @@
 // @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Animated, ScrollView, StyleSheet, View } from 'react-native';
-import _ from 'lodash';
+import { Animated, ScrollView, StyleSheet, View, Image, Dimensions } from 'react-native';
+import type { ViewProps } from 'ViewPropTypes';
+import type { FlatList, SectionList, ListView } from 'react-native';
 
-export type Props = {
+type ScrollViewProps = {
+  onScroll?: ?Function,
+  style?: $PropertyType<ViewProps, 'style'>,
+  contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
+  scrollEventThrottle: number,
+};
+
+type SourceObjectProps = {
+  uri?: ?string,
+  bundle?: ?string,
+  method?: ?string,
+  headers?: ?{ [string]: string },
+  body?: ?string,
+  cache?: ?('default' | 'reload' | 'force-cache' | 'only-if-cached'),
+  width?: ?number,
+  height?: ?number,
+  scale?: ?number,
+};
+type SourceProps = number | SourceObjectProps | SourceObjectProps[];
+
+export type Props = ScrollViewProps & {
   children?: ?React$Element<any>,
   childrenStyle?: ?any,
   overlayColor: string,
@@ -15,9 +36,12 @@ export type Props = {
   minHeight: number,
   minOverlayOpacity: number,
   renderFixedForeground: () => React$Element<any>,
-  renderForeground: () => React$Element<any>,
+  renderForeground?: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
   renderTouchableFixedForeground?: ?() => React$Element<any>,
+  ScrollViewComponent: React$ComponentType<ScrollViewProps>,
+  scrollViewBackgroundColor: string,
+  headerImage?: ?SourceProps,
 };
 
 export type DefaultProps = {
@@ -29,8 +53,9 @@ export type DefaultProps = {
   minHeight: number,
   minOverlayOpacity: number,
   renderFixedForeground: () => React$Element<any>,
-  renderForeground: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
+  ScrollViewComponent: React$ComponentType<ScrollViewProps>,
+  scrollViewBackgroundColor: string,
 };
 
 export type State = {
@@ -38,9 +63,11 @@ export type State = {
   pageY: number,
 };
 
+type ScrollComponent<ItemT> = FlatList<ItemT> | SectionList<ItemT> | ListView | ScrollView;
+
 class ImageHeaderScrollView extends Component<Props, State> {
-  container: ?any; // @see https://github.com/facebook/react-native/issues/15955
-  scrollViewRef: ?any; // @see https://github.com/facebook/react-native/issues/15955
+  container: ?View; // @see https://github.com/facebook/react-native/issues/15955
+  scrollViewRef: ?ScrollComponent<any>; // @see https://github.com/facebook/react-native/issues/15955
   state: State;
 
   static defaultProps: DefaultProps = {
@@ -52,8 +79,9 @@ class ImageHeaderScrollView extends Component<Props, State> {
     minHeight: 80,
     minOverlayOpacity: 0,
     renderFixedForeground: () => <View />,
-    renderForeground: () => <View />,
     renderHeader: () => <View />,
+    ScrollViewComponent: ScrollView,
+    scrollViewBackgroundColor: 'white',
   };
 
   constructor(props: Props) {
@@ -71,44 +99,6 @@ class ImageHeaderScrollView extends Component<Props, State> {
     };
   }
 
-  /*
-   * Expose `ScrollView` API so this component is composable
-   * with any component that expects a `ScrollView`.
-   */
-  getScrollResponder() {
-    if (!this.scrollViewRef) {
-      return;
-    }
-    return this.scrollViewRef.getScrollResponder();
-  }
-  getScrollableNode() {
-    const responder = this.getScrollResponder();
-    if (!responder) {
-      return;
-    }
-    return responder.getScrollableNode();
-  }
-  getInnerViewNode() {
-    const responder = this.getScrollResponder();
-    if (!responder) {
-      return;
-    }
-    return responder.getInnerViewNode();
-  }
-  setNativeProps(props: Props) {
-    if (!this.scrollViewRef) {
-      return;
-    }
-    this.scrollViewRef.setNativeProps(props);
-  }
-  scrollTo(...args: *) {
-    const responder = this.getScrollResponder();
-    if (!responder) {
-      return;
-    }
-    responder.scrollTo(...args);
-  }
-
   interpolateOnImageHeight(outputRange: Array<number>) {
     const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
     return this.state.scrollY.interpolate({
@@ -116,6 +106,21 @@ class ImageHeaderScrollView extends Component<Props, State> {
       outputRange,
       extrapolate: 'clamp',
     });
+  }
+
+  renderHeaderProps() {
+    if (this.props.headerImage) {
+      return (
+        <Image
+          source={this.props.headerImage}
+          style={{
+            height: this.props.maxHeight,
+            width: Dimensions.get('window').width,
+          }}
+        />
+      );
+    }
+    return this.props.renderHeader();
   }
 
   renderHeader() {
@@ -142,11 +147,9 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
     return (
       <Animated.View style={[styles.header, headerTransformStyle]}>
-        {this.props.renderHeader()}
+        {this.renderHeaderProps()}
         <Animated.View style={overlayStyle} />
-        <View style={styles.fixedForeground}>
-          {this.props.renderFixedForeground()}
-        </View>
+        <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
       </Animated.View>
     );
   }
@@ -164,6 +167,11 @@ class ImageHeaderScrollView extends Component<Props, State> {
       transform: [{ translateY: headerTranslate }],
       opacity: this.props.fadeOutForeground ? opacity : 1,
     };
+
+    if (!this.props.renderForeground) {
+      return <View />;
+    }
+
     return (
       <Animated.View style={[styles.header, headerTransformStyle]}>
         {this.props.renderForeground()}
@@ -174,23 +182,12 @@ class ImageHeaderScrollView extends Component<Props, State> {
   renderTouchableFixedForeground() {
     const height = this.interpolateOnImageHeight([this.props.maxHeight, this.props.minHeight]);
 
-    const headerScale = this.state.scrollY.interpolate({
-      inputRange: [-this.props.maxHeight, 0],
-      outputRange: [3, 1],
-      extrapolate: 'clamp',
-    });
-
-    const headerTransformStyle = {
-      height,
-      transform: [{ scale: headerScale }],
-    };
-
     if (!this.props.renderTouchableFixedForeground) {
       return <View />;
     }
 
     return (
-      <Animated.View style={[styles.header, styles.touchableFixedForeground, headerTransformStyle]}>
+      <Animated.View style={[styles.header, styles.touchableFixedForeground, { height }]}>
         {this.props.renderTouchableFixedForeground()}
       </Animated.View>
     );
@@ -203,9 +200,17 @@ class ImageHeaderScrollView extends Component<Props, State> {
     this.container.measureInWindow((x, y) => this.setState(() => ({ pageY: y })));
   };
 
+  onScroll = (e: *) => {
+    if (this.props.onScroll) {
+      this.props.onScroll(e);
+    }
+    const scrollY = e.nativeEvent.contentOffset.y;
+    this.state.scrollY.setValue(scrollY);
+  };
+
   render() {
+    /* eslint-disable no-unused-vars */
     const {
-      children,
       childrenStyle,
       overlayColor,
       fadeOutForeground,
@@ -218,44 +223,185 @@ class ImageHeaderScrollView extends Component<Props, State> {
       renderForeground,
       renderHeader,
       renderTouchableFixedForeground,
+      style,
+      contentContainerStyle,
+      onScroll,
+      ScrollViewComponent,
+      scrollViewBackgroundColor,
       ...scrollViewProps
     } = this.props;
+    /* eslint-enable no-unused-vars */
 
-    const headerScrollDistance = this.interpolateOnImageHeight([maxHeight, maxHeight - minHeight]);
-    const topMargin = this.interpolateOnImageHeight([0, minHeight]);
-
-    const childrenContainerStyle = StyleSheet.flatten([
-      { transform: [{ translateY: headerScrollDistance }] },
-      { backgroundColor: 'white', paddingBottom: maxHeight },
-      childrenStyle,
-    ]);
+    const inset = maxHeight - minHeight;
 
     return (
       <View
-        style={styles.container}
+        style={[
+          styles.container,
+          {
+            paddingTop: minHeight,
+            backgroundColor: scrollViewBackgroundColor,
+          },
+        ]}
         ref={ref => (this.container = ref)}
         onLayout={this.onContainerLayout}
       >
         {this.renderHeader()}
-        <Animated.View style={[styles.container, { transform: [{ translateY: topMargin }] }]}>
-          <ScrollView
-            ref={ref => (this.scrollViewRef = ref)}
-            style={styles.container}
-            scrollEventThrottle={16}
-            onScroll={Animated.event([
-              { nativeEvent: { contentOffset: { y: this.state.scrollY } } },
-            ])}
-            {...scrollViewProps}
-          >
-            <Animated.View style={childrenContainerStyle}>
-              {children}
-            </Animated.View>
-          </ScrollView>
-        </Animated.View>
+        <ScrollViewComponent
+          ref={ref => (this.scrollViewRef = ref)}
+          scrollEventThrottle={16}
+          overScrollMode="never"
+          {...scrollViewProps}
+          contentContainerStyle={[
+            {
+              backgroundColor: scrollViewBackgroundColor,
+              marginTop: inset,
+              paddingBottom: inset,
+            },
+            contentContainerStyle,
+            childrenStyle,
+          ]}
+          style={[styles.container, style]}
+          onScroll={this.onScroll}
+        />
         {this.renderTouchableFixedForeground()}
         {this.renderForeground()}
       </View>
     );
+  }
+
+  /*
+   * Expose `ScrollView` API so this component is composable
+   * with any component that expects a `ScrollView`.
+   */
+  getScrollableNode(): any {
+    const responder = this.getScrollResponder();
+    if (!responder) {
+      return;
+    }
+    return responder.getScrollableNode();
+  }
+  getInnerViewNode(): any {
+    const responder = this.getScrollResponder();
+    if (!responder) {
+      return;
+    }
+    return responder.getInnerViewNode();
+  }
+
+  scrollTo(
+    y?: number | { x?: number, y?: number, animated?: boolean },
+    x?: number,
+    animated?: boolean
+  ) {
+    const responder = this.getScrollResponder();
+    if (!responder) {
+      return;
+    }
+    responder.scrollTo(y, x, animated);
+  }
+
+  scrollToEnd(params?: ?{ animated?: ?boolean }) {
+    if (
+      this.scrollViewRef &&
+      this.scrollViewRef.scrollToEnd &&
+      typeof this.scrollViewRef.scrollToEnd === 'function'
+    ) {
+      this.scrollViewRef.scrollToEnd(params);
+    }
+  }
+
+  getScrollResponder(): ?ScrollView {
+    if (this.scrollViewRef && this.scrollViewRef.getScrollResponder) {
+      return this.scrollViewRef.getScrollResponder();
+    }
+  }
+
+  setNativeProps(props: Object) {
+    if (this.scrollViewRef && this.scrollViewRef.setNativeProps) {
+      this.scrollViewRef.setNativeProps(props);
+    }
+  }
+
+  recordInteraction() {
+    if (this.scrollViewRef && this.scrollViewRef.recordInteraction) {
+      this.scrollViewRef.recordInteraction();
+    }
+  }
+
+  flashScrollIndicators() {
+    if (this.scrollViewRef && this.scrollViewRef.flashScrollIndicators) {
+      this.scrollViewRef.flashScrollIndicators();
+    }
+  }
+
+  getMetrics(): ?Object {
+    if (
+      this.scrollViewRef &&
+      this.scrollViewRef.getMetrics &&
+      typeof this.scrollViewRef.getMetrics === 'function'
+    ) {
+      return this.scrollViewRef.getMetrics();
+    }
+  }
+
+  /**
+   * Expose `FlatList` API so this component is composable
+   * with any component that expects a `FlatList`.
+   */
+  scrollToIndex(params: {
+    animated?: ?boolean,
+    index: number,
+    viewOffset?: number,
+    viewPosition?: number,
+  }) {
+    if (
+      this.scrollViewRef &&
+      this.scrollViewRef.scrollToIndex &&
+      typeof this.scrollViewRef.scrollToIndex === 'function'
+    ) {
+      this.scrollViewRef.scrollToIndex(params);
+    }
+  }
+
+  scrollToItem(params: { animated?: ?boolean, item: any, viewPosition?: number }) {
+    if (
+      this.scrollViewRef &&
+      this.scrollViewRef.scrollToItem &&
+      typeof this.scrollViewRef.scrollToItem === 'function'
+    ) {
+      this.scrollViewRef.scrollToItem(params);
+    }
+  }
+
+  scrollToOffset(params: { animated?: ?boolean, offset: number }) {
+    if (
+      this.scrollViewRef &&
+      this.scrollViewRef.scrollToOffset &&
+      typeof this.scrollViewRef.scrollToOffset === 'function'
+    ) {
+      this.scrollViewRef.scrollToOffset(params);
+    }
+  }
+
+  /**
+   * Expose `SectionList` API so this component is composable
+   * with any component that expects a `SectionList`.
+   */
+  scrollToLocation(params: {
+    animated?: ?boolean,
+    itemIndex: number,
+    sectionIndex: number,
+    viewOffset?: number,
+    viewPosition?: number,
+  }) {
+    if (
+      this.scrollViewRef &&
+      this.scrollViewRef.scrollToLocation &&
+      typeof this.scrollViewRef.scrollToLocation === 'function'
+    ) {
+      this.scrollViewRef.scrollToLocation(params);
+    }
   }
 }
 

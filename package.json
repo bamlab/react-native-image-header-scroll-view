@@ -1,12 +1,12 @@
 {
   "name": "react-native-image-header-scroll-view",
-  "version": "0.6.2",
+  "version": "0.8.0",
   "description": "ScrollView with an image in header which become a navbar",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint src/*.js",
+    "lint": "eslint .",
     "test": "npm run lint && flow",
-    "prettify": "prettier --single-quote --trailing-comma es5 --print-width 100 --write src/**.js"
+    "prettify": "prettier --write src/**.js"
   },
   "files": ["README.md", "LICENCE", "src", "readmeAssets"],
   "repository": {
@@ -29,26 +29,22 @@
   },
   "homepage": "https://github.com/bamlab/react-native-image-header-scroll-view#readme",
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-preset-react-native": "1.9.1",
-    "eslint": "^3.19.0",
-    "eslint-config-prettier": "1.7.0",
-    "eslint-config-react-app": "^0.6.2",
-    "eslint-plugin-flowtype": "^2.32.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-prettier": "2.1.2",
-    "eslint-plugin-react": "^6.10.0",
-    "flow-bin": "^0.53.0",
-    "prettier": "^1.5.3",
-    "react": "16.0.0-beta.5",
-    "react-native": "0.49.5"
+    "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.14.0",
+    "eslint-config-bambi": "^1.2.0",
+    "flow-bin": "^0.61.0",
+    "prettier": "^1.10.2",
+    "react": "16.2.0",
+    "react-native": "0.52.2"
   },
   "peerDependencies": {
     "react": ">=15.3.1",
     "react-native": ">=0.20.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "prop-types": "^15.6.0"
+  },
+  "eslintConfig": {
+    "extends": "bambi/native"
   }
 }
