@@ -182,23 +182,12 @@ class ImageHeaderScrollView extends Component<Props, State> {
   renderTouchableFixedForeground() {
     const height = this.interpolateOnImageHeight([this.props.maxHeight, this.props.minHeight]);
 
-    const headerScale = this.state.scrollY.interpolate({
-      inputRange: [-this.props.maxHeight, 0],
-      outputRange: [3, 1],
-      extrapolate: 'clamp',
-    });
-
-    const headerTransformStyle = {
-      height,
-      transform: [{ scale: headerScale }],
-    };
-
     if (!this.props.renderTouchableFixedForeground) {
       return <View />;
     }
 
     return (
-      <Animated.View style={[styles.header, styles.touchableFixedForeground, headerTransformStyle]}>
+      <Animated.View style={[styles.header, styles.touchableFixedForeground, { height }]}>
         {this.props.renderTouchableFixedForeground()}
       </Animated.View>
     );
