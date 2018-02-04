@@ -52,7 +52,7 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 ### Header
 
 | Property | Type | Default | Description | Example |
-| -------- | ---- | ------- | ----------- |
+| -------- | ---- | ------- | ----------- | ------- |
 | `renderHeader` | `function` | Empty view | Function which return the component to use as header. It can return background image for example. | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/3b9d2d0d7f71c6bf877e2d10cc65c9ab7e1b484d/src/Pages/PullToRefresh.js#L37) |
 | `headerImage` | Image source Props (object or number) | `undefined` | Shortcut for `renderHeader={() => <Image source={this.props.headerImage} style={{ height: this.props.maxHeight, width: Dimensions.get('window').width }} />}` | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/BasicUsage.js#L26) |
 | `maxHeight` | `number` | `80` | Max height for the header | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/BasicUsage.js#L24) |
@@ -65,8 +65,8 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 
 ### Foreground
 
-| Property | Type | Default | Description |
-| -------- | ---- | ------- | ----------- |
+| Property | Type | Default | Description | Example |
+| -------- | ---- | ------- | ----------- | ------- |
 | `renderForeground` | `function` | Empty view | Function which return the component to use at foreground. The component is render in front of the header and scroll with the ScrollView. It can return a title for example.| [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/TvShow.js#L112) |
 | `renderFixedForeground` | `function` | Empty view | Function which return the component to use as fixed foreground. The component is displayed with the header but not affected by the overlay.| [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/3b9d2d0d7f71c6bf877e2d10cc65c9ab7e1b484d/src/Pages/TvShow.js#L100) |
 | `foregroundParallaxRatio` | `number` | `1` | Ration for parallax effect of foreground when scrolling. If 2, the header goes up two times faster than the scroll | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/Colors.js#L23) |
@@ -75,8 +75,8 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 
 ### Mixed
 
-| Property | Type | Default | Description |
-| -------- | ---- | ------- | ----------- |
+| Property | Type | Default | Description | Example |
+| -------- | ---- | ------- | ----------- | ------- |
 | `ScrollViewComponent` | `Component` | `ScrollView` | The component to be used for scrolling. Can be any component with an `onScroll` props (ie. `ListView`, `FlatList`, `SectionList` or `ScrollView`) | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/Avignon.js#L34) |
 | `scrollViewBackgroundColor` | `string` | `white` | Background color of the scrollView content | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/PullToRefresh.js#L52) |
 
