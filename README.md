@@ -84,7 +84,7 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 ### TriggeringView
 
 The module also export a TriggeringView component. It is a simple view witch accept callback called when it disappear
-or appear at the top of the ImageHeaderScrollView. You can see [an exemple in the dedicated repository](https://www.youtube.com/watch?v=PsgxTiif0w8&index=17&list=UUwi4cpbdkeuyYD8lDo3Z6qA).
+or appear at the top of the ImageHeaderScrollView. You can see [an exemple in the dedicated repository](https://github.com/bamlab/react-native-image-header-scroll-view-example).
 
 All of the properties of `View` are supported.
 
