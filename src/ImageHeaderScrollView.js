@@ -9,7 +9,7 @@ type ScrollViewProps = {
   onScroll?: ?Function,
   style?: $PropertyType<ViewProps, 'style'>,
   contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
-  scrollEventThrottle: number,
+  scrollEventThrottle?: number,
 };
 
 type SourceObjectProps = {
