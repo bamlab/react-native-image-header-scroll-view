@@ -44,6 +44,7 @@ export type Props = ScrollViewProps & {
   headerImage?: ?SourceProps,
   headerContainerStyle?: ?Object,
   disableHeaderGrow?: ?boolean,
+  disableOverlay?: ?boolean,
 };
 
 export type DefaultProps = {
@@ -154,7 +155,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     return (
       <Animated.View style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
         {this.renderHeaderProps()}
-        <Animated.View style={overlayStyle} />
+        {!this.props.disableOverlay && <Animated.View style={overlayStyle} />}
         <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
       </Animated.View>
     );
