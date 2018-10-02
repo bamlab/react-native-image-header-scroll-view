@@ -42,6 +42,8 @@ export type Props = ScrollViewProps & {
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
   scrollViewBackgroundColor: string,
   headerImage?: ?SourceProps,
+  headerContainerStyle?: ?Object,
+  disableHeaderGrow?: ?boolean,
 };
 
 export type DefaultProps = {
@@ -72,6 +74,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
   static defaultProps: DefaultProps = {
     overlayColor: 'black',
+    disableHeaderGrow: false,
     fadeOutForeground: false,
     foregroundParallaxRatio: 1,
     maxHeight: 125,
@@ -137,8 +140,11 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
     const headerTransformStyle = {
       height: this.props.maxHeight,
-      transform: [{ scale: headerScale }],
     };
+
+    if (!this.props.disableHeaderGrow) {
+      headerTransformStyle.transform = [{ scale: headerScale }];
+    }
 
     const overlayStyle = [
       styles.overlay,
@@ -146,7 +152,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     ];
 
     return (
-      <Animated.View style={[styles.header, headerTransformStyle]}>
+      <Animated.View style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
         {this.renderHeaderProps()}
         <Animated.View style={overlayStyle} />
         <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
