@@ -141,11 +141,8 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
     const headerTransformStyle = {
       height: this.props.maxHeight,
+      transform: !this.props.disableHeaderGrow ? [{ scale: headerScale }] : undefined,
     };
-
-    if (!this.props.disableHeaderGrow) {
-      headerTransformStyle.transform = [{ scale: headerScale }];
-    }
 
     const overlayStyle = [
       styles.overlay,
