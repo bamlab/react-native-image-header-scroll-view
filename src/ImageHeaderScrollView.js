@@ -232,6 +232,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
       onScroll,
       ScrollViewComponent,
       scrollViewBackgroundColor,
+      getScrollViewRef,
       ...scrollViewProps
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -247,7 +248,12 @@ class ImageHeaderScrollView extends Component<Props, State> {
             backgroundColor: scrollViewBackgroundColor,
           },
         ]}
-        ref={ref => (this.container = ref)}
+        ref={ref => {
+          this.container = ref;
+          if (getScrollViewRef) {
+            getScrollViewRef(ref);
+          }
+        }}
         onLayout={this.onContainerLayout}
       >
         {this.renderHeader()}
