@@ -250,15 +250,18 @@ class ImageHeaderScrollView extends Component<Props, State> {
         ]}
         ref={ref => {
           this.container = ref;
-          if (getScrollViewRef) {
-            getScrollViewRef(ref);
-          }
         }}
         onLayout={this.onContainerLayout}
       >
         {this.renderHeader()}
         <ScrollViewComponent
-          ref={ref => (this.scrollViewRef = ref)}
+          ref={ref => {
+            if (getScrollViewRef) {
+              getScrollViewRef(ref);
+            }
+
+            this.scrollViewRef = ref;
+          }}
           scrollEventThrottle={16}
           overScrollMode="never"
           {...scrollViewProps}
