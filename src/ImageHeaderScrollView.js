@@ -164,12 +164,10 @@ class ImageHeaderScrollView extends Component<Props, State> {
       outputRange: [0, -this.props.maxHeight * 2 * this.props.foregroundParallaxRatio],
       extrapolate: 'clamp',
     });
-    const opacity = this.interpolateOnImageHeight([1, -0.3]);
 
     const headerTransformStyle = {
       height: this.props.maxHeight,
       transform: [{ translateY: headerTranslate }],
-      opacity: this.props.fadeOutForeground ? opacity : 1,
     };
 
     if (!this.props.renderForeground) {
