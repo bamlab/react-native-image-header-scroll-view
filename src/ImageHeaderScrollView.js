@@ -199,7 +199,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
     this.container.measureInWindow((x, y) => {
       if (this.container) {
-        this.setState(() => ({ pageY: y }))
+        this.setState(() => ({ pageY: y }));
       }
     });
   };
