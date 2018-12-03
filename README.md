@@ -97,6 +97,17 @@ All of the properties of `View` are supported.
 | `onDisplay` | `function` | Called when the component finished to be displayed again. |
 | `onTouchTop` | `function` | Called when the Top of the component touch the Top of the ScrollView. (`onDisplay` + `onBeginHidden`) |
 | `onTouchBottom` | `function` | Called when the Bottom of the component touch the Top of the ScrollView. (`onHide` + `onBeginDisplayed`) |
+### Contributing
+
+All contributions are welcomed, that might be either adding new features, doing some refaco of the exisiting code or fixing bugs. 
+
+**How to contribute**
+
+1. Fork the project & clone locally. Follow the initial setup here.
+2. Create a branch, naming it either a feature or bug: git checkout -b feature/that-new-feature or bug/fixing-that-bug
+3. Code and commit your changes. Write a good commit message. Best would be to use git [commitizen](https://github.com/commitizen/cz-cli)
+4. Push to the branch: git push origin feature/that-new-feature
+5. Create a pull request for your branch 🎉
 
 
 ## Other open-source modules by the folks at [BAM](http://github.com/bamlab)
