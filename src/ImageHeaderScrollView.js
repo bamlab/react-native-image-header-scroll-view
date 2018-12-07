@@ -2,8 +2,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Animated, ScrollView, StyleSheet, View, Image, Dimensions } from 'react-native';
+import ViewOverflow from 'react-native-view-overflow';
 import type { ViewProps } from 'ViewPropTypes';
 import type { FlatList, SectionList, ListView } from 'react-native';
+
+const AnimatedViewOverflow = Animated.createAnimatedComponent(ViewOverflow);
 
 type ScrollViewProps = {
   onScroll?: ?Function,
@@ -150,11 +153,11 @@ class ImageHeaderScrollView extends Component<Props, State> {
     ];
 
     return (
-      <Animated.View style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
+      <AnimatedViewOverflow style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
         {this.renderHeaderProps()}
         {!this.props.disableOverlay && <Animated.View style={overlayStyle} />}
         <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
-      </Animated.View>
+      </AnimatedViewOverflow>
     );
   }
 
@@ -175,9 +178,9 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
 
     return (
-      <Animated.View style={[styles.header, headerTransformStyle]}>
+      <AnimatedViewOverflow style={[styles.header, headerTransformStyle]}>
         {this.props.renderForeground()}
-      </Animated.View>
+      </AnimatedViewOverflow>
     );
   }
 
@@ -189,9 +192,9 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
 
     return (
-      <Animated.View style={[styles.header, styles.touchableFixedForeground, { height }]}>
+      <AnimatedViewOverflow style={[styles.header, styles.touchableFixedForeground, { height }]}>
         {this.props.renderTouchableFixedForeground()}
-      </Animated.View>
+      </AnimatedViewOverflow>
     );
   }
 
