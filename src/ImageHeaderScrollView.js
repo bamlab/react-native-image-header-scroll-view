@@ -156,7 +156,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
       <AnimatedViewOverflow style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
         {this.renderHeaderProps()}
         {!this.props.disableOverlay && <Animated.View style={overlayStyle} />}
-        <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
+        <AnimatedViewOverflow style={styles.fixedForeground}>{this.props.renderFixedForeground()}</AnimatedViewOverflow>
       </AnimatedViewOverflow>
     );
   }
@@ -241,7 +241,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     const inset = maxHeight - minHeight;
 
     return (
-      <View
+      <AnimatedViewOverflow
         style={[
           styles.container,
           {
@@ -280,7 +280,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
         />
         {this.renderTouchableFixedForeground()}
         {this.renderForeground()}
-      </View>
+      </AnimatedViewOverflow>
     );
   }
 
