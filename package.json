@@ -1,6 +1,6 @@
 {
   "name": "react-native-image-header-scroll-view-ep",
-  "version": "0.0.8",
+  "version": "0.0.81",
   "description": "ScrollView with an image in header which become a navbar",
   "main": "src/index.js",
   "scripts": {
@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "prop-types": "^15.6.0",
+    "react-native-image-header-scroll-view-ep": "^0.0.8",
     "react-native-view-overflow": "^0.0.3"
   },
   "eslintConfig": {
