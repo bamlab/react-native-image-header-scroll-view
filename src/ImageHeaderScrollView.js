@@ -153,7 +153,9 @@ class ImageHeaderScrollView extends Component<Props, State> {
       <Animated.View style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
         {this.renderHeaderProps()}
         {!this.props.disableOverlay && <Animated.View style={overlayStyle} />}
-        <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
+        <View style={[styles.fixedForeground, this.props.fixedForegroundContainerStyles]}>
+          {this.props.renderFixedForeground()}
+        </View>
       </Animated.View>
     );
   }
