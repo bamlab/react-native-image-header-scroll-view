@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/joshua/.nvm/versions/node/v8.10.0/bin/node /Users/joshua/.yarn/bin/yarn.js android-dev
+  /Users/joshua/.nvm/versions/node/v8.10.0/bin/node /Users/joshua/.yarn/bin/yarn.js publish
 
 PATH: 
   /Users/joshua/.nvm/versions/node/v8.10.0/bin:/Users/joshua/.yarn/bin:/Users/joshua/.config/yarn/global/node_modules/.bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/joshua/Library/Android/sdk/tools:/Users/joshua/Library/Android/sdk/platform-tools
@@ -16,7 +16,7 @@ Platform:
 npm manifest: 
   {
     "name": "react-native-image-header-scroll-view-ep",
-    "version": "0.0.8",
+    "version": "0.0.84",
     "description": "ScrollView with an image in header which become a navbar",
     "main": "src/index.js",
     "scripts": {
@@ -4402,14 +4402,14 @@ Lockfile:
       yargs-parser "^7.0.0"
 
 Trace: 
-  Error: Command "android-dev" not found.
-      at new MessageError (/Users/joshua/.yarn/lib/cli.js:186:110)
-      at /Users/joshua/.yarn/lib/cli.js:87307:17
-      at Generator.next (<anonymous>)
-      at step (/Users/joshua/.yarn/lib/cli.js:98:30)
-      at /Users/joshua/.yarn/lib/cli.js:116:14
-      at new Promise (<anonymous>)
-      at new F (/Users/joshua/.yarn/lib/cli.js:23451:28)
-      at /Users/joshua/.yarn/lib/cli.js:95:12
-      at runCommand (/Users/joshua/.yarn/lib/cli.js:87312:22)
-      at Object.<anonymous> (/Users/joshua/.yarn/lib/cli.js:87412:14)
+  Error: https://registry.yarnpkg.com/react-native-image-header-scroll-view-ep: You cannot publish over the previously published versions: 0.0.84.
+      at Request.params.callback [as _callback] (/Users/joshua/.yarn/lib/cli.js:65019:18)
+      at Request.self.callback (/Users/joshua/.yarn/lib/cli.js:132430:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (/Users/joshua/.yarn/lib/cli.js:133413:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at Gunzip.<anonymous> (/Users/joshua/.yarn/lib/cli.js:133333:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
