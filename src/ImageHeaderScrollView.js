@@ -42,6 +42,7 @@ export type Props = ScrollViewProps & {
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
   scrollViewBackgroundColor: string,
   headerImage?: ?SourceProps,
+  useNativeDriver: ?boolean,
 };
 
 export type DefaultProps = {
@@ -186,6 +187,15 @@ class ImageHeaderScrollView extends Component<Props, State> {
       return <View />;
     }
 
+    if (this.props.useNativeDriver) {
+      if (__DEV__) {
+        console.warn(
+          'useNativeDriver=true and renderTouchableFixedForeground is not supported at the moment due to the animation of height unsupported with the native driver'
+        );
+      }
+      return null;
+    }
+
     return (
       <Animated.View style={[styles.header, styles.touchableFixedForeground, { height }]}>
         {this.props.renderTouchableFixedForeground()}
@@ -230,11 +240,15 @@ class ImageHeaderScrollView extends Component<Props, State> {
       style,
       contentContainerStyle,
       onScroll,
-      ScrollViewComponent,
       scrollViewBackgroundColor,
+      useNativeDriver,
       ...scrollViewProps
     } = this.props;
     /* eslint-enable no-unused-vars */
+
+    const ScrollViewComponent = useNativeDriver
+      ? Animated.ScrollView
+      : this.props.ScrollViewComponent;
 
     const inset = maxHeight - minHeight;
 
@@ -253,7 +267,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
         {this.renderHeader()}
         <ScrollViewComponent
           ref={ref => (this.scrollViewRef = ref)}
-          scrollEventThrottle={16}
+          scrollEventThrottle={useNativeDriver ? 1 : 16}
           overScrollMode="never"
           {...scrollViewProps}
           contentContainerStyle={[
@@ -266,7 +280,13 @@ class ImageHeaderScrollView extends Component<Props, State> {
             childrenStyle,
           ]}
           style={[styles.container, style]}
-          onScroll={this.onScroll}
+          onScroll={
+            useNativeDriver
+              ? Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }], {
+                  useNativeDriver: true,
+                })
+              : this.onScroll
+          }
         />
         {this.renderTouchableFixedForeground()}
         {this.renderForeground()}
