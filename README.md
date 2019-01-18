@@ -61,8 +61,8 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 | `maxOverlayOpacity` | `number` | `0.3` | Opacity of a black overlay on the header when in navbar mode | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/3b9d2d0d7f71c6bf877e2d10cc65c9ab7e1b484d/src/Pages/TvShow.js#L96) |
 | `overlayColor` | `string` | `black` | Color of the overlay on the header | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/Colors.js#L16) |
 | `useNativeDriver` | `boolean` | `false` | Use native driver for the animation for performance improvement. A few props are unsupported at the moment if `useNativeDriver=true` (`onScroll`, `ScrollComponent`, `renderTouchableFixedForeground`) | - |
-|`headerContainerStyle`|`Object`|`undefined`|Optional styles to be passed to the container of the header component|
-|`disableHeaderGrow`|`boolean`|`undefined`|Disable to grow effect on the header|
+|`headerContainerStyle`|`Object`|`undefined`| Optional styles to be passed to the container of the header component|
+|`disableHeaderGrow`|`boolean`|`undefined`| Disable to grow effect on the header|
 
 ### Foreground
 
@@ -73,6 +73,7 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 | `foregroundParallaxRatio` | `number` | `1` | Ration for parallax effect of foreground when scrolling. If 2, the header goes up two times faster than the scroll | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/Colors.js#L23) |
 | `fadeOutForeground` | `bool` | `false` | If set, add a fade out effect on the foreground when scroll up | [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/Colors.js#L13) |
 | `renderTouchableFixedForeground` | `function` | Empty view | Same as `renderFixedForeground` but allow to use touchable in it. [*Can cause performances issues on Android*](https://github.com/bamlab/react-native-image-header-scroll-view/issues/6)| [example](https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/PullToRefresh.js#L45) |
+|`fixedForegroundContainerStyles`|`Object`|`undefined`| Optional styles to be passed to the container of the fixed foreground component|
 
 ### Mixed
 

@@ -44,6 +44,7 @@ export type Props = ScrollViewProps & {
   headerImage?: ?SourceProps,
   useNativeDriver: ?boolean,
   headerContainerStyle?: ?Object,
+  fixedForegroundContainerStyles?: ?Object,
   disableHeaderGrow?: ?boolean,
 };
 

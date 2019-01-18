@@ -34,7 +34,7 @@ type State = {
 
 type Context = {
   scrollPageY?: number,
-  scrollY: typeof Animated.Value,
+  scrollY: Animated.Value,
 };
 
 class TriggeringView extends Component<Props, State> {
