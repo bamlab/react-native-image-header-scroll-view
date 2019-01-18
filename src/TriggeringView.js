@@ -12,6 +12,7 @@ type Props = {
   onTouchBottom: Function,
   children?: React$Node,
   onLayout?: Function,
+  bottomOffset?: number,
 };
 
 type DefaultProps = {
@@ -21,6 +22,7 @@ type DefaultProps = {
   onDisplay: Function,
   onTouchTop: Function,
   onTouchBottom: Function,
+  bottomOffset: number,
 };
 
 type State = {
@@ -30,7 +32,7 @@ type State = {
 
 type Context = {
   scrollPageY?: number,
-  scrollY: Animated.Value,
+  scrollY: typeof Animated.Value,
 };
 
 class TriggeringView extends Component<Props, State> {
@@ -55,6 +57,7 @@ class TriggeringView extends Component<Props, State> {
     onDisplay: () => {},
     onTouchTop: () => {},
     onTouchBottom: () => {},
+    bottomOffset: 0,
   };
 
   constructor(props: Props) {
@@ -114,11 +117,11 @@ class TriggeringView extends Component<Props, State> {
       this.props.onTouchTop(false);
     }
 
-    if (!this.state.hidden && value >= bottom) {
+    if (!this.state.hidden && value >= bottom + this.props.bottomOffset) {
       this.setState({ hidden: true });
       this.props.onHide();
       this.props.onTouchBottom(true);
-    } else if (this.state.hidden && value < bottom) {
+    } else if (this.state.hidden && value < bottom + this.props.bottomOffset) {
       this.setState({ hidden: false });
       this.props.onBeginDisplayed();
       this.props.onTouchBottom(false);

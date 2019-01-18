@@ -8,7 +8,12 @@
     "test": "npm run lint && flow",
     "prettify": "prettier --write src/**.js"
   },
-  "files": ["README.md", "LICENCE", "src", "readmeAssets"],
+  "files": [
+    "README.md",
+    "LICENCE",
+    "src",
+    "readmeAssets"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bamlab/react-native-image-header-scroll-view.git"
@@ -42,7 +47,9 @@
     "react-native": ">=0.20.0"
   },
   "dependencies": {
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "react-native-image-header-scroll-view-ep": "^0.0.8",
+    "react-native-view-overflow": "^0.0.3"
   },
   "eslintConfig": {
     "extends": "bambi/native"

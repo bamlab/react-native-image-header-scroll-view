@@ -3344,6 +3344,17 @@ react-devtools-core@3.0.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-image-header-scroll-view-ep@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-image-header-scroll-view-ep/-/react-native-image-header-scroll-view-ep-0.0.8.tgz#a42e82d074197c76d1d28fc5c5d6b0a6a9fb512a"
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-view-overflow "^0.0.3"
+
+react-native-view-overflow@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-view-overflow/-/react-native-view-overflow-0.0.3.tgz#d7b08e8c1e5047a2cf07f3ece82025899f930674"
+
 react-native@0.52.2:
   version "0.52.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.52.2.tgz#1ae9a4c4441bd6e54a8ffc8aae4ac2b5c7cccd68"
