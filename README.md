@@ -17,6 +17,8 @@ $ npm install react-native-image-header-scroll-view --save
 
 ![react-native-image-header-scroll-view demo android](./readmeAssets/demoAndroid.gif)|![react-native-image-header-scroll-view demo ios](./readmeAssets/demoIos.gif)
 
+You can find this example code here : https://github.com/bamlab/react-native-image-header-scroll-view-example/blob/master/src/Pages/TvShow.js 
+
 ## Basic Usage 
 
 ```jsx
