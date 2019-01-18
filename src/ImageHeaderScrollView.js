@@ -43,6 +43,9 @@ export type Props = ScrollViewProps & {
   scrollViewBackgroundColor: string,
   headerImage?: ?SourceProps,
   useNativeDriver: ?boolean,
+  headerContainerStyle?: ?Object,
+  fixedForegroundContainerStyles?: ?Object,
+  disableHeaderGrow?: ?boolean,
 };
 
 export type DefaultProps = {
@@ -73,6 +76,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
   static defaultProps: DefaultProps = {
     overlayColor: 'black',
+    disableHeaderGrow: false,
     fadeOutForeground: false,
     foregroundParallaxRatio: 1,
     maxHeight: 125,
@@ -138,7 +142,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
 
     const headerTransformStyle = {
       height: this.props.maxHeight,
-      transform: [{ scale: headerScale }],
+      transform: !this.props.disableHeaderGrow ? [{ scale: headerScale }] : undefined,
     };
 
     const overlayStyle = [
@@ -146,11 +150,17 @@ class ImageHeaderScrollView extends Component<Props, State> {
       { opacity: overlayOpacity, backgroundColor: this.props.overlayColor },
     ];
 
+    const disableOverlay =
+      this.props.minOverlayOpacity === this.props.maxOverlayOpacity &&
+      this.props.maxOverlayOpacity === 0;
+
     return (
-      <Animated.View style={[styles.header, headerTransformStyle]}>
+      <Animated.View style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
         {this.renderHeaderProps()}
-        <Animated.View style={overlayStyle} />
-        <View style={styles.fixedForeground}>{this.props.renderFixedForeground()}</View>
+        {!disableOverlay && <Animated.View style={overlayStyle} />}
+        <View style={[styles.fixedForeground, this.props.fixedForegroundContainerStyles]}>
+          {this.props.renderFixedForeground()}
+        </View>
       </Animated.View>
     );
   }
@@ -161,12 +171,10 @@ class ImageHeaderScrollView extends Component<Props, State> {
       outputRange: [0, -this.props.maxHeight * 2 * this.props.foregroundParallaxRatio],
       extrapolate: 'clamp',
     });
-    const opacity = this.interpolateOnImageHeight([1, -0.3]);
 
     const headerTransformStyle = {
       height: this.props.maxHeight,
       transform: [{ translateY: headerTranslate }],
-      opacity: this.props.fadeOutForeground ? opacity : 1,
     };
 
     if (!this.props.renderForeground) {
@@ -261,13 +269,17 @@ class ImageHeaderScrollView extends Component<Props, State> {
             backgroundColor: scrollViewBackgroundColor,
           },
         ]}
-        ref={ref => (this.container = ref)}
+        ref={ref => {
+          this.container = ref;
+        }}
         onLayout={this.onContainerLayout}
       >
         {this.renderHeader()}
         <ScrollViewComponent
-          ref={ref => (this.scrollViewRef = ref)}
           scrollEventThrottle={useNativeDriver ? 1 : 16}
+          ref={ref => {
+            this.scrollViewRef = ref;
+          }}
           overScrollMode="never"
           {...scrollViewProps}
           contentContainerStyle={[
@@ -305,6 +317,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
     return responder.getScrollableNode();
   }
+
   getInnerViewNode(): any {
     const responder = this.getScrollResponder();
     if (!responder) {
