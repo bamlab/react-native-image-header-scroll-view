@@ -47,9 +47,7 @@
     "react-native": ">=0.20.0"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
-    "react-native-image-header-scroll-view-ep": "^0.0.8",
-    "react-native-view-overflow": "^0.0.3"
+    "prop-types": "^15.6.0"
   },
   "eslintConfig": {
     "extends": "bambi/native"

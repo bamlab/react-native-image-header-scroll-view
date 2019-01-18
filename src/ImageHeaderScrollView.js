@@ -2,11 +2,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Animated, ScrollView, StyleSheet, View, Image, Dimensions } from 'react-native';
-import OverflowView from 'react-native-view-overflow';
 import type { ViewProps } from 'ViewPropTypes';
 import type { FlatList, SectionList, ListView } from 'react-native';
-
-const AnimatedOverflow = Animated.createAnimatedComponent(OverflowView);
 
 type ScrollViewProps = {
   onScroll?: ?Function,
@@ -153,16 +150,18 @@ class ImageHeaderScrollView extends Component<Props, State> {
       { opacity: overlayOpacity, backgroundColor: this.props.overlayColor },
     ];
 
+    const disableOverlay =
+      this.props.minOverlayOpacity === this.props.maxOverlayOpacity &&
+      this.props.maxOverlayOpacity === 0;
+
     return (
-      <AnimatedOverflow
-        style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}
-      >
+      <Animated.View style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
         {this.renderHeaderProps()}
-        {!this.props.disableOverlay && <Animated.View style={overlayStyle} />}
+        {!disableOverlay && <Animated.View style={overlayStyle} />}
         <View style={[styles.fixedForeground, this.props.fixedForegroundContainerStyles]}>
           {this.props.renderFixedForeground()}
         </View>
-      </AnimatedOverflow>
+      </Animated.View>
     );
   }
 
@@ -280,10 +279,6 @@ class ImageHeaderScrollView extends Component<Props, State> {
         <ScrollViewComponent
           scrollEventThrottle={useNativeDriver ? 1 : 16}
           ref={ref => {
-            if (getScrollViewRef) {
-              getScrollViewRef(ref);
-            }
-
             this.scrollViewRef = ref;
           }}
           overScrollMode="never"
