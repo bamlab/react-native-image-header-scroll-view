@@ -100,7 +100,38 @@ All of the properties of `View` are supported.
 | `onTouchTop` | `function` | Called when the Top of the component touch the Top of the ScrollView. (`onDisplay` + `onBeginHidden`) |
 | `onTouchBottom` | `function` | Called when the Bottom of the component touch the Top of the ScrollView. (`onHide` + `onBeginDisplayed`) |
 
-### Contributing
+
+
+## FAQ
+
+### How to remove the black image overlay
+
+Just set the `maxOverlayOpacity` to `0`.
+
+```jsx 
+<HeaderImageScrollView
+  minOverlayOpacity={0}
+  maxOverlayOpacity={0}
+  {/* ... */}
+/>
+
+```
+
+### How to remove the image zomming on scroll down
+
+You have two solutions : 
+
+1. You can use the `disableHeaderGrow` props. It will keep the ios elastic scroll effect.
+2. You can also use the `bounces={false}` props [from the scroll view](https://facebook.github.io/react-native/docs/scrollview#bounces). 
+
+Results : 
+
+| `disableHeaderGrow` | `bounces={false}` | 
+| ------------------- | ----------------- | 
+![react-native-image-header-scroll-view demo disableHeaderGrow](./readmeAssets/demoDisableHeaderGrow.gif)|![react-native-image-header-scroll-view demo bounces](./readmeAssets/demoBounces.gif)
+
+
+## Contributing
 
 All contributions are welcomed, that might be either adding new features, doing some refaco of the exisiting code or fixing bugs. 
 
@@ -109,8 +140,9 @@ All contributions are welcomed, that might be either adding new features, doing 
 1. Fork the project & clone locally. Follow the initial setup here.
 2. Create a branch, naming it either a feature or bug: git checkout -b feature/that-new-feature or bug/fixing-that-bug
 3. Code and commit your changes. Write a good commit message. Best would be to use git [commitizen](https://github.com/commitizen/cz-cli)
-4. Push to the branch: git push origin feature/that-new-feature
-5. Create a pull request for your branch 🎉
+4. Test your changes in the [example repository](https://github.com/bamlab/react-native-image-header-scroll-view-example)
+5. Push to the branch: git push origin feature/that-new-feature
+6. Create a pull request for your branch 🎉
 
 
 ## Other open-source modules by the folks at [BAM](http://github.com/bamlab)
