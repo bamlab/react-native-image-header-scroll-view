@@ -45,7 +45,6 @@ export type Props = ScrollViewProps & {
   useNativeDriver: ?boolean,
   headerContainerStyle?: ?Object,
   disableHeaderGrow?: ?boolean,
-  disableOverlay?: ?boolean,
 };
 
 export type DefaultProps = {
@@ -250,7 +249,6 @@ class ImageHeaderScrollView extends Component<Props, State> {
       onScroll,
       scrollViewBackgroundColor,
       useNativeDriver,
-      getScrollViewRef,
       ...scrollViewProps
     } = this.props;
     /* eslint-enable no-unused-vars */

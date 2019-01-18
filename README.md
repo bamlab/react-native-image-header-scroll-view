@@ -63,7 +63,6 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 | `useNativeDriver` | `boolean` | `false` | Use native driver for the animation for performance improvement. A few props are unsupported at the moment if `useNativeDriver=true` (`onScroll`, `ScrollComponent`, `renderTouchableFixedForeground`) | - |
 |`headerContainerStyle`|`Object`|`undefined`|Optional styles to be passed to the container of the header component|
 |`disableHeaderGrow`|`boolean`|`undefined`|Disable to grow effect on the header|
-|`disableOverlay`|`boolean`|`undefined`|Disable the image overlay|
 
 ### Foreground
 
@@ -99,6 +98,7 @@ All of the properties of `View` are supported.
 | `onDisplay` | `function` | Called when the component finished to be displayed again. |
 | `onTouchTop` | `function` | Called when the Top of the component touch the Top of the ScrollView. (`onDisplay` + `onBeginHidden`) |
 | `onTouchBottom` | `function` | Called when the Bottom of the component touch the Top of the ScrollView. (`onHide` + `onBeginDisplayed`) |
+
 ### Contributing
 
 All contributions are welcomed, that might be either adding new features, doing some refaco of the exisiting code or fixing bugs. 
