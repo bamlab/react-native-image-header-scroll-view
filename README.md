@@ -40,6 +40,11 @@ render() {
 }
 ```
 
+Result : 
+
+![Basic Usage](./readmeAssets/basicUsage.gif)
+
+
 You can find examples in a [dedicated repository](https://github.com/bamlab/react-native-image-header-scroll-view-example).
 
 ## Usage (API)
@@ -85,8 +90,8 @@ The `HeaderImageScrollView` handle also the following props. None is required :
 
 ### TriggeringView
 
-The module also export a TriggeringView component. It is a simple view witch accept callback called when it disappear
-or appear at the top of the ImageHeaderScrollView. You can see [an exemple in the dedicated repository](https://github.com/bamlab/react-native-image-header-scroll-view-example).
+The module also export a TriggeringView component. It is a spy View you put on the page that will can call various callback during the scroll.
+It accept callback called when it disappear or appear at the top of the ImageHeaderScrollView. You can see [an exemple in the dedicated repository](https://github.com/bamlab/react-native-image-header-scroll-view-example).
 
 All of the properties of `View` are supported.
 
