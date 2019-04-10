@@ -38,7 +38,7 @@ export type Props = ScrollViewProps & {
   renderFixedForeground: () => React$Element<any>,
   renderForeground?: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
-  foregroundExtrapolate: string,
+  foregroundExtrapolate: ?string,
   renderTouchableFixedForeground?: ?() => React$Element<any>,
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
   scrollViewBackgroundColor: string,
