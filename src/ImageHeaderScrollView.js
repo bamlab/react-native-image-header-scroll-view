@@ -38,6 +38,7 @@ export type Props = ScrollViewProps & {
   renderFixedForeground: () => React$Element<any>,
   renderForeground?: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
+  foregroundExtrapolate: ?string,
   renderTouchableFixedForeground?: ?() => React$Element<any>,
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
   scrollViewBackgroundColor: string,
@@ -58,6 +59,7 @@ export type DefaultProps = {
   minOverlayOpacity: number,
   renderFixedForeground: () => React$Element<any>,
   renderHeader: () => React$Element<any>,
+  foregroundExtrapolate: string,
   ScrollViewComponent: React$ComponentType<ScrollViewProps>,
   scrollViewBackgroundColor: string,
 };
@@ -84,6 +86,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     minHeight: 80,
     minOverlayOpacity: 0,
     renderFixedForeground: () => <View />,
+    foregroundExtrapolate: 'clamp',
     renderHeader: () => <View />,
     ScrollViewComponent: ScrollView,
     scrollViewBackgroundColor: 'white',
@@ -169,7 +172,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     const headerTranslate = this.state.scrollY.interpolate({
       inputRange: [0, this.props.maxHeight * 2],
       outputRange: [0, -this.props.maxHeight * 2 * this.props.foregroundParallaxRatio],
-      extrapolate: 'clamp',
+      extrapolate: this.props.foregroundExtrapolate,
     });
 
     const headerTransformStyle = {
