@@ -33,7 +33,7 @@ declare module "react-native-image-header-scroll-view" {
         renderFixedForeground?: () => React.ReactElement;
         renderForeground?: () => React.ReactElement;
         renderHeader?: () => React.ReactElement; // default is an empty view.
-        foregroundExtrapolate: ?string;
+        foregroundExtrapolate?: string;
         renderTouchableFixedForeground?: () => React.ReactElement;
         ScrollViewComponent?: React.ComponentType<ScrollViewProps>;
         scrollViewBackgroundColor?: string; // defaults to white.
