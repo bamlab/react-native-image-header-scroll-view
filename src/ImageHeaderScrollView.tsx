@@ -1,82 +1,71 @@
 // @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Animated, ScrollView, StyleSheet, View, Image, Dimensions } from 'react-native';
-import type { ViewProps } from 'ViewPropTypes';
-import type { FlatList, SectionList, ListView } from 'react-native';
+import {
+  ScrollViewProps,
+  ViewStyle,
+  TextStyle,
+  ImageStyle,
+  Animated,
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+} from 'react-native';
 
-type ScrollViewProps = {
-  onScroll?: ?Function,
-  style?: $PropertyType<ViewProps, 'style'>,
-  contentContainerStyle?: $PropertyType<ViewProps, 'style'>,
-  scrollEventThrottle?: number,
-};
+interface Dictionary {
+  [key: string]: string;
+}
+interface SourceObjectProps {
+  uri?: string;
+  bundle?: string;
+  method?: string;
+  headers?: Dictionary;
+  body?: string;
+  cache?: 'default' | 'reload' | 'force-cache' | 'only-if-cached';
+  width?: number;
+  height?: number;
+  scale?: number;
+}
 
-type SourceObjectProps = {
-  uri?: ?string,
-  bundle?: ?string,
-  method?: ?string,
-  headers?: ?{ [string]: string },
-  body?: ?string,
-  cache?: ?('default' | 'reload' | 'force-cache' | 'only-if-cached'),
-  width?: ?number,
-  height?: ?number,
-  scale?: ?number,
-};
 type SourceProps = number | SourceObjectProps | SourceObjectProps[];
 
-export type Props = ScrollViewProps & {
-  children?: ?React$Element<any>,
-  childrenStyle?: ?any,
-  overlayColor: string,
-  fadeOutForeground: boolean,
-  foregroundParallaxRatio: number,
-  maxHeight: number,
-  maxOverlayOpacity: number,
-  minHeight: number,
-  minOverlayOpacity: number,
-  renderFixedForeground: () => React$Element<any>,
-  renderForeground?: () => React$Element<any>,
-  renderHeader: () => React$Element<any>,
-  foregroundExtrapolate: ?string,
-  renderTouchableFixedForeground?: ?() => React$Element<any>,
-  ScrollViewComponent: React$ComponentType<ScrollViewProps>,
-  scrollViewBackgroundColor: string,
-  headerImage?: ?SourceProps,
-  useNativeDriver: ?boolean,
-  headerContainerStyle?: ?Object,
-  fixedForegroundContainerStyles?: ?Object,
-  disableHeaderGrow?: ?boolean,
-};
+interface Props extends ScrollViewProps {
+  children?: React.ReactElement;
+  childrenStyle?: ViewStyle | TextStyle | ImageStyle;
+  overlayColor?: string; // defaults to black
+  fadeOutForeground?: boolean;
+  foregroundParallaxRatio?: number; // defaults to 1
+  maxHeight?: number; // default is 80
+  minHeight?: number; // default is 125
+  maxOverlayOpacity?: number; // defaults to 0.3
+  minOverlayOpacity?: number; // defaults to 0
+  renderFixedForeground?: () => React.ReactElement;
+  renderForeground?: () => React.ReactElement;
+  renderHeader?: () => React.ReactElement; // default is an empty view.
+  foregroundExtrapolate?: 'extend' | 'identity' | 'clamp';
+  renderTouchableFixedForeground?: () => React.ReactElement;
+  ScrollViewComponent?: React.ComponentType<ScrollViewProps>;
+  scrollViewBackgroundColor?: string; // defaults to white.
+  headerImage?: SourceProps;
+  useNativeDriver?: boolean; // defaults to false.
+  headerContainerStyle?: object;
+  fixedForegroundContainerStyles?: object;
+  disableHeaderGrow?: boolean;
+}
 
-export type DefaultProps = {
-  overlayColor: string,
-  fadeOutForeground: boolean,
-  foregroundParallaxRatio: number,
-  maxHeight: number,
-  maxOverlayOpacity: number,
-  minHeight: number,
-  minOverlayOpacity: number,
-  renderFixedForeground: () => React$Element<any>,
-  renderHeader: () => React$Element<any>,
-  foregroundExtrapolate: string,
-  ScrollViewComponent: React$ComponentType<ScrollViewProps>,
-  scrollViewBackgroundColor: string,
-};
-
-export type State = {
-  scrollY: Animated.Value,
-  pageY: number,
-};
-
-type ScrollComponent<ItemT> = FlatList<ItemT> | SectionList<ItemT> | ListView | ScrollView;
+interface State {
+  scrollY: Animated.Value;
+  pageY: number;
+}
 
 class ImageHeaderScrollView extends Component<Props, State> {
-  container: ?View; // @see https://github.com/facebook/react-native/issues/15955
-  scrollViewRef: ?ScrollComponent<any>; // @see https://github.com/facebook/react-native/issues/15955
+  container?: any; // @see https://github.com/facebook/react-native/issues/15955
+  scrollViewRef?: any; // @see https://github.com/facebook/react-native/issues/15955
   state: State;
 
-  static defaultProps: DefaultProps = {
+  static defaultProps = {
     overlayColor: 'black',
     disableHeaderGrow: false,
     fadeOutForeground: false,
@@ -90,6 +79,11 @@ class ImageHeaderScrollView extends Component<Props, State> {
     renderHeader: () => <View />,
     ScrollViewComponent: ScrollView,
     scrollViewBackgroundColor: 'white',
+  };
+
+  static childContextTypes = {
+    scrollY: PropTypes.instanceOf(Animated.Value),
+    scrollPageY: PropTypes.number,
   };
 
   constructor(props: Props) {
@@ -225,7 +219,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     });
   };
 
-  onScroll = (e: *) => {
+  onScroll = e => {
     if (this.props.onScroll) {
       this.props.onScroll(e);
     }
@@ -330,7 +324,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
   }
 
   scrollTo(
-    y?: number | { x?: number, y?: number, animated?: boolean },
+    y?: number | { x?: number; y?: number; animated?: boolean },
     x?: number,
     animated?: boolean
   ) {
@@ -341,7 +335,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     responder.scrollTo(y, x, animated);
   }
 
-  scrollToEnd(params?: ?{ animated?: ?boolean }) {
+  scrollToEnd(params?: { animated?: boolean }) {
     if (
       this.scrollViewRef &&
       this.scrollViewRef.scrollToEnd &&
@@ -351,7 +345,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
   }
 
-  getScrollResponder(): ?ScrollView {
+  getScrollResponder(): ScrollView {
     if (this.scrollViewRef && this.scrollViewRef.getScrollResponder) {
       return this.scrollViewRef.getScrollResponder();
     }
@@ -375,7 +369,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
   }
 
-  getMetrics(): ?Object {
+  getMetrics() {
     if (
       this.scrollViewRef &&
       this.scrollViewRef.getMetrics &&
@@ -390,10 +384,10 @@ class ImageHeaderScrollView extends Component<Props, State> {
    * with any component that expects a `FlatList`.
    */
   scrollToIndex(params: {
-    animated?: ?boolean,
-    index: number,
-    viewOffset?: number,
-    viewPosition?: number,
+    animated?: boolean;
+    index: number;
+    viewOffset?: number;
+    viewPosition?: number;
   }) {
     if (
       this.scrollViewRef &&
@@ -404,7 +398,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
   }
 
-  scrollToItem(params: { animated?: ?boolean, item: any, viewPosition?: number }) {
+  scrollToItem(params: { animated?: boolean; item: any; viewPosition?: number }) {
     if (
       this.scrollViewRef &&
       this.scrollViewRef.scrollToItem &&
@@ -414,7 +408,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
   }
 
-  scrollToOffset(params: { animated?: ?boolean, offset: number }) {
+  scrollToOffset(params: { animated?: boolean; offset: number }) {
     if (
       this.scrollViewRef &&
       this.scrollViewRef.scrollToOffset &&
@@ -429,11 +423,11 @@ class ImageHeaderScrollView extends Component<Props, State> {
    * with any component that expects a `SectionList`.
    */
   scrollToLocation(params: {
-    animated?: ?boolean,
-    itemIndex: number,
-    sectionIndex: number,
-    viewOffset?: number,
-    viewPosition?: number,
+    animated?: boolean;
+    itemIndex: number;
+    sectionIndex: number;
+    viewOffset?: number;
+    viewPosition?: number;
   }) {
     if (
       this.scrollViewRef &&
@@ -444,11 +438,6 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
   }
 }
-
-ImageHeaderScrollView.childContextTypes = {
-  scrollY: PropTypes.instanceOf(Animated.Value),
-  scrollPageY: PropTypes.number,
-};
 
 const styles = StyleSheet.create({
   container: {
