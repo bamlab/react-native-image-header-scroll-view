@@ -152,10 +152,16 @@ class ImageHeaderScrollView extends Component<Props, State> {
       this.props.maxOverlayOpacity === 0;
 
     return (
-      <Animated.View style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}>
+      <Animated.View
+        style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}
+        testID="header"
+      >
         {this.renderHeaderProps()}
-        {!disableOverlay && <Animated.View style={overlayStyle} />}
-        <View style={[styles.fixedForeground, this.props.fixedForegroundContainerStyles]}>
+        {!disableOverlay && <Animated.View style={overlayStyle} testID="overlay" />}
+        <View
+          style={[styles.fixedForeground, this.props.fixedForegroundContainerStyles]}
+          testID="fixedForeground"
+        >
           {this.props.renderFixedForeground()}
         </View>
       </Animated.View>
@@ -179,7 +185,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
 
     return (
-      <Animated.View style={[styles.header, headerTransformStyle]}>
+      <Animated.View style={[styles.header, headerTransformStyle]} testID="foreground">
         {this.props.renderForeground()}
       </Animated.View>
     );
@@ -202,7 +208,10 @@ class ImageHeaderScrollView extends Component<Props, State> {
     }
 
     return (
-      <Animated.View style={[styles.header, styles.touchableFixedForeground, { height }]}>
+      <Animated.View
+        style={[styles.header, styles.touchableFixedForeground, { height }]}
+        testID="touchableForeground"
+      >
         {this.props.renderTouchableFixedForeground()}
       </Animated.View>
     );
@@ -278,6 +287,7 @@ class ImageHeaderScrollView extends Component<Props, State> {
             this.scrollViewRef = ref;
           }}
           overScrollMode="never"
+          testID="scrollView"
           {...scrollViewProps}
           contentContainerStyle={[
             {
