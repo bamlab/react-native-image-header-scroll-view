@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Animated, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { FixedContentComponent } from '../FixedContent';
 
 export interface Props {
@@ -12,7 +13,7 @@ export interface Props {
   maxOpacity?: number;
   minOpacity?: number;
   color?: string;
-  scrollValue: Animated.Value;
+  scrollValue: Animated.Value<number>;
 }
 
 export class Overlay extends Component<Props> {
@@ -27,7 +28,7 @@ export class Overlay extends Component<Props> {
     return this.props.scrollValue.interpolate({
       inputRange: [0, headerScrollDistance],
       outputRange,
-      extrapolate: 'clamp',
+      extrapolate: Animated.Extrapolate.CLAMP,
     });
   }
 

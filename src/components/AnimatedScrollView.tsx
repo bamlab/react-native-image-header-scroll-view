@@ -7,14 +7,14 @@ import {
   ViewStyle,
   TextStyle,
   ImageStyle,
-  Animated,
   ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 interface ModuleProps {
-  scrollValue: Animated.Value;
+  scrollValue: Animated.Value<number>;
   isBackground?: boolean;
   isForeground?: boolean;
 }
@@ -24,7 +24,7 @@ interface Props extends ScrollViewProps {
   childrenStyle?: ViewStyle | TextStyle | ImageStyle;
   maxHeight: number; // default is 80
   minHeight: number; // default is 125
-  ScrollViewComponent: React.ComponentType<ScrollViewProps>;
+  ScrollViewComponent: React.ComponentType<any>;
   scrollViewBackgroundColor: string; // defaults to white.
   useNativeDriver?: boolean; // defaults to false.
   backgroundComponents: Array<React.ComponentType<ModuleProps>>;
@@ -32,7 +32,7 @@ interface Props extends ScrollViewProps {
 }
 
 interface State {
-  scrollY: Animated.Value;
+  scrollY: Animated.Value<number>;
   pageY: number;
 }
 

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Animated, View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 export interface Props {
-  extrapolate?: 'extend' | 'identity' | 'clamp';
+  extrapolate?: Animated.Extrapolate;
   height?: number;
   isBackground?: boolean;
   isForeground?: boolean;
   parallaxRatio?: number;
   render: () => React.ReactElement;
-  scrollValue: Animated.Value;
+  scrollValue: Animated.Value<number>;
   style?: ViewStyle;
 }
 
@@ -16,7 +17,7 @@ export class MovingContent extends Component<Props> {
   static defaultProps = {
     height: 500,
     foregroundParallaxRatio: 1,
-    extrapolate: 'clamp',
+    extrapolate: Animated.Extrapolate.CLAMP,
   };
 
   render() {

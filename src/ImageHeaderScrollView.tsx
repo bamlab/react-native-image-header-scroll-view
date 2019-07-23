@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { ImageStyle, ScrollView, ScrollViewProps, TextStyle, View, ViewStyle } from 'react-native';
+import Animated from 'react-native-reanimated';
 import AnimatedScrollView from './components/AnimatedScrollView';
 import { fixedContent, fixedImage } from './modules/FixedContent';
 import { overlay } from './modules/Overlay';
@@ -37,7 +38,7 @@ interface Props extends ScrollViewProps {
   renderFixedForeground: () => React.ReactElement;
   renderForeground?: () => React.ReactElement;
   renderHeader?: () => React.ReactElement; // default is an empty view.
-  foregroundExtrapolate: 'extend' | 'identity' | 'clamp';
+  foregroundExtrapolate: Animated.Extrapolate;
   renderTouchableFixedForeground?: () => React.ReactElement;
   ScrollViewComponent: React.ComponentType<ScrollViewProps>;
   scrollViewBackgroundColor: string; // defaults to white.

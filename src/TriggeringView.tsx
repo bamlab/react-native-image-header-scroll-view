@@ -1,7 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Animated, LayoutChangeEvent } from 'react-native';
+import { View, LayoutChangeEvent } from 'react-native';
+import Animated from 'react-native-reanimated';
+import throttle from 'lodash/throttle';
 
 interface Props {
   onBeginHidden?: Function;
@@ -23,12 +25,11 @@ interface State {
 
 interface Context {
   scrollPageY?: number;
-  scrollY: Animated.Value;
+  scrollY: Animated.Value<number>;
 }
 
 class TriggeringView extends Component<Props, State> {
   initialPageY: number;
-  listenerId: string;
   ref: any;
   height: number;
   context: Context;
@@ -59,21 +60,6 @@ class TriggeringView extends Component<Props, State> {
     this.initialPageY = 0;
   }
 
-  componentWillMount() {
-    if (!this.context.scrollY) {
-      return;
-    }
-    this.listenerId = this.context.scrollY.addListener(this.onScroll);
-  }
-
-  componentWillReceiveProps(nextProps: Props, nextContext: Context) {
-    if (!this.context.scrollY) {
-      return;
-    }
-    this.context.scrollY.removeListener(this.listenerId);
-    this.listenerId = nextContext.scrollY.addListener(this.onScroll);
-  }
-
   onRef = (ref: any) => {
     this.ref = ref;
   };
@@ -92,11 +78,11 @@ class TriggeringView extends Component<Props, State> {
     });
   };
 
-  onScroll = event => {
+  onScroll = ([value]) => {
     if (!this.context.scrollPageY) {
       return;
     }
-    const pageY = this.initialPageY - event.value;
+    const pageY = this.initialPageY - value;
     this.triggerEvents(this.context.scrollPageY, pageY, pageY + this.height);
   };
 
@@ -137,9 +123,14 @@ class TriggeringView extends Component<Props, State> {
     /* eslint-enable no-unused-vars */
 
     return (
-      <View ref={this.onRef} collapsable={false} {...viewProps} onLayout={this.onLayout}>
-        {this.props.children}
-      </View>
+      <React.Fragment>
+        <Animated.Code>
+          {() => Animated.call([this.context.scrollY], throttle(this.onScroll, 100))}
+        </Animated.Code>
+        <View ref={this.onRef} collapsable={false} {...viewProps} onLayout={this.onLayout}>
+          {this.props.children}
+        </View>
+      </React.Fragment>
     );
   }
 }

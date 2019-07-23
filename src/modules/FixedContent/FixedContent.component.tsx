@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Animated, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 export interface Props {
   disableHeaderGrow?: boolean;
@@ -9,7 +10,7 @@ export interface Props {
   maxHeight?: number;
   minHeight?: number;
   renderHeader?: () => React.ReactElement;
-  scrollValue: Animated.Value;
+  scrollValue: Animated.Value<number>;
   testId?: string;
 }
 
@@ -22,20 +23,21 @@ export class FixedContent extends Component<Props> {
   };
 
   render() {
-    const headerScale = this.props.scrollValue.interpolate({
+    const { scrollValue } = this.props;
+    const headerScale = scrollValue.interpolate({
       inputRange: [-this.props.maxHeight, 0],
       outputRange: [3, 1],
-      extrapolate: 'clamp',
+      extrapolate: Animated.Extrapolate.CLAMP,
     });
 
-    let height: Animated.AnimatedInterpolation | number = this.props.maxHeight;
+    let height: ReturnType<typeof scrollValue.interpolate> | number = this.props.maxHeight;
 
     if (this.props.isForeground && this.props.minHeight) {
       const headerScrollDistance = this.props.maxHeight - this.props.minHeight;
-      height = this.props.scrollValue.interpolate({
+      height = scrollValue.interpolate({
         inputRange: [0, headerScrollDistance],
         outputRange: [this.props.maxHeight, this.props.minHeight],
-        extrapolate: 'clamp',
+        extrapolate: Animated.Extrapolate.CLAMP,
       });
     }
 
