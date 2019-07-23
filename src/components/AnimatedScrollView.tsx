@@ -29,6 +29,7 @@ interface Props extends ScrollViewProps {
   useNativeDriver?: boolean; // defaults to false.
   backgroundComponents: Array<React.ComponentType<ModuleProps>>;
   foregroundComponents: Array<React.ComponentType<ModuleProps>>;
+  childrenComponents: Array<React.ComponentType<ModuleProps>>;
 }
 
 interface State {
@@ -36,7 +37,7 @@ interface State {
   pageY: number;
 }
 
-class ImageHeaderScrollView extends ScrollViewLike<Props, State> {
+export class AnimatedScrollView extends ScrollViewLike<Props, State> {
   container?: any; // @see https://github.com/facebook/react-native/issues/15955
   state: State;
 
@@ -45,6 +46,7 @@ class ImageHeaderScrollView extends ScrollViewLike<Props, State> {
     scrollViewBackgroundColor: 'white',
     backgroundComponents: [],
     foregroundComponents: [],
+    childrenComponents: [],
   };
 
   static childContextTypes = {
@@ -97,6 +99,7 @@ class ImageHeaderScrollView extends ScrollViewLike<Props, State> {
       onScroll,
       scrollViewBackgroundColor,
       useNativeDriver,
+      children,
       ...scrollViewProps
     } = this.props;
     /* eslint-enable no-unused-vars */
@@ -148,7 +151,13 @@ class ImageHeaderScrollView extends ScrollViewLike<Props, State> {
                 })
               : this.onScroll
           }
-        />
+        >
+          {this.props.childrenComponents.map(
+            (Component, index) =>
+              !!Component && <Component scrollValue={this.state.scrollY} isForeground key={index} />
+          )}
+          {children}
+        </ScrollViewComponent>
         {this.props.foregroundComponents.map(
           (Component, index) =>
             !!Component && <Component scrollValue={this.state.scrollY} isForeground key={index} />
@@ -164,5 +173,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ImageHeaderScrollView;
-
+export default AnimatedScrollView;
