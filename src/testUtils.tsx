@@ -30,7 +30,18 @@ const getStylesAnimatedValue = (style: any, key?: string): { [key: string]: numb
   );
 };
 
-export const getAnimatedValues = (comp: ReactTestInstance): { [key: string]: number } => {
+export const getAnimatedValues = (
+  comp: ReactTestInstance | ReactTestInstance[]
+): { [key: string]: number } => {
+  if (Array.isArray(comp)) {
+    return comp.reduce(
+      (acc, val) => ({
+        ...acc,
+        ...getAnimatedValues(val),
+      }),
+      {}
+    );
+  }
   const style = comp.props.style;
   return getStylesAnimatedValue(style);
 };

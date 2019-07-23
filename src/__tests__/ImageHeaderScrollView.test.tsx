@@ -151,4 +151,24 @@ describe('ImageHeaderScrollView', () => {
     });
     expect(getAnimatedValues(renderer.getByTestId('foreground')).translateY).toBe(-1200);
   });
+
+  it('should have scrollView like methods', () => {
+    let component;
+    render(
+      <ImageHeaderScrollView
+        maxHeight={200}
+        minHeight={100}
+        renderHeader={renderHeader}
+        renderTouchableFixedForeground={renderTouchableFixedForeground}
+        renderFixedForeground={renderFixedForeground}
+        renderForeground={renderForeground}
+        ref={ref => {
+          component = ref;
+        }}
+      >
+        <View style={{ height: 1000 }} testID="children" />
+      </ImageHeaderScrollView>
+    );
+    expect(component.scrollTo).not.toBeUndefined();
+  });
 });
