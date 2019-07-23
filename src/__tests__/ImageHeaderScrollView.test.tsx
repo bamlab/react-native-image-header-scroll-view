@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { render, fireEvent } from 'react-native-testing-library';
 import ImageHeaderScrollView from '../ImageHeaderScrollView';
 
-import { getAnimatedValues } from '../testUtils';
+import { getAnimatedValues } from './testUtils';
 
 const renderForeground = () => <View testID="user_foreground" />;
 const renderHeader = () => <View testID="user_header" />;
