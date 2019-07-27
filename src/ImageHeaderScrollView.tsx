@@ -91,7 +91,7 @@ class ImageHeaderScrollView extends ScrollViewLike<Props, {}> {
         backgroundComponents={[
           headerImage
             ? fixedImage({ ...contentOptions, headerImage })
-            : fixedContent({ ...contentOptions, renderHeader }),
+            : fixedContent({ ...contentOptions, render: renderHeader }),
           !disableOverlay
             ? overlay({
                 disableHeaderGrow,
@@ -105,7 +105,7 @@ class ImageHeaderScrollView extends ScrollViewLike<Props, {}> {
             : null,
           fixedContent({
             ...contentOptions,
-            renderHeader: renderFixedForeground,
+            render: renderFixedForeground,
             headerContainerStyle: fixedForegroundContainerStyles,
             testId: 'fixedForeground',
           }),
@@ -116,7 +116,7 @@ class ImageHeaderScrollView extends ScrollViewLike<Props, {}> {
                 disableHeaderGrow: true,
                 maxHeight,
                 minHeight,
-                renderHeader: this.props.renderTouchableFixedForeground,
+                render: this.props.renderTouchableFixedForeground,
                 testId: 'touchableForeground',
               })
             : null,

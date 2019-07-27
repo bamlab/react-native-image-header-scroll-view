@@ -22,18 +22,13 @@ interface Options {
   headerContainerStyle?: object;
   maxHeight?: number;
   minHeight?: number;
-  maxOverlayOpacity?: number;
-  minOverlayOpacity?: number;
-  overlayColor?: string;
-  renderFixedForeground?: () => React.ReactElement;
-  renderHeader?: () => React.ReactElement;
 }
 
 export const fixedImage = (options: Options) => (props: ComponentProps) => (
   <FixedContent
     {...props}
     {...options}
-    renderHeader={() => (
+    render={() => (
       <Image
         source={options.headerImage}
         style={{

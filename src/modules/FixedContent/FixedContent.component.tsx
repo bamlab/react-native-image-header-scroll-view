@@ -9,7 +9,7 @@ export interface Props {
   isForeground?: boolean;
   maxHeight?: number;
   minHeight?: number;
-  renderHeader?: () => React.ReactElement;
+  render?: () => React.ReactElement;
   scrollValue: Animated.Value<number>;
   testId?: string;
 }
@@ -19,7 +19,7 @@ export class FixedContent extends Component<Props> {
     disableHeaderGrow: false,
     maxHeight: 125,
     minHeight: 80,
-    renderHeader: () => <View />,
+    render: () => <View />,
   };
 
   render() {
@@ -51,7 +51,7 @@ export class FixedContent extends Component<Props> {
         style={[styles.header, headerTransformStyle, this.props.headerContainerStyle]}
         testID={this.props.testId || 'header'}
       >
-        {this.props.renderHeader()}
+        {this.props.render()}
       </Animated.View>
     );
   }

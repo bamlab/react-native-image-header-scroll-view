@@ -50,7 +50,7 @@ export class Overlay extends Component<Props> {
     return (
       <FixedContentComponent
         scrollValue={this.props.scrollValue}
-        renderHeader={this.renderOverlay}
+        render={this.renderOverlay}
         minHeight={this.props.minHeight}
         maxHeight={this.props.maxHeight}
         isBackground={this.props.isBackground}
