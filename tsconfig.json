@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "target": "es2015",
+    "target": "esnext",
     "outDir": "dist",
 
-    "lib": [ "es2017" ],
-    "skipLibCheck": true,
-
-    "importHelpers": true,
-
+    "lib": [ "es6" ],
     "module": "es2015",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
-    "declaration": true
+    "declaration": true,
+    "isolatedModules": true,
+
+    "noEmit": true,
+    "strict": true
   },
-  "exclude": ["node_modules", "src/**/__tests__/*"],
+  "exclude": ["node_modules", "src/**/__tests__/*", "react-native-scrollview-animation"],
   "include": [
     "src/**/*"
   ]

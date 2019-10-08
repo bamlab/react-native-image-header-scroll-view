@@ -4,3 +4,4 @@ export { AnimatedScrollView } from './components/AnimatedScrollView';
 export { fixedContent, FixedContentComponent } from './modules/FixedContent';
 export { overlay, OverlayComponent } from './modules/Overlay';
 export { movingContent, MovingContentComponent } from './modules/MovingContent';
+export { ScalingImageComponent, scalingImage } from './modules/ScalingImage';

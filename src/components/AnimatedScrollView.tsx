@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import ScrollViewLike from '../ScrollViewLike';
 import {
   ScrollViewProps,
@@ -12,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { ScrollProvider } from '../ScrollContext';
 
 interface ModuleProps {
   scrollValue: Animated.Value<number>;
@@ -49,23 +49,11 @@ export class AnimatedScrollView extends ScrollViewLike<Props, State> {
     childrenComponents: [],
   };
 
-  static childContextTypes = {
-    scrollY: PropTypes.instanceOf(Animated.Value),
-    scrollPageY: PropTypes.number,
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
       scrollY: new Animated.Value(0),
       pageY: 0,
-    };
-  }
-
-  getChildContext() {
-    return {
-      scrollY: this.state.scrollY,
-      scrollPageY: this.state.pageY + this.props.minHeight,
     };
   }
 
@@ -110,59 +98,69 @@ export class AnimatedScrollView extends ScrollViewLike<Props, State> {
 
     const inset = maxHeight - minHeight;
 
+    const context = {
+      scrollValue: this.state.scrollY,
+      scrollPageY: this.state.pageY + this.props.minHeight,
+    };
+
+    console.log('scrollView');
     return (
-      <View
-        style={[
-          styles.container,
-          {
-            paddingTop: minHeight,
-            backgroundColor: scrollViewBackgroundColor,
-          },
-        ]}
-        ref={ref => {
-          this.container = ref;
-        }}
-        onLayout={this.onContainerLayout}
-      >
-        {this.props.backgroundComponents.map(
-          (Component, index) =>
-            !!Component && <Component scrollValue={this.state.scrollY} isBackground key={index} />
-        )}
-        <ScrollViewComponent
-          scrollEventThrottle={useNativeDriver ? 1 : 16}
-          ref={this.setScrollViewRef}
-          overScrollMode="never"
-          testID="scrollView"
-          {...scrollViewProps}
-          contentContainerStyle={[
+      <ScrollProvider value={context}>
+        <View
+          style={[
+            styles.container,
             {
+              paddingTop: minHeight,
               backgroundColor: scrollViewBackgroundColor,
-              marginTop: inset,
-              paddingBottom: inset,
             },
-            contentContainerStyle,
-            childrenStyle,
           ]}
-          style={[styles.container, style]}
-          onScroll={
-            useNativeDriver
-              ? Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }], {
-                  useNativeDriver: true,
-                })
-              : this.onScroll
-          }
+          ref={ref => {
+            this.container = ref;
+          }}
+          onLayout={this.onContainerLayout}
         >
-          {this.props.childrenComponents.map(
+          {this.props.backgroundComponents.map(
+            (Component, index) =>
+              !!Component && <Component scrollValue={this.state.scrollY} isBackground key={index} />
+          )}
+          <ScrollViewComponent
+            scrollEventThrottle={useNativeDriver ? 1 : 16}
+            ref={this.setScrollViewRef}
+            overScrollMode="never"
+            testID="scrollView"
+            {...scrollViewProps}
+            contentContainerStyle={[
+              {
+                backgroundColor: scrollViewBackgroundColor,
+                marginTop: inset,
+                paddingBottom: inset,
+              },
+              contentContainerStyle,
+              childrenStyle,
+            ]}
+            style={[styles.container, style]}
+            onScroll={
+              useNativeDriver
+                ? Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }], {
+                    useNativeDriver: true,
+                  })
+                : this.onScroll
+            }
+          >
+            {this.props.childrenComponents.map(
+              (Component, index) =>
+                !!Component && (
+                  <Component scrollValue={this.state.scrollY} isForeground key={index} />
+                )
+            )}
+            {children}
+          </ScrollViewComponent>
+          {this.props.foregroundComponents.map(
             (Component, index) =>
               !!Component && <Component scrollValue={this.state.scrollY} isForeground key={index} />
           )}
-          {children}
-        </ScrollViewComponent>
-        {this.props.foregroundComponents.map(
-          (Component, index) =>
-            !!Component && <Component scrollValue={this.state.scrollY} isForeground key={index} />
-        )}
-      </View>
+        </View>
+      </ScrollProvider>
     );
   }
 }

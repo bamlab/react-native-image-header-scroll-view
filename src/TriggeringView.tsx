@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { View, LayoutChangeEvent } from 'react-native';
 import Animated from 'react-native-reanimated';
 import throttle from 'lodash/throttle';
+import { ScrollConsumer } from './ScrollContext';
 
 interface Props {
   onBeginHidden?: Function;
@@ -23,16 +23,10 @@ interface State {
   hidden: boolean;
 }
 
-interface Context {
-  scrollPageY?: number;
-  scrollY: Animated.Value<number>;
-}
-
 class TriggeringView extends Component<Props, State> {
   initialPageY: number;
   ref: any;
   height: number;
-  context: Context;
 
   state: State = {
     touched: false,
@@ -48,11 +42,6 @@ class TriggeringView extends Component<Props, State> {
     onTouchBottom: () => {},
     bottomOffset: 0,
     topOffset: 0,
-  };
-
-  static contextTypes = {
-    scrollY: PropTypes.instanceOf(Animated.Value),
-    scrollPageY: PropTypes.number,
   };
 
   constructor(props: Props) {
@@ -78,12 +67,12 @@ class TriggeringView extends Component<Props, State> {
     });
   };
 
-  onScroll = ([value]) => {
-    if (!this.context.scrollPageY) {
+  onScroll = (scrollPageY: number) => ([value]) => {
+    if (!scrollPageY) {
       return;
     }
     const pageY = this.initialPageY - value;
-    this.triggerEvents(this.context.scrollPageY, pageY, pageY + this.height);
+    this.triggerEvents(scrollPageY, pageY, pageY + this.height);
   };
 
   triggerEvents(value: number, top: number, bottom: number) {
@@ -123,14 +112,18 @@ class TriggeringView extends Component<Props, State> {
     /* eslint-enable no-unused-vars */
 
     return (
-      <React.Fragment>
-        <Animated.Code>
-          {() => Animated.call([this.context.scrollY], throttle(this.onScroll, 100))}
-        </Animated.Code>
-        <View ref={this.onRef} collapsable={false} {...viewProps} onLayout={this.onLayout}>
-          {this.props.children}
-        </View>
-      </React.Fragment>
+      <ScrollConsumer>
+        {({ scrollValue, scrollPageY }) => (
+          <React.Fragment>
+            <Animated.Code>
+              {() => Animated.call([scrollPageY], throttle(this.onScroll(scrollPageY), 100))}
+            </Animated.Code>
+            <View ref={this.onRef} collapsable={false} {...viewProps} onLayout={this.onLayout}>
+              {this.props.children}
+            </View>
+          </React.Fragment>
+        )}
+      </ScrollConsumer>
     );
   }
 }
