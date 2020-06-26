@@ -68,14 +68,14 @@ class TriggeringView extends Component<Props, State> {
     this.initialPageY = 0;
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (!this.context.scrollY) {
       return;
     }
     this.listenerId = this.context.scrollY.addListener(this.onScroll);
   }
 
-  componentWillReceiveProps(nextProps: Props, nextContext: Context) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props, nextContext: Context) {
     if (!this.context.scrollY) {
       return;
     }
