@@ -62,6 +62,7 @@ declare module "react-native-image-header-scroll-view" {
     onLayout?: Function;
     bottomOffset?: number;
     topOffset?: number;
+    style?: ViewStyle;
     }
 
     interface TriggeringViewState {
