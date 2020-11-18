@@ -1,3 +1,18 @@
 node_modules/**/*
 npm-debug.*
 .idea
+
+example/node_modules/**/*
+example/.expo/*
+example/.expo-shared/*
+example/npm-debug.*
+example/*.jks
+example/*.p8
+example/*.p12
+example/*.key
+example/*.mobileprovision
+example/*.orig.*
+example/web-build/
+
+# macOS
+example/.DS_Store
