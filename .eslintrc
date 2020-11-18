@@ -2,6 +2,6 @@
   "extends": ["bambi/native"],
   "rules": {
     "prettier/prettier": "error",
-    "flowtype/type-id-match": [0, ""],
+    "flowtype/type-id-match": [0, ""]
   }
 }

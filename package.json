@@ -2,11 +2,12 @@
   "name": "react-native-image-header-scroll-view",
   "version": "0.10.3",
   "description": "ScrollView with an image in header which become a navbar",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && flow",
-    "prettify": "prettier --write src/**.js"
+    "prettify": "prettier --write src/**.js",
+    "build": "tsc"
   },
   "files": [
     "README.md",
@@ -34,13 +35,16 @@
   },
   "homepage": "https://github.com/bamlab/react-native-image-header-scroll-view#readme",
   "devDependencies": {
+    "@types/react": "^16.9.56",
+    "@types/react-native": "^0.63.35",
     "babel-preset-react-native": "4.0.0",
     "eslint": "^4.14.0",
     "eslint-config-bambi": "^1.2.0",
     "flow-bin": "^0.61.0",
     "prettier": "^1.10.2",
     "react": "16.2.0",
-    "react-native": "0.52.2"
+    "react-native": "0.52.2",
+    "typescript": "^4.0.5"
   },
   "peerDependencies": {
     "react": ">=16.8.1",

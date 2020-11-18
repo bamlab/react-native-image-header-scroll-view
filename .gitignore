@@ -16,3 +16,5 @@ example/web-build/
 
 # macOS
 example/.DS_Store
+
+lib
