@@ -1,7 +1,21 @@
 {
-  "extends": ["bambi/native"],
+  "parser": "babel-eslint",
+  "plugins": ["react", "react-native", "prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "rules": {
     "prettier/prettier": "error",
-    "flowtype/type-id-match": [0, ""]
+    "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-color-literals": 2,
+    "react/prop-types": 0
+  },
+  "env": {
+    "browser": true,
+    "react-native/react-native": true
   }
 }

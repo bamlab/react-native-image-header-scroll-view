@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && flow",
+    "test": "npm run lint && npm run tsc --noEmit",
     "prettify": "prettier --write src/**.js",
     "build": "tsc"
   },
@@ -37,10 +37,12 @@
   "devDependencies": {
     "@types/react": "^16.9.56",
     "@types/react-native": "^0.63.35",
+    "babel-eslint": "^10.1.0",
     "babel-preset-react-native": "4.0.0",
-    "eslint": "^4.14.0",
-    "eslint-config-bambi": "^1.2.0",
-    "flow-bin": "^0.61.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-native": "^3.10.0",
     "prettier": "^1.10.2",
     "react": "16.2.0",
     "react-native": "0.52.2",
@@ -50,11 +52,6 @@
     "react": ">=16.8.1",
     "react-native": ">=0.59.0"
   },
-  "dependencies": {
-    "prop-types": "^15.6.0"
-  },
-  "eslintConfig": {
-    "extends": "bambi/native"
-  },
-  "types": "./src/index.d.ts"
+  "dependencies": {},
+  "types": "./lib/index.d.ts"
 }

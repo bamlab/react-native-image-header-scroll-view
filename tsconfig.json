@@ -11,7 +11,9 @@
     // "allowJs": true,
     /* Advanced Options */
     "skipLibCheck": true /* Skip type checking of declaration files. */,
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
+    "declaration": true
   },
-  "exclude": ["node_modules", "example", "lib"]
+  "exclude": ["node_modules", "example", "lib"],
+  "include": ["src"]
 }

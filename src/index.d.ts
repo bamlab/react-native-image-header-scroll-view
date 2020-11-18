@@ -1,6 +1,5 @@
 declare module "react-native-image-header-scroll-view" {
-    import * as React from "react";
-    import { ScrollViewProps, ViewStyle, TextStyle, ImageStyle, Animated } from "react-native";
+    import type { ScrollViewProps, ViewStyle, TextStyle, ImageStyle, Animated } from "react-native";
 
     interface Dictionary {
         [key: string]: string;

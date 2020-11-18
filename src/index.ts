@@ -1,4 +1,2 @@
-// @flow
-// @ts-ignore
-export { default } from './ImageHeaderScrollView';
-export { default as TriggeringView } from './TriggeringView';
+export { ImageHeaderScrollView } from './ImageHeaderScrollView';
+export { TriggeringView } from './TriggeringView';

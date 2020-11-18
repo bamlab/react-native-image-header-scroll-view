@@ -7,7 +7,7 @@ module.exports = function(api) {
         'module-resolver',
         {
           alias: {
-            'react-native-image-header-scroll-view': '../src/index.ts',
+            'react-native-image-header-scroll-view': '..',
           },
         },
       ],

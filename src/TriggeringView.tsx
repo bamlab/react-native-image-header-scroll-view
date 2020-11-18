@@ -18,7 +18,7 @@ type Context = {
   scrollY: Animated.Value;
 };
 
-const TriggeringView: FunctionComponent<Props> = ({
+export const TriggeringView: FunctionComponent<Props> = ({
   topOffset = 0,
   bottomOffset = 0,
   onDisplay,
@@ -99,21 +99,8 @@ const TriggeringView: FunctionComponent<Props> = ({
   };
 
   return (
-    <View
-      ref={ref}
-      collapsable={false}
-      {...viewProps}
-      onLayout={handleOnLayout}
-      style={{ backgroundColor: 'red' }}
-    >
+    <View ref={ref} collapsable={false} {...viewProps} onLayout={handleOnLayout}>
       {children}
     </View>
   );
 };
-
-TriggeringView.contextTypes = {
-  scrollY: PropTypes.instanceOf(Animated.Value),
-  scrollPageY: PropTypes.number,
-};
-
-export default TriggeringView;

@@ -1,14 +1,13 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-// @ts-ignore
-import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
+import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 
 export default function App() {
   return (
-    <HeaderImageScrollView
+    <ImageHeaderScrollView
       maxHeight={200}
-      minHeight={56}
+      minHeight={100}
       headerImage={require('./assets/NZ.jpg')}
       renderForeground={() => (
         <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
@@ -23,6 +22,6 @@ export default function App() {
           <Text>Scroll Me!</Text>
         </TriggeringView>
       </View>
-    </HeaderImageScrollView>
+    </ImageHeaderScrollView>
   );
 }
