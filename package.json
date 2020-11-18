@@ -43,8 +43,8 @@
     "react-native": "0.52.2"
   },
   "peerDependencies": {
-    "react": ">=15.3.1",
-    "react-native": ">=0.20.0"
+    "react": ">=16.8.1",
+    "react-native": ">=0.59.0"
   },
   "dependencies": {
     "prop-types": "^15.6.0"
