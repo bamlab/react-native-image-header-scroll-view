@@ -2,9 +2,9 @@ node_modules/**/*
 npm-debug.*
 .idea
 
-example/node_modules/**/*
-example/.expo/*
-example/.expo-shared/*
+example/node_modules
+example/.expo
+example/.expo-shared
 example/npm-debug.*
 example/*.jks
 example/*.p8
