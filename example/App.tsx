@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 
@@ -10,14 +10,14 @@ export default function App() {
       minHeight={100}
       headerImage={require('./assets/NZ.jpg')}
       renderForeground={() => (
-        <View style={{ height: 150, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.foregroundContainer}>
           <TouchableOpacity onPress={() => console.log('tap!!')}>
-            <Text style={{ backgroundColor: 'transparent' }}>Tap Me!</Text>
+            <Text style={styles.header}>Tap Me!</Text>
           </TouchableOpacity>
         </View>
       )}
     >
-      <View style={{ height: 1000 }}>
+      <View style={styles.content}>
         <TriggeringView onHide={() => console.log('text hidden')}>
           <Text>Scroll Me!</Text>
         </TriggeringView>
@@ -25,3 +25,13 @@ export default function App() {
     </ImageHeaderScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  foregroundContainer: {
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: { backgroundColor: 'transparent' },
+  content: { height: 1000 },
+});
