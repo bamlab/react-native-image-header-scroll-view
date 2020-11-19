@@ -1,18 +1,20 @@
 {
   "name": "react-native-image-header-scroll-view",
-  "version": "0.10.3",
+  "version": "1.0.0",
   "description": "ScrollView with an image in header which become a navbar",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && npm run tsc --noEmit",
     "prettify": "prettier --write src/**.js",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build",
+    "preversion": "npm run lint"
   },
   "files": [
     "README.md",
     "LICENCE",
-    "src",
+    "lib",
     "readmeAssets"
   ],
   "repository": {
@@ -28,7 +30,7 @@
     "ios",
     "android"
   ],
-  "author": "Nhacsam <nicolas@djambazian.fr>",
+  "author": "Spoutnik97 <guillaume.piedigrossi@gadz.org>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bamlab/react-native-image-header-scroll-view/issues"
