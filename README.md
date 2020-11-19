@@ -7,6 +7,16 @@ A ScrollView-like component that:
  - Keep the image as a nav bar
  - Works on iOS and Android
 
+## Breaking changes
+
+### Version 1.0.0
+**/!\ Warning /!\\**
+The lib has been upgraded to match with new React and React Native standards (hooks, deprecated methods, etc...).
+The version 1.0.0 may contain some bugs or regressions. Ping me in issues if you notice a bad behaviour of the upgraded lib on your project.
+I advice you to update the lib in a separate commit to roll back if necessary.
+However the lib should work for most of cases, so don't be scared to update the lib.
+**It is a first step to improve the lib in the future, so please be understanding 😇**
+
 ## Installation
 
 ```
