@@ -32,12 +32,12 @@ You can find this example code here : https://github.com/bamlab/react-native-ima
 ## Basic Usage 
 
 ```jsx
-import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
+import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 
 // Inside of a component's render() method:
 render() {
   return (
-    <HeaderImageScrollView
+    <ImageHeaderScrollView
       maxHeight={200}
       minHeight={MIN_HEIGHT}
       headerImage={require("../../assets/NZ.jpg")}
@@ -54,7 +54,7 @@ render() {
           <Text>Scroll Me!</Text>
         </TriggeringView>
       </View>
-    </HeaderImageScrollView>
+    </ImageHeaderScrollView>
   );
 }
 ```
@@ -71,7 +71,7 @@ You can find examples in a [dedicated repository](https://github.com/bamlab/reac
 All of the properties of `ScrollView` are supported. Please refer to the
 [`ScrollView` documentation](https://facebook.github.io/react-native/docs/scrollview.html) for more detail.
 
-The `HeaderImageScrollView` handle also the following props. None is required :
+The `ImageHeaderScrollView` handle also the following props. None is required :
 
 ### Header
 
@@ -134,7 +134,7 @@ All of the properties of `View` are supported.
 Just set the `maxOverlayOpacity` to `0`.
 
 ```jsx 
-<HeaderImageScrollView
+<ImageHeaderScrollView
   minOverlayOpacity={0}
   maxOverlayOpacity={0}
   {/* ... */}
