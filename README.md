@@ -32,7 +32,7 @@ You can find this example code here : https://github.com/bamlab/react-native-ima
 ## Basic Usage 
 
 ```jsx
-import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
+import { TriggeringView, ImageHeaderScrollView } from 'react-native-image-header-scroll-view';
 
 // Inside of a component's render() method:
 render() {
